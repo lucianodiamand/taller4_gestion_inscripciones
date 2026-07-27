@@ -2,47 +2,113 @@ package gestion_inscripciones.backendTaller4.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//import gestion_inscripciones.backendTaller4.entity.InscripcionCarrera;
+import gestion_inscripciones.backendTaller4.dto.InscripcionMateriaRequestDTO;
+import gestion_inscripciones.backendTaller4.dto.InscripcionMateriaResponseDTO;
+import gestion_inscripciones.backendTaller4.entity.InscripcionCarrera;
 import gestion_inscripciones.backendTaller4.entity.InscripcionMateria;
+import gestion_inscripciones.backendTaller4.entity.Materia;
+import gestion_inscripciones.backendTaller4.repository.InscripcionCarreraRepository;
 import gestion_inscripciones.backendTaller4.repository.InscripcionMateriaRepository;
+import gestion_inscripciones.backendTaller4.repository.MateriaRepository;
 
 @Service // para la logica de negocio
 public class InscripcionMateriaService { 
 	@Autowired
     private InscripcionMateriaRepository inscripcionMateriaRepository;
 
+    @Autowired
+    private InscripcionCarreraRepository inscripcionCarreraRepository;
+
+    @Autowired
+    private MateriaRepository materiaRepository;
+
     // Obtener todas las inscripciones (READ)
-    public List<InscripcionMateria> obtenerTodas() {
-        return inscripcionMateriaRepository.findAll();
+    public List<InscripcionMateriaResponseDTO> obtenerTodas() {
+        return inscripcionMateriaRepository.findAll()
+                .stream()
+                .map(this::convertirAResponseDTO)
+                .collect(Collectors.toList());
     }
 
     // Obtener por ID (READ)
-    public Optional<InscripcionMateria> obtenerPorId(Long id) {
-        return inscripcionMateriaRepository.findById(id);
+    public Optional<InscripcionMateriaResponseDTO> obtenerPorId(Long id) {
+        return inscripcionMateriaRepository.findById(id)
+                .map(this::convertirAResponseDTO);
     }
     
- // Guardar / Crear inscripción (CREATE)
-    public InscripcionMateria guardar(InscripcionMateria inscripcionMateria) {
-        return inscripcionMateriaRepository.save(inscripcionMateria);
+    
+    public List<InscripcionMateriaResponseDTO> obtenerPorIngresante(Long ingresanteId) {
+        return inscripcionMateriaRepository.findByIngresanteId(ingresanteId)
+        		.stream()
+                .map(this::convertirAResponseDTO)
+                .collect(Collectors.toList());
     }
     
- // Actualizar inscripción (UPDATE)
-    public InscripcionMateria actualizar(Long id, InscripcionMateria inscripcionActualizada) {
-        return inscripcionMateriaRepository.findById(id).map(inscripcion -> {
-            inscripcion.setFechaInscripcion(inscripcionActualizada.getFechaInscripcion());
-            inscripcion.setMateria(inscripcionActualizada.getMateria());
-            inscripcion.setInscripcionCarrera(inscripcionActualizada.getInscripcionCarrera());
-            return inscripcionMateriaRepository.save(inscripcion);
-        }).orElseThrow(() -> new RuntimeException("Inscripción no encontrada con el id: " + id));
+    // Guardar / Crear inscripción (CREATE)
+    public InscripcionMateriaResponseDTO guardar(InscripcionMateriaRequestDTO dto) {
+        InscripcionCarrera insCarrera = inscripcionCarreraRepository.findById(dto.getInscripcionCarreraId())
+                .orElseThrow(() -> new RuntimeException("Inscripción de Carrera no encontrada"));
+
+        Materia materia = materiaRepository.findById(dto.getMateriaId())
+                .orElseThrow(() -> new RuntimeException("Materia no encontrada"));
+
+        InscripcionMateria entidad = new InscripcionMateria();
+        entidad.setFechaInscripcion(dto.getFechaInscripcion());
+        entidad.setInscripcionCarrera(insCarrera);
+        entidad.setMateria(materia);
+
+        InscripcionMateria guardada = inscripcionMateriaRepository.save(entidad);
+        return convertirAResponseDTO(guardada);
     }
     
- // Eliminar inscripción (DELETE)
+    // Actualizar inscripción (UPDATE)
+    public InscripcionMateriaResponseDTO actualizar(Long id, InscripcionMateriaRequestDTO dto) {
+        // 1. Buscamos la inscripción original
+        InscripcionMateria entidad = inscripcionMateriaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Inscripción a materia no encontrada"));
+
+        // 2. Buscamos las nuevas relaciones
+        InscripcionCarrera insCarrera = inscripcionCarreraRepository.findById(dto.getInscripcionCarreraId())
+                .orElseThrow(() -> new RuntimeException("Inscripción de Carrera no encontrada"));
+
+        Materia materia = materiaRepository.findById(dto.getMateriaId())
+                .orElseThrow(() -> new RuntimeException("Materia no encontrada"));
+
+        // 3. Actualizamos los datos
+        entidad.setFechaInscripcion(dto.getFechaInscripcion());
+        entidad.setInscripcionCarrera(insCarrera);
+        entidad.setMateria(materia);
+
+        // 4. Guardamos y devolvemos el DTO
+        InscripcionMateria actualizada = inscripcionMateriaRepository.save(entidad);
+        return convertirAResponseDTO(actualizada);
+    }
+    
+    // Eliminar inscripción (DELETE)
     public void eliminar(Long id) {
     	inscripcionMateriaRepository.deleteById(id);
+    }
+    
+    private InscripcionMateriaResponseDTO convertirAResponseDTO(InscripcionMateria entidad) {
+        InscripcionMateriaResponseDTO dto = new InscripcionMateriaResponseDTO();
+        dto.setId(entidad.getId());
+        dto.setFechaInscripcion(entidad.getFechaInscripcion());
+
+        if (entidad.getInscripcionCarrera() != null) {
+            dto.setInscripcionCarreraId(entidad.getInscripcionCarrera().getId());
+        }
+
+        if (entidad.getMateria() != null) {
+            dto.setMateriaId(entidad.getMateria().getId());
+            dto.setNombreMateria(entidad.getMateria().getNombre());
+        }
+
+        return dto;
     }
     
 }
