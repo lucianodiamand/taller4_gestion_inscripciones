@@ -18,4 +18,28 @@ public class InscripcionMateriaResponseDTO {
     // Datos de la Materia
     private Long materiaId;
     private String nombreMateria;
+    
+    
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public void setFechaInscripcion(LocalDate fechaInscripcion) {
+		this.fechaInscripcion = fechaInscripcion;
+	}
+
+
+	public void setInscripcionCarreraId(Long inscripcionCarreraId) {
+		this.inscripcionCarreraId = inscripcionCarreraId;
+	}
+
+	public void setNombreMateria(String nombreMateria) {
+		this.nombreMateria = nombreMateria;
+	}
+
+
+	public void setMateriaId(Long materiaId) {
+		this.materiaId = materiaId;
+	}
 }

@@ -43,7 +43,7 @@ public class InscripcionMateriaService {
     
     
     public List<InscripcionMateriaResponseDTO> obtenerPorIngresante(Long ingresanteId) {
-        return inscripcionMateriaRepository.findByIngresanteId(ingresanteId)
+        return inscripcionMateriaRepository.findByInscripcionCarreraIngresanteId(ingresanteId)
         		.stream()
                 .map(this::convertirAResponseDTO)
                 .collect(Collectors.toList());
@@ -104,7 +104,7 @@ public class InscripcionMateriaService {
         }
 
         if (entidad.getMateria() != null) {
-            dto.setMateriaId(entidad.getMateria().getId());
+        	dto.setMateriaId(entidad.getMateria().getId());
             dto.setNombreMateria(entidad.getMateria().getNombre());
         }
 

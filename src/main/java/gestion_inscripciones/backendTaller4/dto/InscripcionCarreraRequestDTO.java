@@ -12,4 +12,16 @@ public class InscripcionCarreraRequestDTO {
     private LocalDate fechaInscripcion;
     private Long ingresanteId;
     private Long carreraId;
+    
+	public Long getIngresanteId() {
+		return ingresanteId;
+	}
+
+	public Long getCarreraId() {
+		return carreraId;
+	}
+
+	public LocalDate getFechaInscripcion() {
+		return fechaInscripcion;
+	}
 }

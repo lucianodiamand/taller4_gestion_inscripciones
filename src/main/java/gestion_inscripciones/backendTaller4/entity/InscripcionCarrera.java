@@ -60,4 +60,10 @@ public class InscripcionCarrera {
         this.carrera = carrera;
     }
 
+	public Long getId() {
+		return id;
+	}
+
+	
+
 }

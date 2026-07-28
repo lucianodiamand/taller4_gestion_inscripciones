@@ -11,6 +11,6 @@ import gestion_inscripciones.backendTaller4.entity.InscripcionMateria;
 @Repository
 public interface InscripcionMateriaRepository extends JpaRepository<InscripcionMateria, Long> {
 	// Spring Data JPA crea la consulta SQL automáticamente basándose en la relación con la entidad Ingresante/Estudiante
-	List<InscripcionMateria> findByIngresanteId(Long ingresanteId);
+	List<InscripcionMateria> findByInscripcionCarreraIngresanteId(Long ingresanteId);
 	// JpaRepository ya incluye por defecto los métodos: findAll(), findById(), save(), deleteById()
 }

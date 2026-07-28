@@ -59,5 +59,9 @@ public class InscripcionMateria {
     public void setMateria(Materia materia) {
         this.materia = materia;
     }
+
+	public Long getId() {
+		return id;
+	}
     
 }

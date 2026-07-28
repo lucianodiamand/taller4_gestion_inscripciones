@@ -32,4 +32,40 @@ public class Materia {
     @ManyToOne (optional = false) //Especifico como es la relacion entre entidades. Muchas materias pertenecen a una carrera
     @JoinColumn(name = "carrera_id", nullable = false) 
     private Carrera carrera; //esto hace que en la bd haya un campo carrera_id, por lo que no haga falta que carrera conozca sus materias
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setAnio(int anio) {
+		this.anio = anio;
+	}
+
+	public void setCuatrimestre(int cuatrimestre) {
+		this.cuatrimestre = cuatrimestre;
+	}
+
+	public void setCarrera(Carrera carrera) {
+		this.carrera = carrera;
+	}
+
+	public int getAnio() {
+		return anio;
+	}
+
+	public int getCuatrimestre() {
+		return cuatrimestre;
+	}
+
+	public Carrera getCarrera() {
+		return carrera;
+	}
 }
