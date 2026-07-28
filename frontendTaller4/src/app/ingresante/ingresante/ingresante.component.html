@@ -1,0 +1,15 @@
+<p>ingresante works!</p>
+
+<p><a routerLink="/ingreso/crear">Nuevo Ingresante</a></p>
+
+<ul>
+    <li *ngFor="let ingresante of ingresantes$ | async"> <!-- | async sirve para subscribirse automaticamente al observable y obtener los datos del backend -->
+        {{ ingresante.id }}: {{ ingresante.nombre }}: {{ ingresante.apellido }}: {{ ingresante.tipoDocumento }}: {{ ingresante.numeroDocumento }}: {{ ingresante.edad }}: {{ ingresante.email }}
+        <!-- {{}} indica interpolacion. Sirve para mostrar datos desde la clase en el .ts en el HTML -->
+        <a [routerLink]="['/ingreso/editar', ingresante.id]">Editar</a>
+        <!-- [] significan que el destino va a ser dinamico, segun el id del ingresante recorrido por medio del ngfor -->
+        <button (click)="borrar(ingresante.id)">Borrar</button>  
+    </li>
+</ul>
+
+

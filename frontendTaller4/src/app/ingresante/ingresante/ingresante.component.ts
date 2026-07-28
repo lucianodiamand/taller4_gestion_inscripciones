@@ -1,0 +1,29 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
+import { IngresanteDto } from '../../../models/ingresante-dto';
+import { IngresanteService } from '../ingresante.service';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+
+@Component({
+  selector: 'app-ingresante',
+  imports: [CommonModule, RouterLink],
+  templateUrl: './ingresante.component.html',
+  styleUrl: './ingresante.component.css',
+})
+export class IngresanteComponent implements OnInit {
+
+  ingresantes$!: Observable<Array<IngresanteDto>> // observevable con arreglo de IngresanteDto
+
+  constructor(private readonly servicio: IngresanteService){} //inyecto el service
+
+  ngOnInit() { // se ejecuta al crear el componente. Se usa para hacer la primer carga de datos. El observable pide al servicio todos los ingresantes
+      this.ingresantes$ = this.servicio.obtenerTodos();
+  }
+
+  borrar(id: number) {
+    this.servicio.eliminar(id).subscribe(() => this.ngOnInit());
+  }
+
+}

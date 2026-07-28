@@ -1,0 +1,11 @@
+<h2>Ingresante</h2>
+
+<form [formGroup]="ingresanteForm">
+    <p>Nombre: <input type="text" formControlName="nombre" /></p>
+    <p>Apellido: <input type="text" formControlName="apellido" /></p>
+    <p>Tipo Documento: <input type="text" formControlName="tipoDocumento" /></p>
+    <p>Numero de documento: <input type="number" formControlName="numeroDocumento" /></p>
+    <p>Edad: <input type="number" formControlName="edad" /></p>
+    <p>Email: <input type="text" formControlName="email" /></p>
+    <p><button (click)="guardar()">Guardar</button></p>
+</form>
