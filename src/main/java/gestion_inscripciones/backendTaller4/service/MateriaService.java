@@ -78,7 +78,7 @@ public class MateriaService {
 
         if (entidad.getCarrera() != null) {
             dto.setCarreraId(entidad.getCarrera().getId());
-            dto.setNombre(entidad.getCarrera().getNombre());
+            dto.setNombreCarrera(entidad.getCarrera().getNombre());
         }
         return dto;
     }

@@ -32,20 +32,20 @@ public class MateriaController {
     }
     
     // 2. Obtener una materia por ID -> GET http://localhost:8080/materias/{id}
-    @GetMapping("/{id}")
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<MateriaDTO> obtenerPorId(@PathVariable Long id) {
         return materiaService.obtenerPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
     
-    @PostMapping
+    @PostMapping("/crear")
     public ResponseEntity<MateriaDTO> crear(@RequestBody MateriaDTO dto) {
         MateriaDTO nueva = materiaService.guardar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(nueva);
     }
     
-    @PutMapping("/{id}")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<MateriaDTO> actualizar(@PathVariable Long id, @RequestBody MateriaDTO dto) {
         try {
             MateriaDTO actualizada = materiaService.actualizar(id, dto);
@@ -55,7 +55,7 @@ public class MateriaController {
         }
     }
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         materiaService.eliminar(id);
         return ResponseEntity.noContent().build();

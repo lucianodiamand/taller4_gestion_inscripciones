@@ -1,0 +1,12 @@
+<p>carreras works!</p>
+
+<p><a routerLink="/carreras/crear">Nueva carrera</a></p>
+
+<ul>
+    <li *ngFor="let carrera of carreras$ | async"> <!-- | async sirve para subscribirse automaticamente al observable y obtener los datos del backend -->
+        {{ carrera.id }}: {{ carrera.nombre }}: {{ carrera.duracion }}
+        <a [routerLink]="['/carreras/editar', carrera.id]">Editar</a>
+        <!-- [] significan que el destino va a ser dinamico, segun el id del ingresante recorrido por medio del ngfor -->
+        <button (click)="borrar(carrera.id)">Borrar</button>  
+    </li>
+</ul>

@@ -17,7 +17,7 @@ public class MateriaDTO {
     
     
 	public Long getCarreraId() {
-		return id;
+		return carreraId;
 	}
 
 
@@ -28,6 +28,10 @@ public class MateriaDTO {
 
 	public int getAnio() {
 		return anio;
+	}
+	
+	public Long getId() {
+		return id;
 	}
 
 
@@ -59,4 +63,13 @@ public class MateriaDTO {
 	public void setCarreraId(Long carreraId) {
 		this.carreraId = carreraId;
 	}
+	
+	public String getNombreCarrera() {
+	    return nombreCarrera;
+	}
+
+	public void setNombreCarrera(String nombreCarrera) {
+	    this.nombreCarrera = nombreCarrera;
+	}
+	
 }

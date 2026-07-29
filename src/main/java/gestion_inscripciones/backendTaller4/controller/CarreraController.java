@@ -31,20 +31,20 @@ public class CarreraController {
     }
     
     // 2. Obtener una carrera por ID -> GET http://localhost:8080/carreras/{id}
-    @GetMapping("/{id}")
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<CarreraDTO> obtenerPorId(@PathVariable Long id) {
         return carreraService.obtenerPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
     
-    @PostMapping
+    @PostMapping("/crear")
     public ResponseEntity<CarreraDTO> crear(@RequestBody CarreraDTO dto) {
         CarreraDTO nueva = carreraService.guardar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(nueva);
     }
     
-    @PutMapping("/{id}")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<CarreraDTO> actualizar(@PathVariable Long id, @RequestBody CarreraDTO dto) {
         try {
             CarreraDTO actualizada = carreraService.actualizar(id, dto);
@@ -54,7 +54,7 @@ public class CarreraController {
         }
     }
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         carreraService.eliminar(id);
         return ResponseEntity.noContent().build();

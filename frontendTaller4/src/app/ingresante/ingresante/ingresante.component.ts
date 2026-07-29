@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IngresanteDto } from '../../../models/ingresante-dto';
 import { IngresanteService } from '../ingresante.service';
 import { CommonModule } from '@angular/common';

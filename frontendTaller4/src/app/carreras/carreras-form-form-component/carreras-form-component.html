@@ -1,0 +1,7 @@
+<h2>Carrera</h2>
+
+<form [formGroup]="carreraForm">
+    <p>Nombre: <input type="text" formControlName="nombre" /></p>
+    <p>Duracion: <input type="number" formControlName="duracion" /></p>
+    <p><button (click)="guardar()">Guardar</button></p>
+</form>
