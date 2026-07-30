@@ -4,7 +4,7 @@ h2 {
 
 
 .nuevo {
-    display: inline-block; //se comporta como un elemento en línea, pero acepta tamaño, márgenes y padding como un bloque.
+    display: inline-block; /* se comporta como un elemento en línea, pero acepta tamaño, márgenes y padding como un bloque.*/
     margin-bottom: 25px;
 
     padding: 10px 15px;
