@@ -1,13 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IngresanteService } from '../ingresante.service';
 import { Subscription } from 'rxjs';
 import { IngresanteDto } from '../../../models/ingresante-dto';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ingresante-form',
-  imports: [ReactiveFormsModule],
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './ingresante-form-component.html',
   styleUrl: './ingresante-form-component.css',
 })
@@ -29,9 +31,13 @@ export class IngresanteFormComponent implements OnInit, OnDestroy {
     this.ingresanteForm = this.fb.group({
       nombre: [""],
       apellido: [""],
-      tipoDocumento: [""],
-      numeroDocumento: [""],
-      edad: [""],
+      tipoDocumento: ['', Validators.required],
+	  numeroDocumento: ['', Validators.required],
+	  edad: ['', [
+	    Validators.required,
+	    Validators.min(1),
+	    Validators.max(100)
+	  ]],
       email: [""],
     });
   }
@@ -53,8 +59,40 @@ export class IngresanteFormComponent implements OnInit, OnDestroy {
 }
 
 guardar() {
-  console.log(this.ingresanteForm.value);
 
+  console.log("Formulario válido:", this.ingresanteForm.valid);
+  console.log("Errores edad:", this.ingresanteForm.get('edad')?.errors);
+  
+  if (this.ingresanteForm.invalid) {
+    this.ingresanteForm.markAllAsTouched();
+    return;
+  }
+  
+  const tipo = this.ingresanteForm.get('tipoDocumento')?.value;
+  const numero = String(this.ingresanteForm.get('numeroDocumento')?.value ?? '');
+
+  console.log("Tipo:", tipo);
+  console.log("Número:", numero);
+  console.log("Longitud:", numero.length);
+  
+  if (tipo === 'DNI' && !/^\d{7,8}$/.test(numero)) {
+    alert('El DNI debe tener 7 u 8 dígitos.');
+    return;
+  }
+
+  if (tipo === 'Libreta Cívica' && !/^\d{7,8}$/.test(numero)) {
+    alert('La Libreta Cívica solo puede contener números.');
+    return;
+  }
+
+  if (tipo === 'Pasaporte' && !/^[A-Za-z0-9]+$/.test(numero) && !/^\d{7,8}$/.test(numero)) {
+	if(!/^\d{7,8}$/.test(numero)){
+	alert('El largo maximo del pasaporte es de: X');
+	}
+    alert('El Pasaporte solo puede contener letras y números.');
+    return;
+  }
+  
   if (this.id) { // si recibo el id es porque se va actualizar un ingresante
     this.subscription = this.servicio.actualizar(+this.id, this.ingresanteForm.value).subscribe({ // subscribe es la accion que se ejecuta cuando se inicia una peticion HTTP al backend
       // this.ingresanteForm.value devuelve un objeto plano con los campos del formulario

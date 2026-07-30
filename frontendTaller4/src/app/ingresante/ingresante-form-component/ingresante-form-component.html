@@ -3,9 +3,52 @@
 <form [formGroup]="ingresanteForm">
     <p>Nombre: <input type="text" formControlName="nombre" /></p>
     <p>Apellido: <input type="text" formControlName="apellido" /></p>
-    <p>Tipo Documento: <input type="text" formControlName="tipoDocumento" /></p>
-    <p>Numero de documento: <input type="number" formControlName="numeroDocumento" /></p>
-    <p>Edad: <input type="number" formControlName="edad" /></p>
+	<div>
+	  <label for="tipoDocumento">Tipo Documento:</label>
+
+	  <select id="tipoDocumento" formControlName="tipoDocumento">
+	    <option value="DNI">DNI</option>
+	    <option value="Pasaporte">Pasaporte</option>
+	    <option value="Libreta Cívica">Libreta Cívica</option>
+	  </select>
+
+	  <div *ngIf="ingresanteForm.get('tipoDocumento')?.touched &&
+	              ingresanteForm.get('tipoDocumento')?.hasError('required')">
+	    Debe seleccionar un tipo de documento.
+	  </div>
+	</div>
+	
+	<p>
+	  Número de documento:
+	  <input
+	    type="text"
+	    formControlName="numeroDocumento"
+	    />
+
+	  <span *ngIf="ingresanteForm.get('numeroDocumento')?.touched &&
+	               ingresanteForm.get('numeroDocumento')?.hasError('required')">
+	    Debe ingresar un número de documento.
+	  </span>
+	</p>
+	<p>
+	  Edad:
+	  <input
+	    type="number"
+	    formControlName="edad"
+	    min="1"
+	    max="100" />
+		<span
+		      *ngIf="ingresanteForm.get('edad')?.touched &&
+		             ingresanteForm.get('edad')?.hasError('min')">
+		      La edad debe ser mayor o igual a 1.
+		    </span>
+
+		    <span
+		      *ngIf="ingresanteForm.get('edad')?.touched &&
+		             ingresanteForm.get('edad')?.hasError('max')">
+		      La edad no puede ser mayor a 100.
+		    </span>
+	</p>
     <p>Email: <input type="text" formControlName="email" /></p>
     <p><button (click)="guardar()">Guardar</button></p>
 </form>
