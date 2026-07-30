@@ -49,35 +49,15 @@ public class InscripcionCarreraResponseDTO {
         this.ingresanteId = ingresanteId;
     }
     
-    public String getNombreIngresante() {
-        return nombreIngresante;
-    }
-
-    public void setNombreIngresante(String nombreIngresante) {
-        this.nombreIngresante = nombreIngresante;
-    }
+    public String getNombreIngresante() {return nombreIngresante;}
+    public void setNombreIngresante(String nombreIngresante) {this.nombreIngresante = nombreIngresante;}
     
-    public String getApellidoIngresante() {
-        return apellidoIngresante;
-    }
+    public String getApellidoIngresante() {return apellidoIngresante;}
+    public void setApellidoIngresante(String apellidoIngresante) {this.apellidoIngresante = apellidoIngresante;}
 
-    public void setApellidoIngresante(String apellidoIngresante) {
-        this.apellidoIngresante = apellidoIngresante;
-    }
-
-    public Long getCarreraId() {
-        return carreraId;
-    }
-
-    public void setCarreraId(Long carreraId) {
-        this.carreraId = carreraId;
-    }
+    public Long getCarreraId() {return carreraId;}
+    public void setCarreraId(Long carreraId) {this.carreraId = carreraId;}
     
-    public void setNombreCarrera(String nombreCarrera) {
-        this.nombreCarrera = nombreCarrera;
-    }
-    
-    public String getNombreCarrera() {
-        return nombreCarrera;
-    }
+    public void setNombreCarrera(String nombreCarrera) {this.nombreCarrera = nombreCarrera;}
+    public String getNombreCarrera() {return nombreCarrera;}
 }
