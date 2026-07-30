@@ -32,7 +32,7 @@ public class Ingresante {
     private String tipoDocumento;
     
     @Column(nullable = false)
-    private int numeroDocumento;
+    private String numeroDocumento;
     
     @Column(nullable = false)
     private int edad;
@@ -72,11 +72,11 @@ public class Ingresante {
     	this.tipoDocumento = tipoDocumento;
     }
     
-    public int getNumeroDocumento() {
+    public String getNumeroDocumento() {
     	return numeroDocumento;
     }
     
-    public void setNumeroDocumento(int numeroDocumento) {
+    public void setNumeroDocumento(String numeroDocumento) {
     	this.numeroDocumento = numeroDocumento;
     }
     

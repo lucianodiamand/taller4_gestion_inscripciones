@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IngresanteService } from '../ingresante.service';
 import { Subscription } from 'rxjs';
@@ -29,23 +29,33 @@ export class IngresanteFormComponent implements OnInit, OnDestroy {
     private readonly router: Router // sirve para cambiar de url sin que el usuario clickee un link
   ) {
     this.ingresanteForm = this.fb.group({
-      nombre: [""],
-      apellido: [""],
+	  //solo letras en nombre y apellido
+      nombre: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+      apellido: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
       tipoDocumento: ['', Validators.required],
 	  numeroDocumento: ['', Validators.required],
+	  //edad entre 1 y 100 anios
 	  edad: ['', [
 	    Validators.required,
 	    Validators.min(1),
 	    Validators.max(100)
 	  ]],
-      email: [""],
-    });
+	  //debe contener @
+      email: ['', [Validators.required, Validators.pattern('.*@.*')]],
+    },{
+	        //Validador personalizado a nivel de formulario para evaluar Tipo + Número juntos
+	        validators: this.validarDocumentoSegunTipo
+	      });
   }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id'); // se ejecuta al crear el componente. Se usa para hacer la primer carga de datos. El observable pide a la ruta el valor id de la url
     console.log('ID leído de la URL:', this.id);
 
+	// Escuchamos los cambios en tipoDocumento para re-evaluar la validacion del numero al cambiar la seleccion
+	this.ingresanteForm.get('tipoDocumento')?.valueChanges.subscribe(() => {
+	      this.ingresanteForm.get('numeroDocumento')?.updateValueAndValidity();
+	    });
   if (this.id) { // si el valor de id existe llamo a obtenrPorId para obtener el ingresante
     this.subscription = this.servicio.obtenerPorId(+this.id).subscribe({
       next: (ingresante: IngresanteDto) => {
@@ -57,39 +67,51 @@ export class IngresanteFormComponent implements OnInit, OnDestroy {
     });
   }
 }
+/*
+    Validador personalizado para los requisitos de los tipos de documentos
+*/
+validarDocumentoSegunTipo(control: AbstractControl): ValidationErrors | null {
+    const tipo = control.get('tipoDocumento')?.value;
+    const numeroControl = control.get('numeroDocumento');
+
+    if (!tipo || !numeroControl || !numeroControl.value) {
+      return null;
+    }
+	const numero = String(numeroControl.value).trim();
+
+	    // 1) DNI o Libreta Cívica: Solo numeros, entre 7 y 8 digitos
+	    if (tipo === 'DNI' || tipo === 'Libreta Cívica') {
+	      const esValido = /^\d{7,8}$/.test(numero);
+	      if (!esValido) {
+	        numeroControl.setErrors({ documentoInvalido: 'Debe contener entre 7 y 8 números.' });
+	        return { documentoInvalido: true };
+	      }
+	    }
+
+	    // 2) Pasaporte: Exactamente 3 letras seguidas de 6 números (ej: ABC123456)
+	    if (tipo === 'Pasaporte') {
+	      const esValido = /^[a-zA-Z]{3}\d{6}$/.test(numero);
+	      if (!esValido) {
+	        numeroControl.setErrors({ documentoInvalido: 'El pasaporte debe tener 3 letras seguidas de 6 números.' });
+	        return { documentoInvalido: true };
+	      }
+	    }
+
+	    // Si todo esta bien, limpiamos los errores especificos de este campo si existian
+	    if (numeroControl.hasError('documentoInvalido')) {
+	      delete numeroControl.errors?.['documentoInvalido'];
+	      if (!Object.keys(numeroControl.errors || {}).length) {
+	        numeroControl.setErrors(null);
+	      }
+	    }
+
+	    return null;
+	  }
 
 guardar() {
-
-  console.log("Formulario válido:", this.ingresanteForm.valid);
-  console.log("Errores edad:", this.ingresanteForm.get('edad')?.errors);
   
   if (this.ingresanteForm.invalid) {
-    this.ingresanteForm.markAllAsTouched();
-    return;
-  }
-  
-  const tipo = this.ingresanteForm.get('tipoDocumento')?.value;
-  const numero = String(this.ingresanteForm.get('numeroDocumento')?.value ?? '');
-
-  console.log("Tipo:", tipo);
-  console.log("Número:", numero);
-  console.log("Longitud:", numero.length);
-  
-  if (tipo === 'DNI' && !/^\d{7,8}$/.test(numero)) {
-    alert('El DNI debe tener 7 u 8 dígitos.');
-    return;
-  }
-
-  if (tipo === 'Libreta Cívica' && !/^\d{7,8}$/.test(numero)) {
-    alert('La Libreta Cívica solo puede contener números.');
-    return;
-  }
-
-  if (tipo === 'Pasaporte' && !/^[A-Za-z0-9]+$/.test(numero) && !/^\d{7,8}$/.test(numero)) {
-	if(!/^\d{7,8}$/.test(numero)){
-	alert('El largo maximo del pasaporte es de: X');
-	}
-    alert('El Pasaporte solo puede contener letras y números.');
+    this.ingresanteForm.markAllAsTouched(); // Marca todos los campos como "tocados" para mostrar errores visuales en la plantilla HTML
     return;
   }
   

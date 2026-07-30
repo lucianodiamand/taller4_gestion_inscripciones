@@ -12,7 +12,7 @@ public class IngresanteDTO {
     private String nombre;
     private String apellido;
     private String tipoDocumento;
-    private int numeroDocumento;
+    private String numeroDocumento;
     private int edad;
     private String email;
     
@@ -48,11 +48,11 @@ public class IngresanteDTO {
     	this.tipoDocumento = tipoDocumento;
     }
     
-    public int getNumeroDocumento() {
+    public String getNumeroDocumento() {
     	return numeroDocumento;
     }
     
-    public void setNumeroDocumento(int numeroDocumento) {
+    public void setNumeroDocumento(String numeroDocumento) {
     	this.numeroDocumento = numeroDocumento;
     }
     
