@@ -1,15 +1,60 @@
-<p>ingresante works!</p>
+<h2>Ingresantes</h2>
 
-<p><a routerLink="/ingreso/crear">Nuevo Ingresante</a></p>
+<a class="nuevo" routerLink="/ingreso/crear">
+  Nuevo Ingresante
+</a>
 
-<ul>
-    <li *ngFor="let ingresante of ingresantes$ | async"> <!-- | async sirve para subscribirse automaticamente al observable y obtener los datos del backend -->
-        {{ ingresante.id }}: {{ ingresante.nombre }}: {{ ingresante.apellido }}: {{ ingresante.tipoDocumento }}: {{ ingresante.numeroDocumento }}: {{ ingresante.edad }}: {{ ingresante.email }}
-        <!-- {{}} indica interpolacion. Sirve para mostrar datos desde la clase en el .ts en el HTML -->
-        <a [routerLink]="['/ingreso/editar', ingresante.id]">Editar</a>
-        <!-- [] significan que el destino va a ser dinamico, segun el id del ingresante recorrido por medio del ngfor -->
-        <button (click)="borrar(ingresante.id)">Borrar</button>  
-    </li>
-</ul>
+
+<div class="card" *ngFor="let ingresante of ingresantes$ | async">
+
+    <div class="dato">
+        <strong>ID:</strong>
+        <span>{{ ingresante.id }}</span>
+    </div>
+
+    <div class="dato">
+        <strong>Nombre:</strong>
+        <span>{{ ingresante.nombre }}</span>
+    </div>
+
+    <div class="dato">
+        <strong>Apellido:</strong>
+        <span>{{ ingresante.apellido }}</span>
+    </div>
+
+    <div class="dato">
+        <strong>Tipo de documento:</strong>
+        <span>{{ ingresante.tipoDocumento }}</span>
+    </div>
+
+    <div class="dato">
+        <strong>Número de documento:</strong>
+        <span>{{ ingresante.numeroDocumento }}</span>
+    </div>
+
+    <div class="dato">
+        <strong>Edad:</strong>
+        <span>{{ ingresante.edad }}</span>
+    </div>
+
+    <div class="dato">
+        <strong>Email:</strong>
+        <span>{{ ingresante.email }}</span>
+    </div>
+
+
+    <div class="acciones">
+
+		<button [routerLink]="['/ingreso/editar', ingresante.id]" class="editar">
+		    Editar
+		</button>
+		
+        <button (click)="borrar(ingresante.id)" class="borrar">
+            Borrar
+        </button>
+
+    </div>
+
+</div>
 
 

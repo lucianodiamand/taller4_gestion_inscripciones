@@ -1,9 +1,8 @@
 import { Routes } from '@angular/router';
 import { IngresanteComponent } from './ingresante/ingresante/ingresante.component';
 import { IngresanteFormComponent } from './ingresante/ingresante-form-component/ingresante-form-component';
-import { CarreraComponent } from './carrera/carrera/carrera.component';
-import { CarreraFormComponent } from './carrera/carrera-form-component/carrera-form-component';
-
+import { CarrerasComponent } from './carreras/carreras/carreras.component';
+import { CarrerasFormComponent } from './carreras/carreras-form-form-component/carreras-form-component';
 
 export const routes: Routes = [
   
@@ -13,9 +12,9 @@ export const routes: Routes = [
   { path: 'ingreso/editar/:id', component: IngresanteFormComponent }, // va al formulario para editar
   
   // Rutas de Carreras
-  { path: 'carrera', component: CarreraComponent },
-  { path: 'carrera/crear', component: CarreraFormComponent },
-  { path: 'carrera/editar/:id', component: CarreraFormComponent },
+  { path: 'carrera', component: CarrerasComponent },
+  { path: 'carrera/crear', component: CarrerasFormComponent },
+  { path: 'carrera/editar/:id', component: CarrerasFormComponent },
     
   // Rutas por defecto
   { path: '', redirectTo: 'ingreso', pathMatch: 'full' }, // va a /ingreso
