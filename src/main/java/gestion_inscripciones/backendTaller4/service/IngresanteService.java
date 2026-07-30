@@ -33,6 +33,9 @@ public class IngresanteService {
     
 	// Guardar / Crear inscripción (CREATE)
 	public IngresanteDTO guardar(IngresanteDTO dto) {
+		
+		validarDocumento(dto); // primero validamos antes de crear
+		
         Ingresante ingresante = new Ingresante();
         copiarAtributos(dto, ingresante);
 
@@ -41,6 +44,9 @@ public class IngresanteService {
     }
 	
 	public IngresanteDTO actualizar(Long id, IngresanteDTO dto) {
+		
+		validarDocumento(dto); // verificamos modificaciones sean validas
+		
         Ingresante ingresante = ingresanteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ingresante no encontrado"));
 
@@ -53,6 +59,27 @@ public class IngresanteService {
 	// Eliminar inscripción (DELETE)
     public void eliminar(Long id) {
     	ingresanteRepository.deleteById(id);
+    }
+    
+    //La validacion de documento la tomamos como una regla de negocio
+    //ya que esta depende del tipo de documento a ingresar
+    private void validarDocumento(IngresanteDTO dto) {
+        String tipo = dto.getTipoDocumento();
+        String numero = dto.getNumeroDocumento() != null ? dto.getNumeroDocumento().trim() : "";
+
+        // 1) DNI o Libreta Civica: Solo numeros de 7 u 8 digitos
+        if ("DNI".equalsIgnoreCase(tipo) || "Libreta Cívica".equalsIgnoreCase(tipo)) {
+            if (!numero.matches("^\\d{7,8}$")) {
+                throw new IllegalArgumentException("El " + tipo + " debe contener entre 7 y 8 números.");
+            }
+        }
+
+        // 2) Pasaporte: 3 letras y 6 numeros (ej: ABC123456)
+        if ("Pasaporte".equalsIgnoreCase(tipo)) {
+            if (!numero.matches("^[a-zA-Z]{3}\\d{6}$")) {
+                throw new IllegalArgumentException("El Pasaporte debe tener 3 letras seguidas de 6 números.");
+            }
+        }
     }
     
     // Helper de mapeo

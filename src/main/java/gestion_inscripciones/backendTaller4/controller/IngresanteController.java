@@ -1,6 +1,7 @@
 package gestion_inscripciones.backendTaller4.controller;
 
 import java.util.List;
+import jakarta.validation.Valid; //para las validaciones
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,14 +41,14 @@ public class IngresanteController {
     
     // 3. Crear un ingresante -> POST http://localhost:8080/ingreso
     @PostMapping("/crear")
-    public ResponseEntity<IngresanteDTO> crear(@RequestBody IngresanteDTO dto) {
+    public ResponseEntity<IngresanteDTO> crear(@Valid @RequestBody IngresanteDTO dto) {
         IngresanteDTO nuevo = ingresanteService.guardar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
     }
     
     // 4. Editar una inscripción -> PUT http://localhost:8080/ingreso/{id}
     @PutMapping("/editar/{id}")
-    public ResponseEntity<IngresanteDTO> actualizar(@PathVariable Long id, @RequestBody IngresanteDTO dto) {
+    public ResponseEntity<IngresanteDTO> actualizar(@Valid @PathVariable Long id, @RequestBody IngresanteDTO dto) {
         try {
             IngresanteDTO actualizado = ingresanteService.actualizar(id, dto);
             return ResponseEntity.ok(actualizado);
