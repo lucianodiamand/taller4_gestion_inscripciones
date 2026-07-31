@@ -16,6 +16,9 @@ import { CarrerasDto } from '../../../models/carreras-dto';
   styleUrl: './inscripcioncarreras-form-component.css'
 })
 export class InscripcionFormComponent implements OnInit {
+eliminar(arg0: number) {
+throw new Error('Method not implemented.');
+}
 
   inscripcionForm: FormGroup;
   inscripciones: InscripcionCarreraResponseDto[] = [];
@@ -43,7 +46,7 @@ export class InscripcionFormComponent implements OnInit {
     this.cargarInscripciones();
   }
 
-  cargarListas(): void {
+  cargarListas(): void { // para los select del formulario
     // Cargar ingresantes
     this.ingresanteService.obtenerTodos().subscribe({
       next: (data: IngresanteDto[]) => this.ingresantes = data,
@@ -57,7 +60,7 @@ export class InscripcionFormComponent implements OnInit {
     });
   }
 
-  cargarInscripciones(): void {
+  cargarInscripciones(): void { // para llenar tabla de inscripciones registradas
     // Corregido: guardar en this.inscripciones en vez de this.carreras
     this.inscripcionService.obtenerTodas().subscribe({
       next: (data: InscripcionCarreraResponseDto[]) => this.inscripciones = data,

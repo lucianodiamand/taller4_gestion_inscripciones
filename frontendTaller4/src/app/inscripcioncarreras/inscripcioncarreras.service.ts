@@ -8,7 +8,7 @@ import { InscripcionCarreraRequestDto, InscripcionCarreraResponseDto } from '../
 export class InscripcionCarreraService {
 
   // Ajustamos la URL al endpoint del controller
-  private apiUrl = 'http://localhost:8080/inscripciones'; 
+  private apiUrl = 'http://localhost:8080/inscripcion/carrera'; 
 
   constructor(private http: HttpClient) { }
 

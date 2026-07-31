@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MateriaService } from '../materia.service';
 import { MateriasDto } from '../../../models/materias-dto';
 
 @Component({
-  selector: 'app-carreras',
+  selector: 'app-materias',
   imports: [CommonModule, RouterLink],
   templateUrl: './materia.component.html',
   styleUrl: './materia.component.css',
 })
-export class MateriaComponent {
+export class MateriaComponent implements OnInit {
   materias$!: Observable<Array<MateriasDto>> // observevable con arreglo de CarrerasDto
   
     constructor(private readonly servicio: MateriaService){} //inyecto el service

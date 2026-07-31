@@ -1,12 +1,12 @@
 <p>Materia works!</p>
 
-<<button routerLink="/materias/crear">Nueva Materia</button>
+<button routerLink="/materias/crear">Nueva Materia</button>
 
 <ul>
     <li *ngFor="let materia of materias$ | async"> <!-- | async sirve para subscribirse automaticamente al observable y obtener los datos del backend -->
         {{ materia.id }}: {{ materia.nombre }}: {{ materia.anio }}: {{ materia.cuatrimestre }}: {{ materia.nombreCarrera }}
         <a [routerLink]="['/materias/editar', materia.id]">Editar</a>
         <!-- [] significan que el destino va a ser dinamico, segun el id de la carrera recorrida por medio del ngfor -->
-        <button [routerLink]="['/materias/editar', materia.id]">Editar</button>
+        <button (click)="borrar(materia.id)">Borrar</button>
     </li>
 </ul>

@@ -13,7 +13,7 @@ import { InscripcionFormComponent } from './inscripcioncarreras/inscripcioncarre
 
 //Importaciones de Inscripción a materia: 
 
-import {InscripcionMateriaComponent} from './inscripcionmaterias/inscripcionmaterias-form-component/inscripcionmaterias-form-component';
+import { InscripcionMateriaFormComponent } from './inscripcionmaterias/inscripcionmaterias-form-component/inscripcionmaterias-form-component';
 
 //import {InscripcionMateriaComponent} from './inscripcionmaterias/inscripcionmaterias.component/inscripcionmaterias.component';
 
@@ -35,10 +35,10 @@ export const routes: Routes = [
   { path: 'materias/editar/:id', component: MateriaFormComponent },
 
   // Rutas de Inscripcion a la carrera
-  { path: 'inscripcioncarreras', component: InscripcionFormComponent },
+  { path: 'inscripcion/carrera', component: InscripcionFormComponent },
   
   // Rutas de inscripcion a materia: 
-  { path: 'inscripcionmaterias', component: InscripcionMateriaComponent },  
+  { path: 'inscripcion/materia', component: InscripcionMateriaFormComponent },  
   
   // Rutas por defecto
   { path: '', redirectTo: 'ingreso', pathMatch: 'full' }, // va a /ingreso

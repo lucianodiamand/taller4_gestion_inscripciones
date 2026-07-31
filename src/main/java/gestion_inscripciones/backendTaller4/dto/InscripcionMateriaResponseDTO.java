@@ -42,4 +42,24 @@ public class InscripcionMateriaResponseDTO {
 	public void setMateriaId(Long materiaId) {
 		this.materiaId = materiaId;
 	}
+	
+	public Long getId() { 
+		return id; 
+	}
+	
+	public LocalDate getFechaInscripcion() { 
+		return fechaInscripcion; 
+	}
+	
+	public Long getInscripcionCarreraId() { 
+		return inscripcionCarreraId; 
+	}
+	
+	public Long getMateriaId() { 
+		return materiaId; 
+	}
+	
+	public String getNombreMateria() { 
+		return nombreMateria; 
+	}
 }

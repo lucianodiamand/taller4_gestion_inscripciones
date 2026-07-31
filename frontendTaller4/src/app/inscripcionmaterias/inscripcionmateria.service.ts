@@ -8,11 +8,11 @@ import { InscripcionMateriaRequestDto, InscripcionMateriaResponseDto } from '../
 })
 export class InscripcionMateriaService {
 
-  private readonly url = 'http://localhost:8080/inscripcion-materia';
+  private readonly url = 'http://localhost:8080/inscripcion/materia';
 
   constructor(private readonly http: HttpClient) {}
 
-  listar(): Observable<InscripcionMateriaResponseDto[]> {
+  obtenerTodas(): Observable<InscripcionMateriaResponseDto[]> {
     return this.http.get<InscripcionMateriaResponseDto[]>(this.url);
   }
 
