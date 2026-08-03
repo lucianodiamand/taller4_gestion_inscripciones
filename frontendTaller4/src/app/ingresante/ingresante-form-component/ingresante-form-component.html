@@ -1,6 +1,6 @@
 <h2>Ingresante</h2>
 
-<form [formGroup]="ingresanteForm">
+<form [formGroup]="ingresanteForm" (ngSubmit)="guardar()">
 	<!-- Nombre -->
 	<p>
 	    Nombre: <input type="text" formControlName="nombre" />
@@ -89,5 +89,5 @@
 	    </p>
 		
 		
-    <p><button (click)="guardar()">Guardar</button></p>
+<p><button type="submit">Guardar</button></p>
 </form>
