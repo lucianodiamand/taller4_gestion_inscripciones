@@ -1,12 +1,60 @@
-<p>Materia works!</p>
+<a class="volver" routerLink="/menu">
+    ← Menú principal
+</a>
 
-<button routerLink="/materias/crear">Nueva Materia</button>
+<h2>Materias</h2>
 
-<ul>
-    <li *ngFor="let materia of materias$ | async"> <!-- | async sirve para subscribirse automaticamente al observable y obtener los datos del backend -->
-        {{ materia.id }}: {{ materia.nombre }}: {{ materia.anio }}: {{ materia.cuatrimestre }}: {{ materia.nombreCarrera }}
-        <a [routerLink]="['/materias/editar', materia.id]">Editar</a>
-        <!-- [] significan que el destino va a ser dinamico, segun el id de la carrera recorrida por medio del ngfor -->
-        <button (click)="borrar(materia.id)">Borrar</button>
-    </li>
-</ul>
+<a class="nuevo" routerLink="/materias/crear">
+    Nueva materia
+</a>
+
+<div
+    class="card"
+    *ngFor="let materia of materias$ | async">
+
+    <div class="dato">
+        <strong>ID:</strong>
+        <span>{{ materia.id }}</span>
+    </div>
+
+    <div class="dato">
+        <strong>Nombre:</strong>
+        <span>{{ materia.nombre }}</span>
+    </div>
+
+    <div class="dato">
+        <strong>Año:</strong>
+        <span>{{ materia.anio }}</span>
+    </div>
+
+    <div class="dato">
+        <strong>Cuatrimestre:</strong>
+        <span>{{ materia.cuatrimestre }}</span>
+    </div>
+
+    <div class="dato">
+        <strong>Carrera:</strong>
+        <span>{{ materia.nombreCarrera }}</span>
+    </div>
+
+    <div class="acciones">
+
+        <a
+            class="editar"
+            [routerLink]="['/materias/editar', materia.id]">
+
+            Editar
+
+        </a>
+
+        <button
+            class="borrar"
+            (click)="borrar(materia.id)">
+
+            Borrar
+
+        </button>
+
+    </div>
+
+</div>

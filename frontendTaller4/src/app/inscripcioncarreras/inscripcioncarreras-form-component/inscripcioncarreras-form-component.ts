@@ -7,11 +7,12 @@ import { CarrerasService } from '../../carreras/carreras.service';
 import { InscripcionCarreraResponseDto } from '../../../models/inscripcion-carrera-dto';
 import { IngresanteDto } from '../../../models/ingresante-dto';
 import { CarrerasDto } from '../../../models/carreras-dto';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-inscripcion-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './inscripcioncarreras-form-component.html',
   styleUrl: './inscripcioncarreras-form-component.css'
 })

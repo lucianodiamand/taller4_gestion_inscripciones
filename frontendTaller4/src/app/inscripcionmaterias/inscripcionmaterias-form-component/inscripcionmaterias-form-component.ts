@@ -8,12 +8,13 @@ import { InscripcionCarreraResponseDto } from '../../../models/inscripcion-carre
 import { MateriasDto } from '../../../models/materias-dto';
 import { InscripcionCarreraService } from '../../inscripcioncarreras/inscripcioncarreras.service';
 import { MateriaService } from '../../materia/materia.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-inscripcion-materia',
   templateUrl: './inscripcionmaterias-form-component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   styleUrl: './inscripcionmaterias-form-component.css'
 })
 export class InscripcionMateriaFormComponent implements OnInit {

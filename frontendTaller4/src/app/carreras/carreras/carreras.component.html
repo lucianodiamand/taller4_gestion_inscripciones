@@ -1,12 +1,50 @@
-<p>carreras works!</p>
+<a class="volver" routerLink="/menu">
+    ← Menú principal
+</a>
 
-<p><a routerLink="/carrera/crear">Nueva carrera</a></p>
+<h2>Carreras</h2>
 
-<ul>
-    <li *ngFor="let carrera of carreras$ | async"> <!-- | async sirve para subscribirse automaticamente al observable y obtener los datos del backend -->
-        {{ carrera.id }}: {{ carrera.nombre }}: {{ carrera.duracion }}
-        <a [routerLink]="['/carreras/editar', carrera.id]">Editar</a>
-        <!-- [] significan que el destino va a ser dinamico, segun el id del ingresante recorrido por medio del ngfor -->
-        <button (click)="borrar(carrera.id)">Borrar</button>  
-    </li>
-</ul>
+<a class="nuevo" routerLink="/carrera/crear">
+    Nueva carrera
+</a>
+
+<div
+    class="card"
+    *ngFor="let carrera of carreras$ | async">
+
+    <div class="dato">
+        <strong>ID:</strong>
+        <span>{{ carrera.id }}</span>
+    </div>
+
+    <div class="dato">
+        <strong>Nombre:</strong>
+        <span>{{ carrera.nombre }}</span>
+    </div>
+
+    <div class="dato">
+        <strong>Duración:</strong>
+        <span>{{ carrera.duracion }} años</span>
+    </div>
+
+    <div class="acciones">
+
+        <a
+            class="editar"
+            [routerLink]="['/carrera/editar', carrera.id]">
+            <!-- [] significan que el destino va a ser dinamico, segun el id de la carrera recorrido por medio del ngfor -->
+            Editar
+
+        </a>
+
+        <button
+            class="borrar"
+            (click)="borrar(carrera.id)">
+
+            Borrar
+
+        </button>
+
+    </div>
+
+</div>

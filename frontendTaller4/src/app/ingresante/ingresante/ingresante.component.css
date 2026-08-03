@@ -71,3 +71,21 @@ h2 {
 
     cursor: pointer;
 }
+
+.volver {
+    display: inline-block;
+
+    margin-bottom: 20px;
+
+    padding: 10px 15px;
+
+    background-color: #616161;
+    color: white;
+
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.volver:hover {
+    background-color: #424242;
+}
