@@ -1,0 +1,58 @@
+<h2>Inscripción a Materia</h2>
+
+<form [formGroup]="inscripcionForm" (ngSubmit)="guardar()">
+  <p>
+    <label for="inscripcionCarrera">Inscripción a Carrera: </label>
+    <select id="inscripcionCarrera" formControlName="inscripcionCarreraId">
+      <option value="" disabled selected>Seleccione una inscripción</option>
+      <option *ngFor="let insc of inscripcionesCarreras" [value]="insc.id">
+        {{ insc.nombreIngresante }} {{ insc.apellidoIngresante }} - {{ insc.nombreCarrera }}
+      </option>
+    </select>
+  </p>
+
+  <p>
+    <label for="materia">Materia: </label>
+    <select id="materia" formControlName="materiaId">
+      <option value="" disabled selected>Seleccione una materia</option>
+      <option *ngFor="let mat of materiasFiltradas" [value]="mat.id">
+        {{ mat.nombre }} ({{ mat.anio }}° año - {{ mat.cuatrimestre }}° cuatrimestre)
+      </option>
+    </select>
+    <span *ngIf="inscripcionForm.value.inscripcionCarreraId && materiasFiltradas.length === 0">
+      No hay materias disponibles de primer año para esta carrera.
+    </span>
+  </p>
+
+  <p>
+    <label for="fecha">Fecha de Inscripción: </label>
+    <input type="date" id="fecha" formControlName="fechaInscripcion" />
+  </p>
+
+  <button type="submit" [disabled]="inscripcionForm.invalid">Inscribir</button>
+</form>
+
+<hr />
+
+<!-- LISTADO DE INSCRIPCIONES REALIZADAS -->
+<h3>Inscripciones a Materias Registradas</h3>
+
+<table border="1" cellpadding="8" cellspacing="0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Fecha</th>
+      <th>Materia</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let insc of inscripciones">
+      <td>{{ insc.id }}</td>
+      <td>{{ insc.fechaInscripcion }}</td>
+      <td>{{ insc.nombreMateria }}</td>
+    </tr>
+    <tr *ngIf="inscripciones.length === 0">
+      <td colspan="3">No hay inscripciones registradas.</td>
+    </tr>
+  </tbody>
+</table>

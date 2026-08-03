@@ -1,0 +1,19 @@
+/* Quita las flechitas en Chrome, Safari, Edge y Opera */
+input[type=number].no-spinners::-webkit-outer-spin-button,
+input[type=number].no-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Quita las flechitas en Firefox */
+input[type=number].no-spinners {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Opcional: Estilo simple para resaltar mensajes de error */
+.error {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-left: 8px;
+}

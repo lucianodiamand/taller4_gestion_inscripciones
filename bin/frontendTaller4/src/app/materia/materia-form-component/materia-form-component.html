@@ -1,0 +1,9 @@
+<h2>Materia</h2>
+
+<form [formGroup]="materiaForm">
+    <p>Nombre: <input type="text" formControlName="nombre" /></p>
+    <p>Anio: <input type="number" formControlName="anio" /></p>
+    <p>Cuatrimestre: <input type="number" formControlName="cuatrimestre" /></p>
+    <p>ID de la Carrera: <input type="number" formControlName="carreraId" /></p>
+    <p><button (click)="guardar()">Guardar</button></p>
+</form>

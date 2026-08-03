@@ -1,0 +1,93 @@
+<h2>Ingresante</h2>
+
+<form [formGroup]="ingresanteForm">
+	<!-- Nombre -->
+	<p>
+	    Nombre: <input type="text" formControlName="nombre" />
+	    <span class="error" *ngIf="ingresanteForm.get('nombre')?.touched && ingresanteForm.get('nombre')?.hasError('required')">
+	      El nombre es obligatorio.
+	    </span>
+	    <span class="error" *ngIf="ingresanteForm.get('nombre')?.touched && ingresanteForm.get('nombre')?.hasError('pattern')">
+	      El nombre solo puede contener letras.
+	    </span>
+	  </p>
+	<!-- Apellido -->
+	<p>
+	    Apellido: <input type="text" formControlName="apellido" />
+	    <span class="error" *ngIf="ingresanteForm.get('apellido')?.touched && ingresanteForm.get('apellido')?.hasError('required')">
+	      El apellido es obligatorio.
+	    </span>
+	    <span class="error" *ngIf="ingresanteForm.get('apellido')?.touched && ingresanteForm.get('apellido')?.hasError('pattern')">
+	      El apellido solo puede contener letras.
+	    </span>
+	</p>
+	<!-- Tipo de Documento -->
+	
+	<div>
+	  <label for="tipoDocumento">Tipo Documento:</label>
+
+	  <select id="tipoDocumento" formControlName="tipoDocumento">
+	    <option value="DNI">DNI</option>
+	    <option value="Pasaporte">Pasaporte</option>
+	    <option value="Libreta Cívica">Libreta Cívica</option>
+	  </select>
+
+	  <div class="error" *ngIf="ingresanteForm.get('tipoDocumento')?.touched && ingresanteForm.get('tipoDocumento')?.hasError('required')">
+	        Debe seleccionar un tipo de documento.
+	      </div>
+	</div>
+	
+	<!-- Numero de Documento -->
+	<p>
+	    Número de documento:
+	    <input type="text" formControlName="numeroDocumento" />
+
+	    <span class="error" *ngIf="ingresanteForm.get('numeroDocumento')?.touched && ingresanteForm.get('numeroDocumento')?.hasError('required')">
+	      Debe ingresar un número de documento.
+	    </span>
+
+	    <!-- Muestra el mensaje devuelto por el validador dinámico según el tipo -->
+	    <span class="error" *ngIf="ingresanteForm.get('numeroDocumento')?.touched && ingresanteForm.get('numeroDocumento')?.hasError('documentoInvalido')">
+	      {{ ingresanteForm.get('numeroDocumento')?.getError('documentoInvalido') }}
+	    </span>
+	</p>
+	
+	<!-- Edad -->
+	<p>
+	  Edad:
+	  <input
+	    type="number"
+	    formControlName="edad"
+	    min="1"
+	    max="100"
+		class="no-spinners" />
+		<span class="error" *ngIf="ingresanteForm.get('edad')?.touched && ingresanteForm.get('edad')?.hasError('required')">
+		      La edad es obligatoria.
+		</span>
+		<span
+		      *ngIf="ingresanteForm.get('edad')?.touched &&
+		             ingresanteForm.get('edad')?.hasError('min')">
+		      La edad debe ser mayor o igual a 1.
+		</span>
+
+		<span
+		      *ngIf="ingresanteForm.get('edad')?.touched &&
+		             ingresanteForm.get('edad')?.hasError('max')">
+		      La edad no puede ser mayor a 100.
+		</span>
+	  </p>
+	  
+	  <!-- Email -->
+	  <p>
+	      Email: <input type="email" formControlName="email" />
+	      <span class="error" *ngIf="ingresanteForm.get('email')?.touched && ingresanteForm.get('email')?.hasError('required')">
+	        El email es obligatorio.
+	      </span>
+	      <span class="error" *ngIf="ingresanteForm.get('email')?.touched && ingresanteForm.get('email')?.hasError('pattern')">
+	        El email debe contener un "@".
+	      </span>
+	    </p>
+		
+		
+    <p><button (click)="guardar()">Guardar</button></p>
+</form>
