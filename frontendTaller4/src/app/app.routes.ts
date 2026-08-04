@@ -1,4 +1,7 @@
 import { Routes } from '@angular/router';
+// Importa Auth (Login y Registro)
+import { LoginComponent } from './auth/login/login';
+import { RegistroComponent } from './auth/registro/registro';
 //Importa Ingresante
 import { IngresanteComponent } from './ingresante/ingresante/ingresante.component';
 import { IngresanteFormComponent } from './ingresante/ingresante-form-component/ingresante-form-component';
@@ -19,6 +22,10 @@ import { MenuPrincipalComponent } from './menu.principal.component/menu.principa
 //import {InscripcionMateriaComponent} from './inscripcionmaterias/inscripcionmaterias.component/inscripcionmaterias.component';
 
 export const routes: Routes = [
+	
+  // Rutas de Autenticacion
+  { path: 'login', component: LoginComponent },
+  { path: 'registro', component: RegistroComponent },
   
   // Rutas de Ingresantes
   { path: 'ingreso', component: IngresanteComponent }, // muestra la lista 
@@ -45,5 +52,5 @@ export const routes: Routes = [
   { path: 'menu', component: MenuPrincipalComponent },
   
   // Rutas por defecto
-  { path: '', redirectTo: 'menu', pathMatch: 'full' }, // va /menu
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, //va por defecto al login
 ];

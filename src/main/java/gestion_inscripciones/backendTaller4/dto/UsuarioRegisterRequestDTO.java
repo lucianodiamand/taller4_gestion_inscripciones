@@ -24,16 +24,13 @@ public class UsuarioRegisterRequestDTO { // para crear una nueva cuenta (registr
 		return username;
 	}
 
-
 	public String getNombre() {
 		return nombre;
 	}
 
-
 	public String getApellido() {
 		return apellido;
 	}
-
 
 	public int getEdad() {
 		return edad;
@@ -42,7 +39,6 @@ public class UsuarioRegisterRequestDTO { // para crear una nueva cuenta (registr
 	public String getEmail() {
 		return email;
 	}
-
 
 	public String getTipoDocumento() {
 		return tipoDocumento;

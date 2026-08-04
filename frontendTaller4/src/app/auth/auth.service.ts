@@ -1,0 +1,43 @@
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
+import { UsuarioRequestDTO, UsuarioResponseDTO, UsuarioRegisterRequestDTO } from '../../models/auth-dto';
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private http = inject(HttpClient);
+  private apiUrl = 'http://localhost:8080/auth';
+
+  // Usa el DTO de registro inicial y retorna la respuesta del usuario
+  registrar(data: UsuarioRegisterRequestDTO): Observable<UsuarioResponseDTO> {
+    return this.http.post<UsuarioResponseDTO>(`${this.apiUrl}/register`, data).pipe(
+      tap(res => {
+        if (res.token) this.guardarToken(res.token);
+      })
+    );
+  }
+
+  login(credentials: UsuarioRequestDTO): Observable<UsuarioResponseDTO> {
+      return this.http.post<UsuarioResponseDTO>(`${this.apiUrl}/login`, credentials).pipe(
+        tap(res => {
+          if (res.token) this.guardarToken(res.token);
+        })
+      );
+    }
+
+    private guardarToken(token: string): void {
+      localStorage.setItem('auth_token', token);
+    }
+	getToken(): string | null {
+	    return localStorage.getItem('auth_token');
+	  }
+
+	estaAutenticado(): boolean {
+	    return !!this.getToken();
+	}
+
+	logout(): void {
+	    localStorage.removeItem('auth_token');
+	}
+	
+  }

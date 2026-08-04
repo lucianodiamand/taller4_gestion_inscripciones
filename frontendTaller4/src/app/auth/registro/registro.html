@@ -1,0 +1,25 @@
+<div class="auth-container">
+  <h2>Crear Cuenta</h2>
+
+  @if (errorMensaje) {
+    <p class="error">{{ errorMensaje }}</p>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label>Nombre Completo:</label>
+    <input type="text" formControlName="nombre" />
+
+    <label>Nombre de Usuario:</label>
+    <input type="text" formControlName="username" />
+
+    <label>Correo Electrónico:</label>
+    <input type="email" formControlName="email" />
+
+    <label>Contraseña:</label>
+    <input type="password" formControlName="password" />
+
+    <button type="submit" [disabled]="form.invalid">Registrarse</button>
+  </form>
+
+  <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia Sesión</a></p>
+</div>
