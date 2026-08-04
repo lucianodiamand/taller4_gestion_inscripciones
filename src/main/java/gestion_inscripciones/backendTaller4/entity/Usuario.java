@@ -37,35 +37,35 @@ public class Usuario {
 	public Long getId() {
 		return id;
 	}
-	public void setid(Long id) {
+	public void setId(Long id) {
 		this.id=id;
 	}
 	
-	public String getusername() {
+	public String getUsername() {
 		return username;
 	}
-	public void setusername(String username) {
+	public void setUsername(String username) {
 		this.username=username;
 	}
 	
-	public String getpassword() {
+	public String getPassword() {
 		return password;
 	}
-	public void setpassword(String password) {
+	public void setPassword(String password) {
 		this.password=password;
 	}
 	
-	public Rol getrol() {
+	public Rol getRol() {
 		return rol;
 	}
-	public void setrol(Rol rol) {
+	public void setRol(Rol rol) {
 		this.rol=rol;
 	}
 	
-	public Ingresante getingresante() {
+	public Ingresante getIngresante() {
 		return ingresante;
 	}
-	public void setingresante(Ingresante ingresante) {
+	public void setIngresante(Ingresante ingresante) {
 		this.ingresante = ingresante;
 	}
 	
