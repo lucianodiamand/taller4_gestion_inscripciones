@@ -3,6 +3,7 @@ package gestion_inscripciones.backendTaller4.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import gestion_inscripciones.backendTaller4.dto.UsuarioRegisterRequestDTO;
 import gestion_inscripciones.backendTaller4.dto.UsuarioRequestDTO;
 import gestion_inscripciones.backendTaller4.dto.UsuarioResponseDTO;
 import gestion_inscripciones.backendTaller4.entity.Rol;
@@ -19,7 +20,7 @@ public class UsuarioService {
     }
 
     public UsuarioResponseDTO registrar(
-            UsuarioRequestDTO dto) {
+            UsuarioRegisterRequestDTO dto) {
 
         if (usuarioRepository
                 .findByUsername(dto.getUsername())

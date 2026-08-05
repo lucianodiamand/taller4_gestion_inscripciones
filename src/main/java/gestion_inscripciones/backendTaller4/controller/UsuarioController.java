@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import gestion_inscripciones.backendTaller4.dto.UsuarioRegisterRequestDTO;
 import gestion_inscripciones.backendTaller4.dto.UsuarioRequestDTO;
 import gestion_inscripciones.backendTaller4.dto.UsuarioResponseDTO;
 import gestion_inscripciones.backendTaller4.service.UsuarioService;
@@ -26,7 +27,7 @@ public class UsuarioController {
 
     @PostMapping("/register")
     public ResponseEntity<UsuarioResponseDTO> registrar(
-            @RequestBody UsuarioRequestDTO dto) {
+            @RequestBody UsuarioRegisterRequestDTO dto) {
 
         return ResponseEntity.ok(
                 usuarioService.registrar(dto));
