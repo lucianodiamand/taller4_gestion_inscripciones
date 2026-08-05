@@ -14,9 +14,10 @@ import gestion_inscripciones.backendTaller4.repository.UsuarioRepository;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    private final PasswordEncoder passwordEncoder; //para encriptar contraseña
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder; 
     }
 
     public UsuarioResponseDTO registrar(
@@ -34,7 +35,7 @@ public class UsuarioService {
 
         usuario.setUsername(dto.getUsername());
 
-        usuario.setPassword(dto.getPassword());
+        usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
 
         usuario.setRol(Rol.GUEST);
 
@@ -60,9 +61,8 @@ public class UsuarioService {
                                 () -> new RuntimeException(
                                         "Usuario inexistente."));
 
-        if (!dto.getPassword().equals(
-                usuario.getPassword())) {
-
+        if (!passwordEncoder.matches(
+                dto.getPassword(),usuario.getPassword())) {
             throw new RuntimeException(
                     "Contraseña incorrecta.");
         }
