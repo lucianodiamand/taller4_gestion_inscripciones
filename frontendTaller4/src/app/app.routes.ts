@@ -28,9 +28,9 @@ export const routes: Routes = [
   { path: 'registro', component: RegistroComponent },
   
   // Rutas de Ingresantes
-  { path: 'ingreso', component: IngresanteComponent }, // muestra la lista 
-  { path: 'ingreso/crear', component: IngresanteFormComponent }, // va al formulario para crear
-  { path: 'ingreso/editar/:id', component: IngresanteFormComponent }, // va al formulario para editar
+  { path: 'ingresante', component: IngresanteComponent }, // muestra la lista 
+  { path: 'ingresante/crear', component: IngresanteFormComponent }, // va al formulario para crear
+  { path: 'ingresante/editar/:id', component: IngresanteFormComponent }, // va al formulario para editar
   
   // Rutas de Carreras
   { path: 'carrera', component: CarrerasComponent },

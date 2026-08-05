@@ -13,7 +13,7 @@ import gestion_inscripciones.backendTaller4.dto.UsuarioResponseDTO;
 import gestion_inscripciones.backendTaller4.service.UsuarioService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/usuario")
 @CrossOrigin(origins = "http://localhost:4200")
 public class UsuarioController {
 
