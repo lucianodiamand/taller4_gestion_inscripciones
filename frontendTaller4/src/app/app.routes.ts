@@ -31,6 +31,7 @@ export const routes: Routes = [
   { path: 'ingresante', component: IngresanteComponent }, // muestra la lista 
   { path: 'ingresante/crear', component: IngresanteFormComponent }, // va al formulario para crear
   { path: 'ingresante/editar/:id', component: IngresanteFormComponent }, // va al formulario para editar
+  { path: 'ingresante/editar', component: IngresanteFormComponent }, // va al formulario para editar
   
   // Rutas de Carreras
   { path: 'carrera', component: CarrerasComponent },

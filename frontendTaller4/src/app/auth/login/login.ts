@@ -26,8 +26,9 @@ export class LoginComponent {
     if (this.form.invalid) return;
 
     this.authService.login(this.form.value as any).subscribe({
-      next: () => {
-        this.router.navigate(['/ingresante']);
+      next: (usuario) => {
+        console.log("Respuesta login:", usuario);
+        this.router.navigate(['/menu']);
       },
       error: () => {
         this.errorMensaje = 'Usuario o contraseña incorrectos';

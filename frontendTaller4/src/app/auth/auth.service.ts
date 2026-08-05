@@ -12,6 +12,7 @@ export class AuthService {
   registrar(data: UsuarioRegisterRequestDTO): Observable<UsuarioResponseDTO> {
     return this.http.post<UsuarioResponseDTO>(`${this.apiUrl}/register`, data).pipe(
       tap(res => {
+        this.guardarUsuario(res);
         if (res.token) this.guardarToken(res.token);
       })
     );
@@ -20,17 +21,42 @@ export class AuthService {
   login(credentials: UsuarioRequestDTO): Observable<UsuarioResponseDTO> {
       return this.http.post<UsuarioResponseDTO>(`${this.apiUrl}/login`, credentials).pipe(
         tap(res => {
+          this.guardarUsuario(res);
           if (res.token) this.guardarToken(res.token);
         })
       );
     }
 
-    private guardarToken(token: string): void {
-      localStorage.setItem('auth_token', token);
-    }
+  private guardarToken(token: string): void {
+    localStorage.setItem('auth_token', token);
+  }
+
 	getToken(): string | null {
 	    return localStorage.getItem('auth_token');
-	  }
+	}
+
+  private guardarUsuario(usuario: UsuarioResponseDTO): void {
+
+  localStorage.setItem(
+    'usuario',
+    JSON.stringify(usuario)
+  );
+
+}
+
+  getUsuario(): UsuarioResponseDTO | null {
+
+    const usuario = localStorage.getItem('usuario');
+
+    return usuario ? JSON.parse(usuario) : null;
+
+  }
+
+  getRol(): string | null {
+    const usuario = this.getUsuario();
+
+    return usuario ? usuario.rol : null;
+  }
 
 	estaAutenticado(): boolean {
 	    return !!this.getToken();
@@ -38,6 +64,7 @@ export class AuthService {
 
 	logout(): void {
 	    localStorage.removeItem('auth_token');
+      localStorage.removeItem('usuario');
 	}
 	
   }

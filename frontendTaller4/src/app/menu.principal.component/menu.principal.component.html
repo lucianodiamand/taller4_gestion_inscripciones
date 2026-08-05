@@ -3,22 +3,31 @@
     <p>Universidad Nacional</p>
 </header>
 
-<div class="menu">
+@if (rol === 'GUEST') {
+    <div class="card">
+    <h3>👤 Ingresantes</h3>
+    <p>Gestión de los ingresantes del sistema.</p>
 
+    <a  class="boton" routerLink="/ingresante/editar">
+      Editar datos del ingresante
+    </a>
+  </div>
+}
+
+@if(rol === 'ADMIN'){
+  
   <div class="card">
     <h3>👤 Ingresantes</h3>
     <p>Gestión de los ingresantes del sistema.</p>
 
-    <a class="boton" routerLink="/ingreso">
+    <a class="boton" routerLink="/ingresante">
       Ver ingresantes
     </a>
-
-    <a class="boton secundario" routerLink="/ingreso/crear">
-      Registrar ingresante
-    </a>
   </div>
+}
 
-  <div class="card">
+@if (rol === 'GUEST') {
+    <div class="card">
     <h3>🎓 Carreras</h3>
     <p>Administración de las carreras disponibles.</p>
 
@@ -26,7 +35,23 @@
       Ver carreras
     </a>
   </div>
+}
 
+@if (rol ==='ADMIN') {
+  <div class="card">
+    <h3>🎓 Carreras</h3>
+    <p>Administración de las carreras disponibles.</p>
+
+    <a class="boton" routerLink="/carrera">
+      Ver carreras
+    </a>
+    <a class="boton" routerLink="/carrera/crear">
+      Crear carrera
+    </a>
+  </div>
+}
+
+@if (rol === 'GUEST') {  
   <div class="card">
     <h3>📚 Materias</h3>
     <p>Consulta y gestión de las materias.</p>
@@ -35,7 +60,23 @@
       Ver materias
     </a>
   </div>
+}
 
+@if (rol === 'ADMIN') {
+  <div class="card">
+    <h3>📚 Materias</h3>
+    <p>Consulta y gestión de las materias.</p>
+
+    <a class="boton" routerLink="/materias">
+      Ver materias
+    </a>
+    <a class="boton" routerLink="/materias/crear">
+      Crear materia
+    </a>
+  </div>
+}
+
+@if (rol === 'GUEST') {
   <div class="card">
     <h3>📝 Inscripciones</h3>
     <p>Realizar nuevas inscripciones.</p>
@@ -48,5 +89,5 @@
       Inscribirse a una materia
     </a>
   </div>
+}
 
-</div>

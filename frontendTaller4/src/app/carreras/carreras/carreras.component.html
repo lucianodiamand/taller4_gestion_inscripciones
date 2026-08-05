@@ -4,9 +4,12 @@
 
 <h2>Carreras</h2>
 
-<a class="nuevo" routerLink="/carrera/crear">
+@if (rol === 'ADMIN') {
+    <a class="nuevo" routerLink="/carrera/crear">
     Nueva carrera
 </a>
+}
+
 
 <div
     class="card"
@@ -27,7 +30,8 @@
         <span>{{ carrera.duracion }} años</span>
     </div>
 
-    <div class="acciones">
+    @if (rol === 'ADMIN') {
+            <div class="acciones">
 
         <a
             class="editar"
@@ -46,5 +50,6 @@
         </button>
 
     </div>
+    }
 
 </div>

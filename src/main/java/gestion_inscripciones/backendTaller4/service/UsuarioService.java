@@ -26,8 +26,8 @@ public class UsuarioService {
                 .findByUsername(dto.getUsername())
                 .isPresent()) {
 
-            throw new RuntimeException(
-                    "El usuario ya existe.");
+            throw new RuntimeException("El usuario ya existe.");
+        
         }
 
         Usuario usuario = new Usuario();
@@ -40,8 +40,7 @@ public class UsuarioService {
 
         usuario = usuarioRepository.save(usuario);
 
-        UsuarioResponseDTO response =
-                new UsuarioResponseDTO();
+        UsuarioResponseDTO response = new UsuarioResponseDTO();
 
         response.setId(usuario.getId());
         response.setUsername(usuario.getUsername());
@@ -50,25 +49,18 @@ public class UsuarioService {
         return response;
     }
 
-    public UsuarioResponseDTO login(
-            UsuarioRequestDTO dto) {
+    public UsuarioResponseDTO login(UsuarioRequestDTO dto) {
 
-        Usuario usuario =
-                usuarioRepository.findByUsername(
-                        dto.getUsername())
-                        .orElseThrow(
-                                () -> new RuntimeException(
-                                        "Usuario inexistente."));
+        Usuario usuario = usuarioRepository.findByUsername(dto.getUsername())
+        		.orElseThrow(() -> new RuntimeException("Usuario inexistente."));
 
-        if (!dto.getPassword().equals(
-                usuario.getPassword())) {
+        if (!dto.getPassword().equals(usuario.getPassword())) {
 
             throw new RuntimeException(
                     "Contraseña incorrecta.");
         }
 
-        UsuarioResponseDTO response =
-                new UsuarioResponseDTO();
+        UsuarioResponseDTO response = new UsuarioResponseDTO();
 
         response.setId(usuario.getId());
         response.setUsername(usuario.getUsername());

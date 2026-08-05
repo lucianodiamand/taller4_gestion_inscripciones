@@ -8,7 +8,7 @@ export interface UsuarioRequestDTO {
 export interface UsuarioResponseDTO {
 	id:number;
 	username:string;
-	role:string;
+	rol:string;
 	token:string;
 }
 
