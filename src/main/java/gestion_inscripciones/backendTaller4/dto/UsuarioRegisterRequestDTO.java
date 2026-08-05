@@ -15,7 +15,7 @@ public class UsuarioRegisterRequestDTO { // para crear una nueva cuenta (registr
     private String nombre;
     private String apellido;
     private String email;
-    private Integer edad;
+    private int edad;
     private String tipoDocumento;
     private String numeroDocumento;
     
