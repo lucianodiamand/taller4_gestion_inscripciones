@@ -5,9 +5,13 @@ import { CarrerasService } from '../carreras.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarrerasDto } from '../../../models/carreras-dto';
 
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ButtonModule } from 'primeng/button';
+
 @Component({
   selector: 'app-carreras-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InputTextModule, InputNumberModule, ButtonModule],
   templateUrl: './carreras-form-component.html',
   styleUrl: './carreras-form-component.css',
 })

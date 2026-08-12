@@ -1,65 +1,57 @@
-<a class="volver" routerLink="/menu">
-    ← Menú principal
+<a routerLink="/menu">
+  ← Menú principal
 </a>
-
 
 <h2>Ingresantes</h2>
 
-<a class="nuevo" routerLink="/ingreso/crear">
-  Nuevo Ingresante
+<a routerLink="/ingresante/crear">
+  <p-button label="Nuevo Ingresante" icon="pi pi-plus"></p-button>
 </a>
 
+<br><br>
 
-<div class="card" *ngFor="let ingresante of ingresantes$ | async">
+<p-table [value]="(ingresantes$ | async) ?? []" stripedRows>
 
-    <div class="dato">
-        <strong>ID:</strong>
-        <span>{{ ingresante.id }}</span>
-    </div>
+  <ng-template #header>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Tipo Documento</th>
+      <th>Número Documento</th>
+      <th>Edad</th>
+      <th>Email</th>
+      <th>Acciones</th>
+    </tr>
+  </ng-template>
 
-    <div class="dato">
-        <strong>Nombre:</strong>
-        <span>{{ ingresante.nombre }}</span>
-    </div>
+  <ng-template #body let-ingresante>
+    <tr>
+      <td>{{ ingresante.id }}</td>
+      <td>{{ ingresante.nombre }}</td>
+      <td>{{ ingresante.apellido }}</td>
+      <td>{{ ingresante.tipoDocumento }}</td>
+      <td>{{ ingresante.numeroDocumento }}</td>
+      <td>{{ ingresante.edad }}</td>
+      <td>{{ ingresante.email }}</td>
 
-    <div class="dato">
-        <strong>Apellido:</strong>
-        <span>{{ ingresante.apellido }}</span>
-    </div>
+      <td>
+        <p-button
+          label="Editar"
+          icon="pi pi-pencil"
+          [routerLink]="['/ingreso/editar', ingresante.id]"
+        />
 
-    <div class="dato">
-        <strong>Tipo de documento:</strong>
-        <span>{{ ingresante.tipoDocumento }}</span>
-    </div>
+        <p-button
+          label="Borrar"
+          icon="pi pi-trash"
+          severity="danger"
+          (click)="borrar(ingresante.id)"
+        />
+      </td>
+    </tr>
+  </ng-template>
 
-    <div class="dato">
-        <strong>Número de documento:</strong>
-        <span>{{ ingresante.numeroDocumento }}</span>
-    </div>
-
-    <div class="dato">
-        <strong>Edad:</strong>
-        <span>{{ ingresante.edad }}</span>
-    </div>
-
-    <div class="dato">
-        <strong>Email:</strong>
-        <span>{{ ingresante.email }}</span>
-    </div>
-
-
-    <div class="acciones">
-
-		<button [routerLink]="['/ingreso/editar', ingresante.id]" class="editar">
-		    Editar
-		</button>
-		
-        <button (click)="borrar(ingresante.id)" class="borrar">
-            Borrar
-        </button>
-
-    </div>
-
-</div>
+</p-table>
 
 

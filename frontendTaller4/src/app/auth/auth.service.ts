@@ -58,6 +58,11 @@ export class AuthService {
     return usuario ? usuario.rol : null;
   }
 
+  getIngresanteId(): number | null {
+    const usuario = this.getUsuario();
+    return usuario? usuario.ingresanteId : null;
+}
+
 	estaAutenticado(): boolean {
 	    return !!this.getToken();
 	}

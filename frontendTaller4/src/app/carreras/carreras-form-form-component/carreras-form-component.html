@@ -1,7 +1,27 @@
 <h2>Carrera</h2>
 
-<form [formGroup]="carreraForm">
-    <p>Nombre: <input type="text" formControlName="nombre" /></p>
-    <p>Duracion: <input type="number" formControlName="duracion" /></p>
-    <p><button (click)="guardar()">Guardar</button></p>
+<form [formGroup]="carreraForm" (ngSubmit)="guardar()">
+
+    <div>
+        <label for="nombre">
+            Nombre
+        </label>
+
+        <input pInputText id="nombre" type="text" formControlName="nombre"/>
+    </div>
+
+    <br>
+
+    <div>
+        <label for="duracion">
+            Duración
+        </label>
+
+        <p-inputnumber inputId="duracion" formControlName="duracion" [min]="1" [showButtons]="true"> </p-inputnumber>
+    </div>
+
+    <br>
+
+    <p-button type="submit" label="Guardar" icon="pi pi-save"> </p-button>
+
 </form>

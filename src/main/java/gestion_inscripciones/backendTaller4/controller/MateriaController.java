@@ -25,18 +25,24 @@ public class MateriaController {
 	@Autowired
     private MateriaService materiaService;
 	
-	// 1. Obtener todos los ingresantes -> GET http://localhost:8080/materias
+	// 1. Obtener todas las materias  -> GET http://localhost:8080/materias
     @GetMapping
     public List<MateriaDTO> listarTodas() {
         return materiaService.obtenerTodas();
     }
     
-    // 2. Obtener una materia por ID -> GET http://localhost:8080/materias/{id}
+    // 2. Obtener una materia por ID -> GET http://localhost:8080/materias/buscar/{id}
     @GetMapping("/buscar/{id}")
     public ResponseEntity<MateriaDTO> obtenerPorId(@PathVariable Long id) {
         return materiaService.obtenerPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+    
+    // 3. Obtener las materias de una carrera -> GET http://localhost:8080/materias/carrera/{carreraId}
+    @GetMapping("/carrera/{carreraId}")
+    public List<MateriaDTO> obtenerPorCarrera(@PathVariable Long carreraId) {
+        return materiaService.obtenerPorCarrera(carreraId);
     }
     
     @PostMapping("/crear")

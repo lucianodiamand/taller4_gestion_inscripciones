@@ -67,6 +67,7 @@ public class AuthService {
         response.setUsername(usuarioGuardado.getUsername());
         response.setRol(usuarioGuardado.getRol());
         response.setToken(token);
+        response.setIngresanteId(ingresanteGuardado.getId());
 
         return response;
     }
@@ -90,6 +91,7 @@ public class AuthService {
         response.setUsername(usuario.getUsername());
         response.setRol(usuario.getRol());
         response.setToken(token);
+        response.setIngresanteId(usuario.getIngresante().getId());
 
         return response;
     }

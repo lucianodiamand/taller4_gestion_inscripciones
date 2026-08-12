@@ -20,6 +20,10 @@ export class MateriaService {
     return this.http.get<MateriasDto>(`${this.apiUrl}/buscar/${id}`);
   }
 
+  obtenerPorCarrera(idCarrera: number): Observable<MateriasDto[]> {
+  return this.http.get<MateriasDto[]>(`${this.apiUrl}/carrera/${idCarrera}`);
+}
+
   crear(materia: MateriasDto): Observable<MateriasDto> {
     return this.http.post<MateriasDto>(`${this.apiUrl}/crear`, materia);
   }

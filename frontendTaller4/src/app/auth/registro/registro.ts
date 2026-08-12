@@ -5,10 +5,15 @@ import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
 import { UsuarioRegisterRequestDTO } from '../../../models/auth-dto';
 
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { SelectModule } from 'primeng/select';
+import { ButtonModule } from 'primeng/button';
+
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, InputTextModule, PasswordModule, SelectModule, ButtonModule],
   templateUrl: './registro.html',
   styleUrl: './registro.css'
 })
@@ -19,6 +24,12 @@ export class RegistroComponent implements OnDestroy {
 
   errorMensaje: string = '';
   private subscription!: Subscription;
+
+   tiposDocumento = [
+    { label: 'DNI', value: 'DNI' },
+    { label: 'Pasaporte', value: 'Pasaporte' },
+    { label: 'Libreta Cívica', value: 'Libreta Cívica' }
+  ];
 
   // Formulario con los mismos validadores que en Ingresante
   form = this.fb.group({
