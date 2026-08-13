@@ -1,38 +1,65 @@
+/* Contenedor principal centrado */
 .auth-container {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
 }
 
-form {
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Espaciado del mensaje de error */
+.error-msg {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+/* Formulario */
+.auth-form {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1.25rem;
 }
 
-input {
-  padding: 0.5rem;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-button {
-  padding: 0.6rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.field label {
+  font-weight: 600;
 }
 
-button:disabled {
-  background-color: #a0a0a0;
-  cursor: not-allowed;
+/* Hacer que los inputs de PrimeNG ocupen todo el ancho */
+p-iconfield,
+p-password,
+p-button,
+input[pInputText] {
+  width: 100%;
 }
 
-.error {
-  color: red;
-  font-size: 0.9rem;
+::ng-deep .p-password-input {
+  width: 100%;
+}
+
+/* Pie de tarjeta */
+.register-link {
+  text-align: center;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.register-link a {
+  color: var(--p-primary-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
 }

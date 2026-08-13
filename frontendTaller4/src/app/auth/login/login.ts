@@ -3,10 +3,28 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../auth.service';
 
+// Módulos de PrimeNG
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink,
+	//Modulos NGprime
+	CardModule,
+	InputTextModule,
+	PasswordModule,
+	ButtonModule,
+	MessageModule,
+	IconFieldModule,
+	InputIconModule
+  ],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })

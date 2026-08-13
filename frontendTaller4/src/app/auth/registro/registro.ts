@@ -5,10 +5,29 @@ import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
 import { UsuarioRegisterRequestDTO } from '../../../models/auth-dto';
 
+// Módulos de PrimeNG
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { SelectModule } from 'primeng/select';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
+
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [
+	ReactiveFormsModule, 
+	RouterLink,
+	CardModule,
+	InputTextModule,
+	InputNumberModule,
+	SelectModule,
+	PasswordModule,
+	ButtonModule,
+	MessageModule
+  ],
   templateUrl: './registro.html',
   styleUrl: './registro.css'
 })
@@ -19,15 +38,17 @@ export class RegistroComponent implements OnDestroy {
 
   errorMensaje: string = '';
   private subscription!: Subscription;
+  
+  tiposDocumento: string[] = ['DNI', 'Pasaporte', 'Libreta Cívica'];
 
   // Formulario con los mismos validadores que en Ingresante
   form = this.fb.group({
     nombre: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
     apellido: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
     username: ['', [Validators.required, Validators.minLength(4)]],
-    email: ['', [Validators.required, Validators.pattern('.*@.*')]],
+    email: ['', [Validators.required,Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    edad: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
+    edad: [null as number | null, [Validators.required, Validators.min(1), Validators.max(100)]],
     tipoDocumento: ['', [Validators.required]],
     numeroDocumento: ['', [Validators.required]],
   }, {
