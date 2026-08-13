@@ -1,55 +1,66 @@
-<a class="volver" routerLink="/menu">
-    ← Menú principal
+<a routerLink="/menu">
+  ← Menú principal
 </a>
 
 <h2>Carreras</h2>
 
 @if (rol === 'ADMIN') {
-    <a class="nuevo" routerLink="/carrera/crear">
-    Nueva carrera
-</a>
+  <p-button label="Nueva carrera" icon="pi pi-plus" routerLink="/carrera/crear"> </p-button>
 }
 
+<br><br>
 
-<div
-    class="card"
-    *ngFor="let carrera of carreras$ | async">
 
-    <div class="dato">
-        <strong>ID:</strong>
-        <span>{{ carrera.id }}</span>
-    </div>
+<p-table
+  [value]="(carreras$ | async) ?? []" stripedRows>
 
-    <div class="dato">
-        <strong>Nombre:</strong>
-        <span>{{ carrera.nombre }}</span>
-    </div>
+  <ng-template #header>
 
-    <div class="dato">
-        <strong>Duración:</strong>
-        <span>{{ carrera.duracion }} años</span>
-    </div>
+    <tr>
+      <th>Nombre</th>
+      <th>Duración</th>
+      <th>Materias</th>
 
-    @if (rol === 'ADMIN') {
-            <div class="acciones">
+      @if (rol === 'ADMIN') {
+        <th>Acciones</th>
+      }
 
-        <a
-            class="editar"
-            [routerLink]="['/carrera/editar', carrera.id]">
-            <!-- [] significan que el destino va a ser dinamico, segun el id de la carrera recorrido por medio del ngfor -->
-            Editar
+    </tr>
 
-        </a>
+  </ng-template>
 
-        <button
-            class="borrar"
-            (click)="borrar(carrera.id)">
 
-            Borrar
+  <ng-template #body let-carrera>
 
-        </button>
+    <tr>
 
-    </div>
-    }
+      <td>
+        {{ carrera.nombre }}
+      </td>
 
-</div>
+      <td>
+        {{ carrera.duracion }} años
+      </td>
+
+      <td>
+
+        <p-button label="Ver materias" icon="pi pi-book" [routerLink]="['/materias/carrera', carrera.id]"> </p-button>
+
+      </td>
+
+
+      @if (rol === 'ADMIN') {
+
+        <td>
+          <p-button label="Editar" icon="pi pi-pencil" [routerLink]="['/carrera/editar', carrera.id]"> </p-button>
+
+          <p-button label="Borrar" icon="pi pi-trash" severity="danger" (click)="borrar(carrera.id)"></p-button>
+        </td>
+
+      }
+
+    </tr>
+
+  </ng-template>
+
+</p-table>

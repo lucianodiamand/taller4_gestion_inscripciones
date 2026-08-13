@@ -1,13 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component,  OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IngresanteDto } from '../../../models/ingresante-dto';
 import { IngresanteService } from '../ingresante.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-ingresante',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TableModule, ButtonModule],
   templateUrl: './ingresante.component.html',
   styleUrl: './ingresante.component.css',
 })

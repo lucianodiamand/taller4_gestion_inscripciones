@@ -6,9 +6,12 @@ import { CarrerasService } from '../carreras.service';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+
 @Component({
   selector: 'app-carreras',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ButtonModule, TableModule],
   templateUrl: './carreras.component.html',
   styleUrl: './carreras.component.css',
 })

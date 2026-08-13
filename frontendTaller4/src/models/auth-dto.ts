@@ -10,6 +10,7 @@ export interface UsuarioResponseDTO {
 	username:string;
 	rol:string;
 	token:string;
+	ingresanteId: number;
 }
 
 export interface UsuarioRegisterRequestDTO {

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gestion_inscripciones.backendTaller4.dto.InscripcionCarreraRequestDTO;
 import gestion_inscripciones.backendTaller4.dto.InscripcionCarreraResponseDTO;
+import gestion_inscripciones.backendTaller4.dto.MateriaDTO;
 import gestion_inscripciones.backendTaller4.service.InscripcionCarreraService;
 
 
@@ -38,6 +39,12 @@ public class InscripcionCarreraController {
         return inscripcionCarreraService.obtenerPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+    
+ // 3. Obtener las inscripciones de un ingresante -> GET http://localhost:8080//inscripcion/carrera/ingresante{ingresanteId}
+    @GetMapping("/ingresante/{ingresanteId}")
+    public List<InscripcionCarreraResponseDTO> obtenerPorIngresante(@PathVariable Long ingresanteId) {
+        return inscripcionCarreraService.obtenerPorIngresante(ingresanteId);
     }
     
     // 3. Crear una nueva inscripción -> POST http://localhost:8080/inscripcion/carrera

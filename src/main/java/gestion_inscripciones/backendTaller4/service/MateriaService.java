@@ -29,6 +29,15 @@ public class MateriaService {
                 .collect(Collectors.toList());
     }
 	
+	// Obtener materias de una carrera
+	public List<MateriaDTO> obtenerPorCarrera(Long carreraId) {
+
+	    return materiaRepository.findByCarreraId(carreraId)
+	            .stream()
+	            .map(this::convertirADTO)
+	            .collect(Collectors.toList());
+	}
+	
     // Obtener por ID (READ)
 	public Optional<MateriaDTO> obtenerPorId(Long id) {
         return materiaRepository.findById(id)

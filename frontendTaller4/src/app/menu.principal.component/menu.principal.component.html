@@ -1,83 +1,95 @@
 <header class="encabezado">
-    <h1>Sistema de Gestión de Inscripciones</h1>
-    <p>Universidad Nacional</p>
+  <h1>Sistema de Gestión de Inscripciones</h1>
+  <p>Universidad Nacional</p>
 </header>
 
-@if (rol === 'GUEST') {
-    <div class="card">
-    <h3>👤 Ingresantes</h3>
-    <p>Gestión de los ingresantes del sistema.</p>
 
-    <a  class="boton" routerLink="/ingresante/editar">
-      Editar datos del ingresante
+<!-- INGRESANTE -->
+
+@if (rol === 'GUEST') {
+
+  <div class="card">
+
+    <h3>👤 Ingresante</h3>
+    <p>Gestión de tus datos personales.</p>
+
+    <a class="boton" routerLink="/ingresante/editar">
+      Editar mis datos
     </a>
+
   </div>
+
 }
 
-@if(rol === 'ADMIN'){
-  
+
+<!-- ADMIN - INGRESANTES -->
+
+@if (rol === 'ADMIN') {
+
   <div class="card">
+
     <h3>👤 Ingresantes</h3>
     <p>Gestión de los ingresantes del sistema.</p>
 
     <a class="boton" routerLink="/ingresante">
       Ver ingresantes
     </a>
+
   </div>
+
 }
 
-@if (rol === 'GUEST') {
-    <div class="card">
-    <h3>🎓 Carreras</h3>
-    <p>Administración de las carreras disponibles.</p>
 
-    <a class="boton" routerLink="/carrera">
-      Ver carreras
-    </a>
-  </div>
-}
+<!-- CARRERAS -->
 
-@if (rol ==='ADMIN') {
-  <div class="card">
-    <h3>🎓 Carreras</h3>
-    <p>Administración de las carreras disponibles.</p>
+<div class="card">
 
-    <a class="boton" routerLink="/carrera">
-      Ver carreras
-    </a>
+  <h3>🎓 Carreras</h3>
+  <p>Consulta las carreras disponibles.</p>
+
+  <a class="boton" routerLink="/carrera">
+    Ver carreras
+  </a>
+
+  @if (rol === 'ADMIN') {
+
     <a class="boton" routerLink="/carrera/crear">
       Crear carrera
     </a>
-  </div>
-}
 
-@if (rol === 'GUEST') {  
-  <div class="card">
-    <h3>📚 Materias</h3>
-    <p>Consulta y gestión de las materias.</p>
+  }
 
-    <a class="boton" routerLink="/materias">
-      Ver materias
-    </a>
-  </div>
-}
+</div>
+
+
+<!-- MATERIAS - SOLO ADMIN -->
 
 @if (rol === 'ADMIN') {
+
   <div class="card">
+
     <h3>📚 Materias</h3>
-    <p>Consulta y gestión de las materias.</p>
+    <p>Administración de las materias.</p>
 
     <a class="boton" routerLink="/materias">
       Ver materias
     </a>
+
     <a class="boton" routerLink="/materias/crear">
       Crear materia
     </a>
+
   </div>
+
 }
 
+
+<!-- INSCRIPCIONES - GUEST -->
+
 @if (rol === 'GUEST') {
+
   <div class="card">
+
     <h3>📝 Inscripciones</h3>
     <p>Realizar nuevas inscripciones.</p>
 
@@ -88,6 +100,8 @@
     <a class="boton secundario" routerLink="/inscripcion/materia">
       Inscribirse a una materia
     </a>
+
   </div>
+
 }
 

@@ -5,11 +5,14 @@ import { IngresanteService } from '../ingresante.service';
 import { Subscription } from 'rxjs';
 import { IngresanteDto } from '../../../models/ingresante-dto';
 import { CommonModule } from '@angular/common';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-ingresante-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, InputTextModule, SelectModule, ButtonModule],
   templateUrl: './ingresante-form-component.html',
   styleUrl: './ingresante-form-component.css',
 })
@@ -47,6 +50,12 @@ export class IngresanteFormComponent implements OnInit, OnDestroy {
 	        validators: this.validarDocumentoSegunTipo
 	      });
   }
+
+  tiposDocumento = [ // para determinar las opciones que apareceran en p-select. label es lo que ve el usuario y value es lo que recibe el formulario
+  { label: 'DNI', value: 'DNI' },
+  { label: 'Pasaporte', value: 'Pasaporte' },
+  { label: 'Libreta Cívica', value: 'Libreta Cívica' }
+];
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id'); // se ejecuta al crear el componente. Se usa para hacer la primer carga de datos. El observable pide a la ruta el valor id de la url

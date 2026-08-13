@@ -96,7 +96,4 @@ public class Ingresante {
     	this.email = email;
     }
     
-   // @OneToMany(mappedBy = "ingresante") //nombre de la propiedad del otro lado que enlazo con esta entidad
-   // private List<InscripcionCarrera> inscripciones;
-    
 }

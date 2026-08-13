@@ -6,57 +6,91 @@
 
 <!-- FORMULARIO DE INSCRIPCIÓN -->
 <form [formGroup]="inscripcionForm" (ngSubmit)="guardar()">
-  <p>
-    <label for="ingresante">Ingresante: </label>
-    <select id="ingresante" formControlName="ingresanteId">
-      <option value="" disabled selected>Seleccione un ingresante</option>
-      <option *ngFor="let ing of ingresantes" [value]="ing.id">
-        {{ ing.nombre }} {{ ing.apellido }} (Doc: {{ ing.numeroDocumento }})
-      </option>
-    </select>
-  </p>
 
-  <p>
-    <label for="carrera">Carrera: </label>
-    <select id="carrera" formControlName="carreraId">
-      <option value="" disabled selected>Seleccione una carrera</option>
-      <option *ngFor="let car of carreras" [value]="car.id">
-        {{ car.nombre }}
-      </option>
-    </select>
-  </p>
+    <p>
+        <label for="carrera">Carrera:</label>
 
-  <p>
-    <label for="fecha">Fecha de Inscripción: </label>
-    <input type="date" id="fecha" formControlName="fechaInscripcion" />
-  </p>
+        <select id="carrera" formControlName="carreraId">
+            <option value="" disabled>Seleccione una carrera</option>
 
-  <button type="submit" [disabled]="inscripcionForm.invalid">Inscribir</button>
+            <option *ngFor="let car of carreras" [value]="car.id">
+                {{ car.nombre }}
+            </option>
+        </select>
+    </p>
+
+    <p>
+        <label for="fecha">Fecha de Inscripción:</label>
+
+        <input
+            type="date"
+            id="fecha"
+            formControlName="fechaInscripcion"
+        />
+    </p>
+
+    <button
+        type="submit"
+        [disabled]="inscripcionForm.invalid">
+        Inscribir
+    </button>
+
 </form>
 
-<hr />
+<hr>
 
-<!-- LISTADO DE INSCRIPCIONES REALIZADAS -->
-<h3>Inscripciones Registradas</h3>
+<!-- INSCRIPCIONES -->
+
+<h3>
+    @if (rol === 'ADMIN') {
+        Todas las inscripciones
+    } @else {
+        Mis inscripciones
+    }
+</h3>
 
 <table border="1" cellpadding="8" cellspacing="0">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Fecha</th>
-      <th>Ingresante</th>
-      <th>Carrera</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let insc of inscripciones">
-      <td>{{ insc.id }}</td>
-      <td>{{ insc.fechaInscripcion }}</td>
-      <td>{{ insc.nombreIngresante }} {{ insc.apellidoIngresante }}</td>
-      <td>{{ insc.nombreCarrera }}</td>
-    </tr>
-    <tr *ngIf="inscripciones.length === 0">
-      <td colspan="4">No hay inscripciones registradas.</td>
-    </tr>
-  </tbody>
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+
+            @if (rol === 'ADMIN') {
+                <th>Ingresante</th>
+            }
+
+            <th>Carrera</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <tr *ngFor="let insc of inscripciones">
+
+            <td>{{ insc.id }}</td>
+
+            <td>{{ insc.fechaInscripcion }}</td>
+
+            @if (rol === 'ADMIN') {
+                <td>
+                    {{ insc.nombreIngresante }}
+                    {{ insc.apellidoIngresante }}
+                </td>
+            }
+
+            <td>{{ insc.nombreCarrera }}</td>
+
+        </tr>
+
+        @if (inscripciones.length === 0) {
+            <tr>
+                <td colspan="4">
+                    No hay inscripciones registradas.
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
 </table>

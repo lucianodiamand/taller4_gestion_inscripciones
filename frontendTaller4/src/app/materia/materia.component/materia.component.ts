@@ -1,32 +1,58 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
+
 import { MateriaService } from '../materia.service';
 import { MateriasDto } from '../../../models/materias-dto';
 import { AuthService } from '../../auth/auth.service';
 
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+
 @Component({
   selector: 'app-materias',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ButtonModule, TableModule],
   templateUrl: './materia.component.html',
   styleUrl: './materia.component.css',
 })
 export class MateriaComponent implements OnInit {
-  materias$!: Observable<Array<MateriasDto>> // observevable con arreglo de CarrerasDto
+  materias$!: Observable<Array<MateriasDto>> // observevable con arreglo de MateriasDto
   
     constructor(private readonly servicio: MateriaService){} //inyecto el service
+
     private authService = inject(AuthService);
+    private materiaService = inject(MateriaService);
+    private route = inject(ActivatedRoute);
 
     rol: String | null = null;
+
+    carreraId: number | null = null;
   
     ngOnInit() { // se ejecuta al crear el componente. Se usa para hacer la primer carga de datos. El observable pide al servicio todos los ingresantes
-        this.materias$ = this.servicio.obtenerTodos();
         this.rol = this.authService.getRol();
+        const id = this.route.snapshot.paramMap.get('id');
+
+        if (id) {
+          this.carreraId = Number(id);
+          // Venimos desde una carrera
+          this.materias$ = this.materiaService.obtenerPorCarrera(this.carreraId);
+        } else {
+          // Listado general de materias
+          this.materias$ = this.servicio.obtenerTodos();
+        }
         console.log("Rol actual:", this.rol);
     }
   
     borrar(id: number) {
-      this.servicio.eliminar(id).subscribe(() => this.ngOnInit());
-    }
+      this.servicio.eliminar(id).subscribe(() => {
+        if (this.carreraId !== null) {
+          this.materias$ =
+          this.servicio.obtenerPorCarrera(this.carreraId);
+        } else {
+          this.materias$ = this.servicio.obtenerTodos();
+      }
+    });
+  }
+  
 }

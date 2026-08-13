@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import gestion_inscripciones.backendTaller4.dto.InscripcionCarreraRequestDTO;
 import gestion_inscripciones.backendTaller4.dto.InscripcionCarreraResponseDTO;
+import gestion_inscripciones.backendTaller4.dto.MateriaDTO;
 import gestion_inscripciones.backendTaller4.entity.Carrera;
 import gestion_inscripciones.backendTaller4.entity.Ingresante;
 import gestion_inscripciones.backendTaller4.entity.InscripcionCarrera;
@@ -43,6 +44,15 @@ public class InscripcionCarreraService {
                 .map(this::convertirAResponseDTO);
     }
         
+	// Obtener inscripciones de un ingresante
+	public List<InscripcionCarreraResponseDTO> obtenerPorIngresante(Long ingresanteId) {
+
+	    return inscripcionRepository.findByIngresanteId(ingresanteId)
+	            .stream()
+	            .map(this::convertirAResponseDTO)
+	            .collect(Collectors.toList());
+	}
+    
     // Guardar / Crear inscripción (CREATE)
     public InscripcionCarreraResponseDTO guardar(InscripcionCarreraRequestDTO dto) {
         Ingresante ingresante = ingresanteRepository.findById(dto.getIngresanteId())

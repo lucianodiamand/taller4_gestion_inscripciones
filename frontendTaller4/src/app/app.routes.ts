@@ -42,6 +42,7 @@ export const routes: Routes = [
   { path: 'materias', component: MateriaComponent },
   { path: 'materias/crear', component: MateriaFormComponent },       
   { path: 'materias/editar/:id', component: MateriaFormComponent },
+  { path: 'materias/carrera/:id', component: MateriaComponent },
 
   // Rutas de Inscripcion a la carrera
   { path: 'inscripcion/carrera', component: InscripcionFormComponent },

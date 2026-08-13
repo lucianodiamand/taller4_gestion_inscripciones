@@ -14,6 +14,7 @@ public class UsuarioResponseDTO {
 	 private String username;
 	 private Rol rol;
 	 private String token;
+	 private Long ingresanteId;
 	
 	 public void setId(Long id) {
 		    this.id = id;
@@ -45,5 +46,13 @@ public class UsuarioResponseDTO {
 
 	 public String getToken() {
 		    return token;
+		}
+	 
+	 public Long getIngresanteId() {
+		    return ingresanteId;
+		}
+
+		public void setIngresanteId(Long ingresanteId) {
+		    this.ingresanteId = ingresanteId;
 		}
 }
