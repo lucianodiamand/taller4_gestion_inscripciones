@@ -18,7 +18,7 @@ export class InscripcionCarreraService {
 
   obtenerPorIngresante(ingresanteId: number): Observable<InscripcionCarreraResponseDto[]> {
     return this.http.get<InscripcionCarreraResponseDto[]>(`${this.apiUrl}/ingresante/${ingresanteId}`);
-}
+  }
 
   crear(inscripcion: InscripcionCarreraRequestDto): Observable<InscripcionCarreraResponseDto> {
     return this.http.post<InscripcionCarreraResponseDto>(this.apiUrl, inscripcion);

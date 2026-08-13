@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InscripcionCarreraService } from '../inscripcioncarreras.service';
@@ -8,10 +8,17 @@ import { CarrerasDto } from '../../../models/carreras-dto';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 
+import { ButtonModule } from 'primeng/button';
+import { SelectModule } from 'primeng/select';
+import { DatePickerModule } from 'primeng/datepicker';
+import { TableModule } from 'primeng/table';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+
 @Component({
   selector: 'app-inscripcion-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink, ButtonModule, SelectModule, DatePickerModule, TableModule, CardModule, InputTextModule],
   templateUrl: './inscripcioncarreras-form-component.html',
   styleUrl: './inscripcioncarreras-form-component.css'
 })
@@ -30,7 +37,8 @@ throw new Error('Method not implemented.');
     private fb: FormBuilder,
     private inscripcionService: InscripcionCarreraService,
     private carrerasService: CarrerasService,
-    private authService: AuthService
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {
     const hoy = new Date().toISOString().split('T')[0];
 
@@ -48,7 +56,10 @@ throw new Error('Method not implemented.');
 
   cargarCarreras(): void{
     this.carrerasService.obtenerTodos().subscribe({ // cargo las carreras disponibles para mostrarlas en el formulario
-      next: (data: CarrerasDto[]) => this.carreras = data,
+      next: (data: CarrerasDto[]) => { 
+        this.carreras = data;
+        this.cdr.detectChanges();
+      },
       error: (err: any) => console.error('Error al obtener carreras:', err)
     });
   }
@@ -57,14 +68,20 @@ throw new Error('Method not implemented.');
     
     if (this.rol === 'ADMIN') { // si el rol del usuario es admin, puede ver todas las inscripciones
       this.inscripcionService.obtenerTodas().subscribe({
-        next: data => this.inscripciones = data
+        next: data => {
+          this.inscripciones = data;
+          this.cdr.detectChanges();
+        },
       });
     } else { // si es guest, solo puede ver las del ingresante
       const ingresanteId = this.authService.getIngresanteId();
 
       if(ingresanteId) {
         this.inscripcionService.obtenerPorIngresante(ingresanteId).subscribe({
-          next: (data: InscripcionCarreraResponseDto[]) => this.inscripciones = data,
+          next: (data: InscripcionCarreraResponseDto[]) => {
+            this.inscripciones = data;
+            this.cdr.detectChanges();
+          },
           error: (err: any) => console.error('Error al cargar mis inscripciones:', err)
         });
       }

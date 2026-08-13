@@ -1,62 +1,192 @@
 <a class="volver" routerLink="/menu">
-    ← Menú principal
+    <i class="pi pi-arrow-left"></i>
+    Menú principal
 </a>
 
 <h2>Inscripción a Materia</h2>
 
-<form [formGroup]="inscripcionForm" (ngSubmit)="guardar()">
-  <p>
-    <label for="inscripcionCarrera">Inscripción a Carrera: </label>
-    <select id="inscripcionCarrera" formControlName="inscripcionCarreraId">
-      <option value="" disabled selected>Seleccione una inscripción</option>
-      <option *ngFor="let insc of inscripcionesCarreras" [value]="insc.id">
-        {{ insc.nombreIngresante }} {{ insc.apellidoIngresante }} - {{ insc.nombreCarrera }}
-      </option>
-    </select>
-  </p>
 
-  <p>
-    <label for="materia">Materia: </label>
-    <select id="materia" formControlName="materiaId">
-      <option value="" disabled selected>Seleccione una materia</option>
-      <option *ngFor="let mat of materiasFiltradas" [value]="mat.id">
-        {{ mat.nombre }} ({{ mat.anio }}° año - {{ mat.cuatrimestre }}° cuatrimestre)
-      </option>
-    </select>
-    <span *ngIf="inscripcionForm.value.inscripcionCarreraId && materiasFiltradas.length === 0">
-      No hay materias disponibles de primer año para esta carrera.
-    </span>
-  </p>
+<p-card header="Nueva inscripción">
 
-  <p>
-    <label for="fecha">Fecha de Inscripción: </label>
-    <input type="date" id="fecha" formControlName="fechaInscripcion" />
-  </p>
+    <form [formGroup]="inscripcionForm" (ngSubmit)="guardar()">
 
-  <button type="submit" [disabled]="inscripcionForm.invalid">Inscribir</button>
-</form>
+        <!-- INSCRIPCIÓN A CARRERA -->
 
-<hr />
+        <div class="campo">
 
-<!-- LISTADO DE INSCRIPCIONES REALIZADAS -->
+            <label for="inscripcionCarrera">
+                Inscripción a carrera
+            </label>
+
+            <p-select
+                id="inscripcionCarrera"
+                formControlName="inscripcionCarreraId"
+                [options]="inscripcionesCarreras"
+                optionValue="id"
+                placeholder="Seleccione una inscripción"
+                styleClass="w-full">
+
+                <ng-template #item let-insc>
+
+                    {{ insc.nombreIngresante }}
+                    {{ insc.apellidoIngresante }}
+                    -
+                    {{ insc.nombreCarrera }}
+
+                </ng-template>
+
+                <ng-template #selectedItem let-insc>
+
+                    @if (insc) {
+
+                        {{ insc.nombreIngresante }}
+                        {{ insc.apellidoIngresante }}
+                        -
+                        {{ insc.nombreCarrera }}
+
+                    }
+
+                </ng-template>
+
+            </p-select>
+
+        </div>
+
+
+        <!-- MATERIA -->
+
+        <div class="campo">
+
+            <label for="materia">
+                Materia
+            </label>
+
+            <p-select
+                id="materia"
+                formControlName="materiaId"
+                [options]="materiasFiltradas"
+                optionLabel="nombre"
+                optionValue="id"
+                placeholder="Seleccione una materia"
+                styleClass="w-full">
+
+                <ng-template #item let-mat>
+
+                    {{ mat.nombre }}
+                    ({{ mat.anio }}° año -
+                    {{ mat.cuatrimestre }}° cuatrimestre)
+
+                </ng-template>
+
+                <ng-template #selectedItem let-mat>
+
+                    @if (mat) {
+
+                        {{ mat.nombre }}
+                        ({{ mat.anio }}° año -
+                        {{ mat.cuatrimestre }}° cuatrimestre)
+
+                    }
+
+                </ng-template>
+
+            </p-select>
+
+
+            @if (
+                inscripcionForm.value.inscripcionCarreraId &&
+                materiasFiltradas.length === 0
+            ) {
+
+                <p-message severity="info">
+
+                    No hay materias disponibles de primer año para esta carrera.
+
+                </p-message>
+
+            }
+
+        </div>
+
+
+        <!-- FECHA -->
+
+        <div class="campo">
+
+            <label for="fecha">
+                Fecha de inscripción
+            </label>
+
+            <input
+                pInputText
+                type="date"
+                id="fecha"
+                formControlName="fechaInscripcion"
+            />
+
+        </div>
+
+
+        <div class="acciones">
+
+            <p-button
+                type="submit"
+                label="Inscribir"
+                icon="pi pi-check"
+                [disabled]="inscripcionForm.invalid">
+            </p-button>
+
+        </div>
+
+    </form>
+
+</p-card>
+
+
+<hr>
+
+
 <h3>Inscripciones a Materias Registradas</h3>
 
-<table border="1" cellpadding="8" cellspacing="0">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Fecha</th>
-      <th>Materia</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let insc of inscripciones">
-      <td>{{ insc.id }}</td>
-      <td>{{ insc.fechaInscripcion }}</td>
-      <td>{{ insc.nombreMateria }}</td>
-    </tr>
-    <tr *ngIf="inscripciones.length === 0">
-      <td colspan="3">No hay inscripciones registradas.</td>
-    </tr>
-  </tbody>
-</table>
+
+<p-table
+    [value]="inscripciones"
+    stripedRows
+    [tableStyle]="{ 'min-width': '40rem' }">
+
+    <ng-template #header>
+
+        <tr>
+            <th>Fecha</th>
+            <th>Materia</th>
+        </tr>
+
+    </ng-template>
+
+
+    <ng-template #body let-insc>
+
+        <tr>
+
+            <td>{{ insc.fechaInscripcion }}</td>
+
+            <td>{{ insc.nombreMateria }}</td>
+
+        </tr>
+
+    </ng-template>
+
+
+    <ng-template #emptymessage>
+
+        <tr>
+
+            <td colspan="3">
+                No hay inscripciones registradas.
+            </td>
+
+        </tr>
+
+    </ng-template>
+
+</p-table>

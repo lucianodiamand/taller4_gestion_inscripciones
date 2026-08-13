@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { InscripcionMateriaResponseDto, InscripcionMateriaRequestDto } from '../../../models/inscripcion-materia-dto';
 import { InscripcionMateriaService } from '../inscripcionmateria.service';
 import { CommonModule } from '@angular/common';
@@ -9,12 +8,20 @@ import { MateriasDto } from '../../../models/materias-dto';
 import { InscripcionCarreraService } from '../../inscripcioncarreras/inscripcioncarreras.service';
 import { MateriaService } from '../../materia/materia.service';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
+
+import { ButtonModule } from 'primeng/button';
+import { SelectModule } from 'primeng/select';
+import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
+import { CardModule } from 'primeng/card';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-inscripcion-materia',
   templateUrl: './inscripcionmaterias-form-component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink, ButtonModule, SelectModule, InputTextModule, TableModule, CardModule, MessageModule],
   styleUrl: './inscripcionmaterias-form-component.css'
 })
 export class InscripcionMateriaFormComponent implements OnInit {
@@ -25,12 +32,16 @@ export class InscripcionMateriaFormComponent implements OnInit {
   materias: MateriasDto[] = [];
   materiasFiltradas: MateriasDto[] = [];
 
+  rol: string | null = null;
+
 
   constructor(
     private fb: FormBuilder,
     private inscripcionMateriaService: InscripcionMateriaService,
     private inscripcionCarreraService: InscripcionCarreraService,
-    private materiaService: MateriaService 
+    private materiaService: MateriaService,
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {
     const hoy = new Date().toISOString().split('T')[0];
 
@@ -42,6 +53,9 @@ export class InscripcionMateriaFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.rol = this.authService.getRol();
+
     this.cargarListas();
     this.cargarInscripciones();
 
@@ -56,10 +70,27 @@ export class InscripcionMateriaFormComponent implements OnInit {
 
   cargarListas(): void {
     // Cargar inscripciones a carrera
-    this.inscripcionCarreraService.obtenerTodas().subscribe({
-      next: (data: InscripcionCarreraResponseDto[]) => this.inscripcionesCarreras = data,
+
+    if(this.rol === 'ADMIN'){
+      this.inscripcionCarreraService.obtenerTodas().subscribe({
+      next: (data: InscripcionCarreraResponseDto[]) => {
+        this.inscripcionesCarreras = data;
+        this.cdr.detectChanges();
+      },
       error: (err: any) => console.error('Error al obtener inscripciones a carrera:', err)
     });
+    } else {
+      const ingresanteId = this.authService.getIngresanteId();
+      if(ingresanteId){
+        this.inscripcionCarreraService.obtenerPorIngresante(ingresanteId).subscribe({
+          next: (data: InscripcionCarreraResponseDto[]) => {
+            this.inscripcionesCarreras = data;
+            this.cdr.detectChanges();
+          },
+          error: (err: any) => console.error('Error al obtener mis inscripciones a carrera:', err)
+          });
+      }
+    }
 
     // Cargar materias 
     this.materiaService.obtenerTodos().subscribe({
@@ -69,11 +100,27 @@ export class InscripcionMateriaFormComponent implements OnInit {
   }
 
   cargarInscripciones(): void {
-    // Corregido: guardar en this.inscripciones en vez de this.carreras
-   this.inscripcionMateriaService.obtenerTodas().subscribe({
-      next: (data: InscripcionMateriaResponseDto[]) => this.inscripciones = data,
+
+    if(this.rol === 'ADMIN'){
+      this.inscripcionMateriaService.obtenerTodas().subscribe({
+      next: (data: InscripcionMateriaResponseDto[]) => {
+        this.inscripciones = data;
+        this.cdr.detectChanges();
+      },
       error: (err: any) => console.error('Error al cargar inscripciones a materia:', err)
     });
+    } else {
+      const ingresanteId = this.authService.getIngresanteId();
+      if(ingresanteId){
+          this.inscripcionMateriaService.obtenerPorIngresante(ingresanteId).subscribe({
+            next: (data: InscripcionMateriaResponseDto[]) => {
+              this.inscripciones = data;
+              this.cdr.detectChanges();
+            },
+            error: (err: any) => console.error('Error al cargar mis inscripciones:', err)
+          });
+      }
+    }
   }
 
   filtrarMaterias(inscripcionCarreraId: number): void {
@@ -109,6 +156,7 @@ export class InscripcionMateriaFormComponent implements OnInit {
           inscripcionCarreraId: '',
           materiaId: ''
         });
+        this.materiasFiltradas = [];
         this.cargarInscripciones();
       },
       error: (err: any) => console.error('Error al guardar inscripción:', err)

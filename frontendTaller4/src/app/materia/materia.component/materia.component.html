@@ -5,7 +5,7 @@
 <h2>Materias</h2>
 
 @if (carreraId !== null) {
-  <p-button label="Volver a carreras" icon="pi pi-arrow-left" routerLink="/carreras" severity="secondary"> </p-button>
+  <p-button label="Volver a carreras" icon="pi pi-arrow-left" routerLink="/carrera" severity="secondary"> </p-button>
 }
 
 <br><br>
@@ -21,7 +21,6 @@
   <ng-template #header>
 
     <tr>
-      <th>ID</th>
       <th>Nombre</th>
       <th>Año</th>
       <th>Cuatrimestre</th>
@@ -42,10 +41,6 @@
   <ng-template #body let-materia>
 
     <tr>
-
-      <td>
-        {{ materia.id }}
-      </td>
 
       <td>
         {{ materia.nombre }}

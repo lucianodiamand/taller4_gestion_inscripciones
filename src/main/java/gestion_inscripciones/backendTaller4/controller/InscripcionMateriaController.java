@@ -44,8 +44,8 @@ public class InscripcionMateriaController {
     }
     
     // 3. CONSULTAR INSCRIPCIONES DE UN ESTUDIANTE ESPECÍFICO
-    // GET http://localhost:8080/api/inscripciones-materias/estudiante/{ingresanteId}
-    @GetMapping("/estudiante/{ingresanteId}")
+    // GET http://localhost:8080/api/inscripciones-materias/ingresante/{ingresanteId}
+    @GetMapping("/ingresante/{ingresanteId}")
     public ResponseEntity<List<InscripcionMateriaResponseDTO>> obtenerPorEstudiante(@PathVariable Long ingresanteId) {
         List<InscripcionMateriaResponseDTO> inscripciones = inscripcionMateriaService.obtenerPorIngresante(ingresanteId);
         return ResponseEntity.ok(inscripciones);

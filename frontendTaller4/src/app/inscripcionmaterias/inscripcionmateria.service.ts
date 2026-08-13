@@ -10,6 +10,7 @@ export class InscripcionMateriaService {
 
   private readonly url = 'http://localhost:8080/inscripcion/materia';
 
+
   constructor(private readonly http: HttpClient) {}
 
   obtenerTodas(): Observable<InscripcionMateriaResponseDto[]> {
@@ -19,6 +20,10 @@ export class InscripcionMateriaService {
   obtenerPorId(id: number): Observable<InscripcionMateriaResponseDto> {
     return this.http.get<InscripcionMateriaResponseDto>(`${this.url}/${id}`);
   }
+
+    obtenerPorIngresante(ingresanteId: number): Observable<InscripcionMateriaResponseDto[]> {
+      return this.http.get<InscripcionMateriaResponseDto[]>(`${this.url}/ingresante/${ingresanteId}`);
+    }
 
   crear(dto: InscripcionMateriaRequestDto): Observable<void> {
     return this.http.post<void>(this.url, dto);

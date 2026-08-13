@@ -1,59 +1,85 @@
 <a class="volver" routerLink="/menu">
-    ← Menú principal
+    <i class="pi pi-arrow-left"></i>
+    Menú principal
 </a>
 
 <h2>Inscripción a Carrera</h2>
 
-<!-- FORMULARIO DE INSCRIPCIÓN -->
-<form [formGroup]="inscripcionForm" (ngSubmit)="guardar()">
+<p-card header="Nueva inscripción">
 
-    <p>
-        <label for="carrera">Carrera:</label>
+    <form [formGroup]="inscripcionForm" (ngSubmit)="guardar()">
 
-        <select id="carrera" formControlName="carreraId">
-            <option value="" disabled>Seleccione una carrera</option>
+        <div class="campo">
 
-            <option *ngFor="let car of carreras" [value]="car.id">
-                {{ car.nombre }}
-            </option>
-        </select>
-    </p>
+            <label for="carrera">
+                Carrera
+            </label>
 
-    <p>
-        <label for="fecha">Fecha de Inscripción:</label>
+            <p-select
+                id="carrera"
+                formControlName="carreraId"
+                [options]="carreras"
+                optionLabel="nombre"
+                optionValue="id"
+                placeholder="Seleccione una carrera"
+                styleClass="w-full">
+            </p-select>
 
-        <input
-            type="date"
-            id="fecha"
-            formControlName="fechaInscripcion"
-        />
-    </p>
+        </div>
 
-    <button
-        type="submit"
-        [disabled]="inscripcionForm.invalid">
-        Inscribir
-    </button>
 
-</form>
+        <div class="campo">
 
-<hr>
+            <label for="fecha">
+                Fecha de inscripción
+            </label>
 
-<!-- INSCRIPCIONES -->
+            <input
+                pInputText
+                type="date"
+                id="fecha"
+                formControlName="fechaInscripcion"
+            />
+
+        </div>
+
+
+        <div class="acciones">
+
+            <p-button
+                type="submit"
+                label="Inscribir"
+                icon="pi pi-check"
+                [disabled]="inscripcionForm.invalid">
+            </p-button>
+
+        </div>
+
+    </form>
+
+</p-card>
+
 
 <h3>
+
     @if (rol === 'ADMIN') {
         Todas las inscripciones
     } @else {
         Mis inscripciones
     }
+
 </h3>
 
-<table border="1" cellpadding="8" cellspacing="0">
 
-    <thead>
+<p-table
+    [value]="inscripciones"
+    stripedRows
+    [tableStyle]="{ 'min-width': '40rem' }">
+
+    <ng-template #header>
+
         <tr>
-            <th>ID</th>
+
             <th>Fecha</th>
 
             @if (rol === 'ADMIN') {
@@ -61,36 +87,45 @@
             }
 
             <th>Carrera</th>
+
         </tr>
-    </thead>
 
-    <tbody>
+    </ng-template>
 
-        <tr *ngFor="let insc of inscripciones">
 
-            <td>{{ insc.id }}</td>
+    <ng-template #body let-insc>
+
+        <tr>
+
 
             <td>{{ insc.fechaInscripcion }}</td>
 
             @if (rol === 'ADMIN') {
+
                 <td>
                     {{ insc.nombreIngresante }}
                     {{ insc.apellidoIngresante }}
                 </td>
+
             }
 
             <td>{{ insc.nombreCarrera }}</td>
 
         </tr>
 
-        @if (inscripciones.length === 0) {
-            <tr>
-                <td colspan="4">
-                    No hay inscripciones registradas.
-                </td>
-            </tr>
-        }
+    </ng-template>
 
-    </tbody>
 
-</table>
+    <ng-template #emptymessage>
+
+        <tr>
+
+            <td colspan="4">
+                No hay inscripciones registradas.
+            </td>
+
+        </tr>
+
+    </ng-template>
+
+</p-table>

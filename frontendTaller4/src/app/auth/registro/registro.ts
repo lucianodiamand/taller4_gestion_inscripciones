@@ -126,7 +126,7 @@ export class RegistroComponent implements OnDestroy {
 	  
     this.subscription = this.authService.registrar(registroData).subscribe({
       next: () => {
-        this.router.navigate(['/ingresante']);
+        this.router.navigate(['/menu']);
       },
       error: (err) => {
         this.errorMensaje = err.error?.message || 'Error al registrar el usuario';

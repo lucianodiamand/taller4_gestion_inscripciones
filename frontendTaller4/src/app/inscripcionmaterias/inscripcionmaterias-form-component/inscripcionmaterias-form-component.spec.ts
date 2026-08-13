@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InscripcionmateriasFormComponent } from './inscripcionmaterias-form-component';
+import { InscripcionMateriaFormComponent } from './inscripcionmaterias-form-component';
 
 describe('InscripcionmateriasFormComponent', () => {
-  let component: InscripcionmateriasFormComponent;
-  let fixture: ComponentFixture<InscripcionmateriasFormComponent>;
+  let component: InscripcionMateriaFormComponent;
+  let fixture: ComponentFixture<InscripcionMateriaFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InscripcionmateriasFormComponent],
+      imports: [InscripcionMateriaFormComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(InscripcionmateriasFormComponent);
+    fixture = TestBed.createComponent(InscripcionMateriaFormComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
