@@ -14,4 +14,5 @@ import gestion_inscripciones.backendTaller4.entity.Materia;
 public interface InscripcionCarreraRepository extends JpaRepository<InscripcionCarrera, Long> {
 	// JpaRepository ya incluye por defecto los métodos: findAll(), findById(), save(), deleteById()
 	List<InscripcionCarrera> findByIngresanteId(Long ingresanteId);
+	boolean existsByIngresanteIdAndCarreraId(Long ingresanteId, Long carreraId);
 }

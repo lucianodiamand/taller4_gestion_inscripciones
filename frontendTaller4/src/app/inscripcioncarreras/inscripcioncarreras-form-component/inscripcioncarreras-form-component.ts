@@ -101,20 +101,37 @@ throw new Error('Method not implemented.');
       console.error('No se encontró el ingresante asociado al usuario.');
       return;
     }
-    
-    const datos = {
-      ingresanteId: ingresanteId,
-      carreraId: Number(this.inscripcionForm.value.carreraId),
-      fechaInscripcion: this.inscripcionForm.value.fechaInscripcion
-    };
+	const carreraIdSeleccionada = Number(this.inscripcionForm.value.carreraId);
 
-    this.inscripcionService.crear(datos).subscribe({
-      next: () => {
-        alert('¡Inscripción realizada con éxito!');
-        this.inscripcionForm.patchValue({ carreraId: '' });
-        this.cargarInscripciones();
-      },
-      error: err => console.error('Error al guardar inscripción:', err)
-    });
-  }
+	  // Validaciones locales rápidas si es un usuario tipo GUEST/Estudiante
+	  const yaEstaInscripto = this.inscripciones.some(
+	    ins => ins.carreraId === carreraIdSeleccionada
+	  );
+
+	  if (yaEstaInscripto) {
+	    alert('Ya te encuentras inscripto en esta carrera.');
+	    return;
+	  }
+
+	  const datos = {
+	    ingresanteId: ingresanteId,
+	    carreraId: carreraIdSeleccionada,
+	    fechaInscripcion: this.inscripcionForm.value.fechaInscripcion
+	  };
+
+	  this.inscripcionService.crear(datos).subscribe({
+	    next: () => {
+	      alert('¡Inscripción realizada con éxito!');
+	      this.inscripcionForm.patchValue({ carreraId: '' });
+	      this.cargarInscripciones();
+	    },
+	    error: (err) => {
+	      console.error('Error al guardar inscripción:', err);
+	      
+	      // Capturamos el mensaje que envía el backend
+	      const mensajeError = err?.error?.message || 'Ya te encuentras registrado en esta carrera o ocurrió un error.';
+	      alert(mensajeError);
+	    }
+	  });
+	}
 }

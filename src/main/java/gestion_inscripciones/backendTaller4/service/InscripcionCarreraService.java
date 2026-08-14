@@ -16,7 +16,8 @@ import gestion_inscripciones.backendTaller4.entity.InscripcionCarrera;
 import gestion_inscripciones.backendTaller4.repository.CarreraRepository;
 import gestion_inscripciones.backendTaller4.repository.IngresanteRepository;
 import gestion_inscripciones.backendTaller4.repository.InscripcionCarreraRepository;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @Service // para la logica de negocio
@@ -63,12 +64,16 @@ public class InscripcionCarreraService {
 
         Carrera carrera = carreraRepository.findById(dto.getCarreraId())
                 .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
-
+        
         InscripcionCarrera entidad = new InscripcionCarrera();
         entidad.setFechaInscripcion(dto.getFechaInscripcion());
         entidad.setIngresante(ingresante);
         entidad.setCarrera(carrera);
 
+        boolean existeInscripcion = inscripcionRepository.existsByIngresanteIdAndCarreraId(dto.getIngresanteId(), dto.getCarreraId());
+        if (existeInscripcion) {
+        	throw new IllegalArgumentException("El ingresante ya se encuentra inscripto en esta carrera.");
+        }
         
         InscripcionCarrera guardada = inscripcionRepository.save(entidad);
         emailService.enviarConfirmacionInscripcionCarrera(
