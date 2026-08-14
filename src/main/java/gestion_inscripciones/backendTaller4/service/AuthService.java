@@ -87,13 +87,15 @@ public class AuthService {
         String token = jwtUtil.generarToken(usuario.getUsername(), usuario.getRol().name());
 
         UsuarioResponseDTO response = new UsuarioResponseDTO();
+        //si es usuario admin va a tener NULL como id de ingresante
         response.setId(usuario.getId());
         response.setUsername(usuario.getUsername());
         response.setRol(usuario.getRol());
         response.setToken(token);
-        response.setIngresanteId(usuario.getIngresante().getId());
+        response.setIngresanteId(usuario.getIngresante() != null ? usuario.getIngresante().getId() : null); 
 
         return response;
     }
 
 }
+
