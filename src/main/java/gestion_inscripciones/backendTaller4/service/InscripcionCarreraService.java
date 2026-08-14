@@ -29,7 +29,10 @@ public class InscripcionCarreraService {
 
     @Autowired
     private CarreraRepository carreraRepository;
-
+    
+    @Autowired
+    private EmailService emailService; 
+    
     // Obtener todas las inscripciones (READ)
     public List<InscripcionCarreraResponseDTO> obtenerTodas() {
         return inscripcionRepository.findAll()
@@ -66,7 +69,12 @@ public class InscripcionCarreraService {
         entidad.setIngresante(ingresante);
         entidad.setCarrera(carrera);
 
+        
         InscripcionCarrera guardada = inscripcionRepository.save(entidad);
+        emailService.enviarConfirmacionInscripcionCarrera(
+        		guardada.getIngresante().getEmail(),
+        		guardada.getIngresante().getNombre(),
+        		guardada.getCarrera().getNombre());
         return convertirAResponseDTO(guardada);
     }
     
@@ -86,6 +94,10 @@ public class InscripcionCarreraService {
         entidad.setCarrera(carrera);
 
         InscripcionCarrera actualizada = inscripcionRepository.save(entidad);
+        emailService.enviarConfirmacionInscripcionCarrera(
+        		actualizada.getIngresante().getEmail(),
+        		actualizada.getIngresante().getNombre(),
+        		actualizada.getCarrera().getNombre());
         return convertirAResponseDTO(actualizada);
     }
     
