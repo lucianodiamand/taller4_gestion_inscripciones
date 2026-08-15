@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 
 import gestion_inscripciones.backendTaller4.dto.InscripcionCarreraRequestDTO;
 import gestion_inscripciones.backendTaller4.dto.InscripcionCarreraResponseDTO;
-import gestion_inscripciones.backendTaller4.dto.MateriaDTO;
+//import gestion_inscripciones.backendTaller4.dto.MateriaDTO;
 import gestion_inscripciones.backendTaller4.entity.Carrera;
 import gestion_inscripciones.backendTaller4.entity.Ingresante;
 import gestion_inscripciones.backendTaller4.entity.InscripcionCarrera;
 import gestion_inscripciones.backendTaller4.repository.CarreraRepository;
 import gestion_inscripciones.backendTaller4.repository.IngresanteRepository;
 import gestion_inscripciones.backendTaller4.repository.InscripcionCarreraRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+//import org.springframework.http.HttpStatus;
+//import org.springframework.web.server.ResponseStatusException;
 
 
 @Service // para la logica de negocio

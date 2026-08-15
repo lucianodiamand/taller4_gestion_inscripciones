@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gestion_inscripciones.backendTaller4.dto.InscripcionCarreraRequestDTO;
 import gestion_inscripciones.backendTaller4.dto.InscripcionCarreraResponseDTO;
-import gestion_inscripciones.backendTaller4.dto.MateriaDTO;
+//import gestion_inscripciones.backendTaller4.dto.MateriaDTO;
 import gestion_inscripciones.backendTaller4.service.InscripcionCarreraService;
 
 
