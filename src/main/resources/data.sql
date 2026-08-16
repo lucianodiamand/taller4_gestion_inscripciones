@@ -136,5 +136,60 @@ INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
 	VALUES (52, 'Transportes y Materiales 2', 2, 2, 3) ON CONFLICT (id) DO NOTHING;
 INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
 	VALUES (53, 'Tratados de Residuos 2', 2, 2, 3) ON CONFLICT (id) DO NOTHING;
+	
+--de carrera id==4 'Contador Público'
 
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (54, 'Calculo 1', 1, 1, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (55, 'Intro. Economía', 1, 1, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (56, 'Estado y Leyes', 1, 1, 4) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (57, 'Calculo 2', 1, 2, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (58, 'Intro. Economía 2', 1, 2, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (59, 'Organización de Empresas', 1, 2, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (60, 'Intro. Costos y Ganancias', 1, 2, 4) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (61, 'Macroeconomía 1', 2, 1, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (62, 'Microeconomía 1', 2, 1, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (63, 'Costos y Ganancias', 2, 1, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (64, 'Sistema tributario Argentino', 2, 1, 4) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (65, 'Declaración y Liquidación de Impuestos', 2, 2, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (66, 'Microeconomía 2', 2, 2, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (67, 'Macroeconomía 2', 2, 2, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (68, 'Relación de independencia y dependencia', 2, 2, 4) ON CONFLICT (id) DO NOTHING;
+	
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (69, 'Modelos Economicos', 3, 1, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (70, 'Análisis de Ganancias y Costos', 3, 1, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (71, 'Mercado Internacional', 3, 1, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (72, 'Modelo Agrario y Ganadero Argentino', 3, 1, 4) ON CONFLICT (id) DO NOTHING;
+	
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (73, 'Modelos Economicos 2', 3, 2, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (74, 'Sistema de Seguros', 3, 2, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (75, 'Mercado de Bolsa de Valores', 3, 2, 4) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (76, 'Contabilidad', 3, 2, 4) ON CONFLICT (id) DO NOTHING;
+	
+	
 	
