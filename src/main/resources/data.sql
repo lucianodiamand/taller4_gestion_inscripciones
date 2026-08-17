@@ -238,3 +238,210 @@ INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
 	VALUES (95, 'Finanzas Públicas y Derecho Tributario', 3, 1, 5) ON CONFLICT (id) DO NOTHING;
 INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
 	VALUES (96, 'CONTRATOS. PARTE ESPECIAL', 3, 1, 5) ON CONFLICT (id) DO NOTHING;
+	
+--de carrera id == 6 'Arquitectura'
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (97, 'Introducción a la Arquitectura', 1, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (98, 'Expresión Gráfica I', 1, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (99, 'Materialidad I', 1, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (100, 'Física', 1, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (101, 'Matemáticas I', 1, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (102, 'Epistemología I', 1, 1, 6) ON CONFLICT (id) DO NOTHING;	
+	
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (103, 'Introducción a la Arquitectura II', 1, 2, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (104, 'Expresión Gráfica II', 1, 2, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (105, 'Materialidad II', 1, 2, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (106, 'Física II', 1, 2, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (107, 'Matemáticas II', 1, 2, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (108, 'Epistemología II', 1, 2, 6) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (109, 'Análisis Proyectual I', 2, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (110, 'Materialidad III', 2, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (111, 'Estática y Resistencia de los materiales', 2, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (112, 'Historia de la Arquitectura I', 2, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (113, 'Geometría Descriptiva', 2, 1, 6) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (114, 'Análisis Proyectual II', 3, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (115, 'Diseño de Estructuras I', 3, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (116, 'Introducción al Urbanismo', 3, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (117, 'Historia de la Arquitectura II', 3, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (118, 'Matemáticas III', 3, 1, 6) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (119, 'Proyecto Arquitéctonico I', 4, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (120, 'Diseño de Estructuras II', 4, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (121, 'Análisis Urbanístico', 4, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (122, 'Producción Edilicia I', 4, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (123, 'Historia de la Arquitectura III', 4, 1, 6) ON CONFLICT (id) DO NOTHING;
+	
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (124, 'Proyecto Arquitéctonico II', 5, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (125, 'Intervención Urbanística', 5, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (126, 'Producción Edilicia II', 5, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (127, 'Epistemología III', 5, 1, 6) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (128, 'Proyecto Final', 6, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (129, 'Práctica Profesional Supervisada', 6, 1, 6) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (130, 'Idioma Moderno', 6, 1, 6) ON CONFLICT (id) DO NOTHING;
+	
+-- DE CARRERA ID==7 'MEDICINA'
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (131, 'Crecimiento y Desarrollo', 1, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (132, 'Nutrición', 1, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (133, 'Medicina Social', 1, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (134, 'Introducción a la Salud Pública', 1, 1, 7) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (135, 'El Hombre y su Medio', 2, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (136, 'Injuria', 2, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (137, 'Metodología de la Investigación', 2, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (138, 'Ingles', 2, 1, 7) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (139, 'Defensa', 3, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (140, 'Trabajo Comunitario', 3, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (141, 'Salud Pública', 3, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (142, 'Salud Socioambienta', 3, 1, 7) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (143, 'Historia de la Medicina', 4, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (144, 'Bioética', 4, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (145, 'Medicina Interna', 4, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (146, 'Neurología', 4, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (147, 'Técnica Quirúrgica', 4, 1, 7) ON CONFLICT (id) DO NOTHING;
+	
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (148, 'Infectología', 5, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (149, 'Pediatría clínica y desarrollo infantil', 5, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (150, 'Salud de la mujer, tocoginecología y salud reproductiva', 5, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (151, 'Semiología', 5, 1, 7) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (152, 'Práctica intensiva supervisada', 6, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (153, 'Atención Primaria de la Salud', 6, 1, 7) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (154, 'Cirugía General', 6, 1, 7) ON CONFLICT (id) DO NOTHING;
+
+-- de carrera id==8 'Psicologia'
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (155, 'Desarrollos Psicológicos Contemporáneos', 1, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (156, 'Problemas Epistemológicos de la Psicología', 1, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (157, 'Psicología', 1, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (158, 'Problemática Filosófica', 1, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (159, 'Lingüística y Discursividad Social', 1, 1, 8) ON CONFLICT (id) DO NOTHING;
+	
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (160, 'Historia de la Psicología', 2, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (161, 'Metodologías y Gestión de la Investigación en Psicología', 2, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (162, 'Psicoanálisis I', 2, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (163, 'Teoría Social', 2, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (164, 'Biología Humana', 2, 1, 8) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (165, 'Epistemología de la Psicología y el Psicoanális', 3, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (166, 'Perspectivas en Educación', 3, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (167, 'Psicoanálisis II', 3, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (168, 'Psicología Social y Comunitaria', 3, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (169, 'Neuropsicología y Psicología del Desarrollo', 3, 1, 8) ON CONFLICT (id) DO NOTHING;
+	
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (170, 'Historia y Epistemología de la Psicología', 4, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (171, 'Evaluación y Psicodiagnóstico', 4, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (172, 'Psicoanálisis y Psicopatología', 4, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (173, 'Organizaciones e Instituciones', 4, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (174, 'Psicología del Lenguaje y del Desarrollo', 4, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (175, 'Psicopatología y Neurofarmacología', 4, 1, 8) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (176, 'Salud Pública y Salud Mental', 5, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (177, 'Psicología en el Ámbito Jurídico Forense', 5, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (178, 'Psicología en Educació', 5, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (179, 'Psicoterapias', 5, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (180, 'Clínica I', 5, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (181, 'Psicología en el Trabajo', 5, 1, 8) ON CONFLICT (id) DO NOTHING;
+	
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (182, 'Intervenciones en Niñez y Adolescencia', 6, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (183, 'Metodologías de la Investigación en Psicología', 6, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (184, 'Clínica II', 6, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (185, 'Práctica Profesional Supervisada', 6, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (186, 'Trabajo Integrador Final', 6, 1, 8) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (187, 'Seminarios y Prácticas de Investigación', 6, 1, 8) ON CONFLICT (id) DO NOTHING;
