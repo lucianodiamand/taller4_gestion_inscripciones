@@ -9,15 +9,36 @@ import { AuthService } from '../../auth/auth.service';
 
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-materias',
-  imports: [CommonModule, RouterLink, ButtonModule, TableModule],
+  imports: [
+	CommonModule,
+	RouterLink,
+	ButtonModule, 
+	TableModule,
+	InputTextModule,
+	IconFieldModule,
+	InputIconModule,
+	SelectModule],
   templateUrl: './materia.component.html',
   styleUrl: './materia.component.css',
 })
 export class MateriaComponent implements OnInit {
   materias$!: Observable<Array<MateriasDto>> // observevable con arreglo de MateriasDto
+  
+  	aniosOptions = [
+      { label: '1° Año', value: 1 },
+      { label: '2° Año', value: 2 },
+      { label: '3° Año', value: 3 },
+      { label: '4° Año', value: 4 },
+      { label: '5° Año', value: 5 },
+	  { label: '6° Año', value: 6 },
+    ]; //para poder filtrar por anios en el html
   
     constructor(private readonly servicio: MateriaService){} //inyecto el service
 

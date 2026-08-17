@@ -8,10 +8,19 @@ import { AuthService } from '../../auth/auth.service';
 
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
   selector: 'app-carreras',
-  imports: [CommonModule, RouterLink, ButtonModule, TableModule],
+  imports: [CommonModule, 
+	RouterLink, 
+	ButtonModule, 
+	TableModule,
+	InputTextModule,
+	IconFieldModule,
+	InputIconModule],
   templateUrl: './carreras.component.html',
   styleUrl: './carreras.component.css',
 })

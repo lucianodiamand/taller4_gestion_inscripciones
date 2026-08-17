@@ -16,9 +16,37 @@
 
 <br><br>
 
-<p-table [value]="(materias$ | async) ?? []" stripedRows>
+<!-- Campo de búsqueda con PrimeNG -->
+<p-iconField iconPosition="left">
+  <p-inputIcon styleClass="pi pi-search" />
+  <input 
+    pInputText 
+    type="text" 
+    (input)="dt.filterGlobal($any($event.target).value, 'contains')" 
+    placeholder="Buscar materia por nombre..." />
+</p-iconField>
 
-  <ng-template #header>
+<br><br>
+
+<!-- Selector de Año -->
+<p-select 
+  [options]="aniosOptions" 
+  optionLabel="label"
+  optionValue="value"
+  placeholder="Filtrar por año" 
+  [showClear]="true"
+  (onChange)="dt.filter($event.value, 'anio', 'equals')">
+</p-select>
+
+<br><br>
+
+<p-table 
+	#dt
+	[value]="(materias$ | async) ?? []" 
+	[globalFilterFields]="['nombre']"
+	stripedRows>
+
+	<ng-template #header>
 
     <tr>
       <th>Nombre</th>
