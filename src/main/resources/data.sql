@@ -191,5 +191,50 @@ INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
 INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
 	VALUES (76, 'Contabilidad', 3, 2, 4) ON CONFLICT (id) DO NOTHING;
 	
+--de carrera id==5 'Abogacía'
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (77, 'Historia del derecho', 1, 1, 5) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (78, 'Etica y ciudadania', 1, 1, 5) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (79, 'Constitución Nacional', 1, 1, 5) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (80, 'Código Penal Argentino', 1, 1, 5) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (81, 'Sistema Juridico Argentino', 1, 2, 5) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (82, 'Derecho a la defensa y representación', 1, 2, 5) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (83, 'Procesamiento y Protocolo Juridico', 1, 2, 5) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (84, 'Constitución Nacional 2', 1, 2, 5) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (85, 'Derecho Internacional', 2, 1, 5) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (86, 'Derechos Reales y Derecho de Familia y Sucesiones', 2, 1, 5) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (87, 'Derecho Administrativo y Finanzas Públicas', 2, 1, 5) ON CONFLICT (id) DO NOTHING;
 	
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (88, 'Derecho Laboral y de la Seguridad Social', 2, 2, 5) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (89, 'Sociedades Civiles y Comerciale', 2, 2, 5) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (90, 'Derecho Internacional Público y Privado', 2, 2, 5) ON CONFLICT (id) DO NOTHING;
 	
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (91, 'Derecho Ambiental y de los Recursos Naturales', 3, 1, 5) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (92, 'Filosofía del Derecho y Ética Profesional', 3, 1, 5) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (93, 'Práctica Profesional Supervisada', 3, 1, 5) ON CONFLICT (id) DO NOTHING;
+	
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (94, 'Patrocinio Jurídico', 3, 1, 5) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (95, 'Finanzas Públicas y Derecho Tributario', 3, 1, 5) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera)
+	VALUES (96, 'CONTRATOS. PARTE ESPECIAL', 3, 1, 5) ON CONFLICT (id) DO NOTHING;
