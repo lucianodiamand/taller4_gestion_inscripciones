@@ -5,7 +5,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+//import org.springframework.web.server.ResponseStatusException;
 
 import gestion_inscripciones.backendTaller4.dto.InscripcionMateriaRequestDTO;
 import gestion_inscripciones.backendTaller4.dto.InscripcionMateriaResponseDTO;
@@ -71,7 +73,18 @@ public class InscripcionMateriaService {
         entidad.setInscripcionCarrera(insCarrera);
         entidad.setMateria(materia);
 
+        
+        boolean existeInscripcion = inscripcionMateriaRepository.existsByInscripcionCarreraIdAndMateriaId(
+        		dto.getInscripcionCarreraId(),
+        		dto.getMateriaId());
+        
+        if(existeInscripcion) {
+        	throw new IllegalArgumentException(
+        			"El ingresante ya esta inscripto en esta materia"); 
+        }
+        
         InscripcionMateria guardada = inscripcionMateriaRepository.save(entidad);
+
         return convertirAResponseDTO(guardada);
     }
     

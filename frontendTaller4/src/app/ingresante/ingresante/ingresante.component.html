@@ -1,57 +1,87 @@
-<a routerLink="/menu">
-  ← Menú principal
+<a class="volver" routerLink="/menu">
+    <i class="pi pi-arrow-left"></i>
+    Menú principal
 </a>
 
 <h2>Ingresantes</h2>
 
-<a routerLink="/ingresante/crear">
-  <p-button label="Nuevo Ingresante" icon="pi pi-plus"></p-button>
-</a>
+@if(rol === 'ADMIN'){
+	<a routerLink="/ingresante/crear">
+	  <p-button label="Nuevo Ingresante" icon="pi pi-plus"></p-button>
+	</a>
+}
 
 <br><br>
 
-<p-table [value]="(ingresantes$ | async) ?? []" stripedRows>
+@if(rol === 'ADMIN'){
+	<p-table [value]="(ingresantes$ | async) ?? []" stripedRows>
 
-  <ng-template #header>
-    <tr>
-      <th>ID</th>
-      <th>Nombre</th>
-      <th>Apellido</th>
-      <th>Tipo Documento</th>
-      <th>Número Documento</th>
-      <th>Edad</th>
-      <th>Email</th>
-      <th>Acciones</th>
-    </tr>
-  </ng-template>
+	  <ng-template #header>
+	    <tr>
+	      <th>ID</th>
+	      <th>Nombre</th>
+	      <th>Apellido</th>
+	      <th>Tipo Documento</th>
+	      <th>Número Documento</th>
+	      <th>Edad</th>
+	      <th>Email</th>
+	      <th>Acciones</th>
+	    </tr>
+	  </ng-template>
 
-  <ng-template #body let-ingresante>
-    <tr>
-      <td>{{ ingresante.id }}</td>
-      <td>{{ ingresante.nombre }}</td>
-      <td>{{ ingresante.apellido }}</td>
-      <td>{{ ingresante.tipoDocumento }}</td>
-      <td>{{ ingresante.numeroDocumento }}</td>
-      <td>{{ ingresante.edad }}</td>
-      <td>{{ ingresante.email }}</td>
+	  <ng-template #body let-ingresante>
+	    <tr>
+	      <td>{{ ingresante.id }}</td>
+	      <td>{{ ingresante.nombre }}</td>
+	      <td>{{ ingresante.apellido }}</td>
+	      <td>{{ ingresante.tipoDocumento }}</td>
+	      <td>{{ ingresante.numeroDocumento }}</td>
+	      <td>{{ ingresante.edad }}</td>
+	      <td>{{ ingresante.email }}</td>
 
-      <td>
-        <p-button
-          label="Editar"
-          icon="pi pi-pencil"
-          [routerLink]="['/ingreso/editar', ingresante.id]"
-        />
+	      <td>
+	        <p-button
+	          label="Editar"
+	          icon="pi pi-pencil"
+	          [routerLink]="['/ingreso/editar', ingresante.id]"
+	        />
 
-        <p-button
-          label="Borrar"
-          icon="pi pi-trash"
-          severity="danger"
-          (click)="borrar(ingresante.id)"
-        />
-      </td>
-    </tr>
-  </ng-template>
+	        <p-button
+	          label="Borrar"
+	          icon="pi pi-trash"
+	          severity="danger"
+	          (click)="borrar(ingresante.id)"
+	        />
+	      </td>
+	    </tr>
+	  </ng-template>
 
-</p-table>
+	</p-table>
+
+}
+
+  <h3>Mis datos</h3>
+
+  @if(ingresante) {
+
+    <p><strong>ID:</strong> {{ ingresante.id }}</p>
+    <p><strong>Nombre:</strong> {{ ingresante.nombre }}</p>
+    <p><strong>Apellido:</strong> {{ ingresante.apellido }}</p>
+    <p><strong>Tipo de documento:</strong> {{ ingresante.tipoDocumento }}</p>
+    <p><strong>Número de documento:</strong> {{ ingresante.numeroDocumento }}</p>
+    <p><strong>Edad:</strong> {{ ingresante.edad }}</p>
+    <p><strong>Email:</strong> {{ ingresante.email }}</p>
+
+    <p-button
+      label="Editar mis datos"
+      icon="pi pi-pencil"
+      [routerLink]="['/ingresante/editar', ingresante.id]"
+    />
+
+  } @else {
+
+    <p>No se encontraron los datos del ingresante.</p>
+
+  }
 
 

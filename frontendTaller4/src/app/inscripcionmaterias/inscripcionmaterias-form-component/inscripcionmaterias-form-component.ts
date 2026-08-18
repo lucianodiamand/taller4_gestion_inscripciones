@@ -148,7 +148,19 @@ export class InscripcionMateriaFormComponent implements OnInit {
       this.inscripcionForm.markAllAsTouched();
       return;
     }
+	
+	const materiaIdSeleccionada = Number(this.inscripcionForm.value.materiaId);
 
+		  // Validaciones locales rápidas si es un usuario tipo GUEST/Estudiante
+		  const yaEstaInscripto = this.inscripciones.some(
+		    ins => ins.materiaId === materiaIdSeleccionada
+		  );
+
+		  if (yaEstaInscripto) {
+		    alert('Ya te encuentras inscripto en esta materia.');
+		    return;
+		  }
+	  
     this.inscripcionMateriaService.crear(this.inscripcionForm.value).subscribe({
       next: () => {
         alert('¡Inscripción a materia realizada con éxito!');
@@ -159,7 +171,13 @@ export class InscripcionMateriaFormComponent implements OnInit {
         this.materiasFiltradas = [];
         this.cargarInscripciones();
       },
-      error: (err: any) => console.error('Error al guardar inscripción:', err)
+	  error: (err) => {
+	  	      console.error('Error al guardar inscripción:', err);
+	  	      
+	  	      // Capturamos el mensaje que envía el backend
+	  	      const mensajeError = err?.error?.message || 'Ya te encuentras registrado en esta materia o ocurrió un error.';
+	  	      alert(mensajeError);
+	  	    }
     });
   }
 }

@@ -13,4 +13,5 @@ public interface InscripcionMateriaRepository extends JpaRepository<InscripcionM
 	// Spring Data JPA crea la consulta SQL automáticamente basándose en la relación con la entidad Ingresante/Estudiante
 	List<InscripcionMateria> findByInscripcionCarreraIngresanteId(Long ingresanteId);
 	// JpaRepository ya incluye por defecto los métodos: findAll(), findById(), save(), deleteById()
+	boolean existsByInscripcionCarreraIdAndMateriaId(Long inscripcionCarreraId, Long materiaId);
 }

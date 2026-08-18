@@ -8,11 +8,12 @@ import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-ingresante-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, InputTextModule, SelectModule, ButtonModule],
+  imports: [ReactiveFormsModule, CommonModule, InputTextModule, SelectModule, ButtonModule, RouterLink],
   templateUrl: './ingresante-form-component.html',
   styleUrl: './ingresante-form-component.css',
 })
@@ -28,9 +29,9 @@ export class IngresanteFormComponent implements OnInit, OnDestroy {
   constructor(
     private readonly fb: FormBuilder, // inyecto un FormBuilder para un formulario
     private readonly servicio: IngresanteService, //inyecto el service
-    private readonly route: ActivatedRoute, // sirve para indicar la ruta en la que estoy parado y acceder a informacion de la url
-    private readonly router: Router // sirve para cambiar de url sin que el usuario clickee un link
-  ) {
+	private readonly route: ActivatedRoute, // sirve para indicar la ruta en la que estoy parado y acceder a informacion de la url
+	private readonly router: Router // sirve para cambiar de url sin que el usuario clickee un link
+	) {
     this.ingresanteForm = this.fb.group({
 	  //solo letras en nombre y apellido
       nombre: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
@@ -130,7 +131,7 @@ guardar() {
             // this.subscription se usa para guardar la referencia de una suscripción a un Observable y poder cancelarla más tarde
       // next y error son las callbacks que se ejecutan cuando el navegador recibe la respuesta de la peticion HTTP al backend
       next: () => { // define que accion se debe ejecutar cada vez que el observable emite un nuevo valor exitoso
-        this.router.navigate(['/ingreso']); // vuelvo a la url principal del navegador para ingresos
+        this.router.navigate(['/ingresante']); // vuelvo a la url principal del navegador para ingresos
       },
       error: (err) => { // se ejecuta si algo sale mal
         console.error('Error al actualizar el ingresante:', err);
@@ -139,7 +140,7 @@ guardar() {
   } else { // si no recibo un id es porque se quiere crear un ingresante
     this.subscription = this.servicio.crear(this.ingresanteForm.value).subscribe({ // this.ingresanteForm.value devuelve un objeto plano con los campos del formulario y crear arma el observable
       next: () => {
-        this.router.navigate(['/ingreso']);
+        this.router.navigate(['/ingresante']);
       },
       error: (err) => {
         console.error('Error al crear el ingresante:', err);
