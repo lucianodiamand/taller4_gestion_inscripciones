@@ -6,6 +6,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { authInterceptor } from './auth/auth.interceptor'
+//import { AuthService } from './auth/auth.service';
 
 // Importaciones de PrimeNG y Temas
 import { providePrimeNG } from 'primeng/config';

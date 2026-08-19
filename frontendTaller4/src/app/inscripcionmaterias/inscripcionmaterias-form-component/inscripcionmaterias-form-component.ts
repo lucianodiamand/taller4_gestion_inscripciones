@@ -133,7 +133,7 @@ export class InscripcionMateriaFormComponent implements OnInit {
   }
 
   this.materiasFiltradas = this.materias.filter(m => {
-    return m.carreraId === inscripcionElegida.carreraId && m.anio === 1 && m.cuatrimestre === 1;
+    return m.carreraId === inscripcionElegida.carreraId;// && m.anio === 1 && m.cuatrimestre === 1;
     // en el callback la materia m se queda si se cumple la condicion, y filter arma el nuevo arreglo
   });
 

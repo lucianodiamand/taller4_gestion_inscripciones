@@ -50,14 +50,14 @@ public class InscripcionMateriaService {
                 .map(this::convertirAResponseDTO)
                 .collect(Collectors.toList());
     }
-    
+    /*
     //validacion para 1er año: 
     
     private void validarMateria(Materia materia) {
     	if(materia.getAnio() != 1 || materia.getCuatrimestre() != 1) {
     		throw new RuntimeException("Solo se permiten inscripciones a materias de primer año y primer cuatrimestre "); 
     	}
-    }
+    }*/
     // Guardar / Crear inscripción (CREATE)
     public InscripcionMateriaResponseDTO guardar(InscripcionMateriaRequestDTO dto) {
         InscripcionCarrera insCarrera = inscripcionCarreraRepository.findById(dto.getInscripcionCarreraId())
@@ -66,7 +66,7 @@ public class InscripcionMateriaService {
         Materia materia = materiaRepository.findById(dto.getMateriaId())
                 .orElseThrow(() -> new RuntimeException("Materia no encontrada"));
 
-        validarMateria(materia);
+        //validarMateria(materia);
         
         InscripcionMateria entidad = new InscripcionMateria();
         entidad.setFechaInscripcion(dto.getFechaInscripcion());
@@ -101,7 +101,7 @@ public class InscripcionMateriaService {
         Materia materia = materiaRepository.findById(dto.getMateriaId())
                 .orElseThrow(() -> new RuntimeException("Materia no encontrada"));
 
-        validarMateria(materia);
+        //validarMateria(materia);
         // 3. Actualizamos los datos
         entidad.setFechaInscripcion(dto.getFechaInscripcion());
         entidad.setInscripcionCarrera(insCarrera);
@@ -133,6 +133,6 @@ public class InscripcionMateriaService {
 
         return dto;
     }
-    
+
 }
 

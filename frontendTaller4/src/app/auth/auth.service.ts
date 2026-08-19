@@ -1,12 +1,14 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable , inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
 import { UsuarioRequestDTO, UsuarioResponseDTO, UsuarioRegisterRequestDTO } from '../../models/auth-dto';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = 'http://localhost:8080/auth';
+  private readonly router = inject(Router);
 
   registrar(data: UsuarioRegisterRequestDTO): Observable<UsuarioResponseDTO> {
     return this.http.post<UsuarioResponseDTO>(`${this.apiUrl}/register`, data).pipe(
@@ -67,7 +69,13 @@ export class AuthService {
   }
 
   logout(): void {
+	// Limpiar almacenamiento local / de sesión
     localStorage.removeItem('auth_token');
     localStorage.removeItem('usuario');
+	localStorage.removeItem('rol');
+	sessionStorage.clear();
+	
+	// 2. Redirigir al login
+	this.router.navigate(['/login']);
   }
 }

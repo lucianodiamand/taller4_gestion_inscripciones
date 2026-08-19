@@ -1,0 +1,5 @@
+.header {
+  display: flex;
+  justify-content: flex-end; /* Empuja el contenido hacia la derecha */
+  padding: 1rem;            /* Opcional: para darle un margen interno */
+}
