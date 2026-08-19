@@ -3,8 +3,6 @@
     Menú principal
 </a>
 
-<h2>Ingresantes</h2>
-
 @if(rol === 'ADMIN'){
 	<a routerLink="/ingresante/crear">
 	  <p-button label="Nuevo Ingresante" icon="pi pi-plus"></p-button>
@@ -43,7 +41,7 @@
 	        <p-button
 	          label="Editar"
 	          icon="pi pi-pencil"
-	          [routerLink]="['/ingreso/editar', ingresante.id]"
+	          [routerLink]="['/ingresante/editar', ingresante.id]"
 	        />
 
 	        <p-button
@@ -60,28 +58,30 @@
 
 }
 
-  <h3>Mis datos</h3>
+<h3>Mis datos</h3>
 
-  @if(ingresante) {
+@if (cargando) {
 
-    <p><strong>ID:</strong> {{ ingresante.id }}</p>
-    <p><strong>Nombre:</strong> {{ ingresante.nombre }}</p>
-    <p><strong>Apellido:</strong> {{ ingresante.apellido }}</p>
-    <p><strong>Tipo de documento:</strong> {{ ingresante.tipoDocumento }}</p>
-    <p><strong>Número de documento:</strong> {{ ingresante.numeroDocumento }}</p>
-    <p><strong>Edad:</strong> {{ ingresante.edad }}</p>
-    <p><strong>Email:</strong> {{ ingresante.email }}</p>
+  <p><i>Cargando datos del ingresante...</i></p>
 
-    <p-button
-      label="Editar mis datos"
-      icon="pi pi-pencil"
-      [routerLink]="['/ingresante/editar', ingresante.id]"
-    />
+} @else if (ingresante) {
 
-  } @else {
+  
+  <p><strong>Nombre:</strong> {{ ingresante.nombre }}</p>
+  <p><strong>Apellido:</strong> {{ ingresante.apellido }}</p>
+  <p><strong>Tipo de documento:</strong> {{ ingresante.tipoDocumento }}</p>
+  <p><strong>Número de documento:</strong> {{ ingresante.numeroDocumento }}</p>
+  <p><strong>Edad:</strong> {{ ingresante.edad }}</p>
+  <p><strong>Email:</strong> {{ ingresante.email }}</p>
 
-    <p>No se encontraron los datos del ingresante.</p>
+  <p-button
+    label="Editar mis datos"
+    icon="pi pi-pencil"
+    [routerLink]="['/ingresante/editar', ingresante.id]"
+  />
 
-  }
+} @else {
 
+  <p>No se encontraron los datos del ingresante.</p>
 
+}

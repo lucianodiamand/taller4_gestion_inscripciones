@@ -7,7 +7,7 @@ import { IngresanteDto } from '../../models/ingresante-dto';
   providedIn: 'root',
 })
 export class IngresanteService {
-  private apiUrl = 'http://localhost:8080/ingreso';
+  private apiUrl = 'http://localhost:8080/ingresante';
 
   constructor(private http: HttpClient) {}
 

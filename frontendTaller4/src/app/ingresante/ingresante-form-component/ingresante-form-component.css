@@ -17,3 +17,20 @@ input[type=number].no-spinners {
   font-size: 0.875rem;
   margin-left: 8px;
 }
+
+.volver {
+    display: inline-block;
+
+    margin-bottom: 20px;
+
+    padding: 10px 15px;
+
+    background-color: #616161;
+    color: white;
+
+    text-decoration: none;
+    border-radius: 5px;
+}
+.volver:hover {
+    background-color: #424242;
+}

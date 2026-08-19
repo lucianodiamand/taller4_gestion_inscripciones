@@ -19,7 +19,7 @@ import gestion_inscripciones.backendTaller4.dto.IngresanteDTO;
 import gestion_inscripciones.backendTaller4.service.IngresanteService;
 
 @RestController
-@RequestMapping("/ingreso")
+@RequestMapping("/ingresante")
 public class IngresanteController {
 	
 	@Autowired
