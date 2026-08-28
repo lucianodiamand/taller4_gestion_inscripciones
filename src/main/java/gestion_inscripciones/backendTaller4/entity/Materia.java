@@ -41,7 +41,7 @@ public class Materia {
     @JoinTable( // relaciono la entidad materia consigo misma con una tabla intermedia
         name = "materia_correlativa",
         joinColumns = @JoinColumn(name = "materia_id", nullable = false), // representa la materia desde la que estoy partiendo
-        inverseJoinColumns = @JoinColumn(name = "correlativa_id") // representa la materia relacionada a la anterior (la correlativa)
+        inverseJoinColumns = @JoinColumn(name = "correlativa_id", nullable = false) // representa la materia relacionada a la anterior (la correlativa)
     )
     private List<Materia> correlativas;
     
