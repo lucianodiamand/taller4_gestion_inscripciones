@@ -1,6 +1,7 @@
 package gestion_inscripciones.backendTaller4.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,4 +15,7 @@ public interface InscripcionMateriaRepository extends JpaRepository<InscripcionM
 	List<InscripcionMateria> findByInscripcionCarreraIngresanteId(Long ingresanteId);
 	// JpaRepository ya incluye por defecto los métodos: findAll(), findById(), save(), deleteById()
 	boolean existsByInscripcionCarreraIdAndMateriaId(Long inscripcionCarreraId, Long materiaId);
+	
+	Optional<InscripcionMateria> findByInscripcionCarreraIngresanteIdAndMateriaId(Long ingresanteId, Long materiaId);
+	// busca una inscripcion a carrera cucya incripcion a carrera sea del id del ingresante y cuya materia tenga ese id
 }

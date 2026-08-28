@@ -25,6 +25,9 @@ public class InscripcionMateria {
     @Column(nullable = false)
     private LocalDate fechaInscripcion;
     
+    @Column
+    private Integer nota;
+    
     
     @ManyToOne(optional = false)//una inscripcion a carrera puede tener 0 o muchas inscripciones a meaterias 
     @JoinColumn(name = "inscripcion_carrera_id", nullable = false) //para determinar a que carrera pertenece la inscripcion
@@ -63,5 +66,15 @@ public class InscripcionMateria {
 	public Long getId() {
 		return id;
 	}
+
+	public Integer getNota() {
+		return nota;
+	}
+
+	public void setNota(Integer nota) {
+		this.nota = nota;
+	}
+
+
     
 }

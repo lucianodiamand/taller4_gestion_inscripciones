@@ -50,6 +50,38 @@ public class InscripcionMateriaService {
                 .map(this::convertirAResponseDTO)
                 .collect(Collectors.toList());
     }
+    
+    private boolean materiaAprobada(Long ingresanteId, Long materiaId) {
+
+        Optional<InscripcionMateria> inscripcion = // busca si el ingresante tiene una incripcion a la materia con ese id
+            inscripcionMateriaRepository
+                .findByInscripcionCarreraIngresanteIdAndMateriaId(ingresanteId, materiaId);
+
+        if (inscripcion.isPresent() && inscripcion.get().getNota() != null && inscripcion.get().getNota() >= 6) {
+            return true;
+        } // si encuentra una inscripcion, su nota no es null y es mayor o igual a 6
+
+        return false;
+    }
+    
+    private void validarCorrelativas(Long ingresanteId, Materia materia) {
+
+        if (materia.getCorrelativas() == null || materia.getCorrelativas().isEmpty()) {
+            return;
+        }
+
+        for (Materia correlativa : materia.getCorrelativas()) {// recorro las correlativas de una materia
+            if (!materiaAprobada(ingresanteId, correlativa.getId())) { // si no esta aprobada..
+                throw new IllegalArgumentException(
+                    "No puede inscribirse a "
+                    + materia.getNombre()
+                    + " porque no aprobó "
+                    + correlativa.getNombre()
+                );
+            }
+        }
+    }
+    
     /*
     //validacion para 1er año: 
     
@@ -65,6 +97,10 @@ public class InscripcionMateriaService {
 
         Materia materia = materiaRepository.findById(dto.getMateriaId())
                 .orElseThrow(() -> new RuntimeException("Materia no encontrada"));
+        
+        Long ingresanteId = insCarrera.getIngresante().getId();
+        
+        validarCorrelativas(ingresanteId, materia);
 
         //validarMateria(materia);
         
@@ -72,6 +108,7 @@ public class InscripcionMateriaService {
         entidad.setFechaInscripcion(dto.getFechaInscripcion());
         entidad.setInscripcionCarrera(insCarrera);
         entidad.setMateria(materia);
+        entidad.setNota(null);
 
         
         boolean existeInscripcion = inscripcionMateriaRepository.existsByInscripcionCarreraIdAndMateriaId(
