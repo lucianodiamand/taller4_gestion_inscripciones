@@ -19,6 +19,7 @@ public class InscripcionCarreraResponseDTO {
     private Long ingresanteId;
     private String nombreIngresante;
     private String apellidoIngresante;
+    private String numeroDocumento; 
     
     // Datos de la Carrera
     private Long carreraId;
@@ -47,6 +48,14 @@ public class InscripcionCarreraResponseDTO {
 
     public void setIngresanteId(Long ingresanteId) {
         this.ingresanteId = ingresanteId;
+    }
+    
+    public String getNumeroDocumento() {
+    	return numeroDocumento; 
+    }
+    
+    public void setNumeroDocumento(String numeroDocumento) {
+    	this.numeroDocumento = numeroDocumento;
     }
     
     public String getNombreIngresante() {return nombreIngresante;}

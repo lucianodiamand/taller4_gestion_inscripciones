@@ -18,7 +18,7 @@ public class InscripcionMateriaResponseDTO {
     // Datos de la Materia
     private Long materiaId;
     private String nombreMateria;
-    
+    private Integer nota; 
     
 	public void setId(Long id) {
 		this.id = id;
@@ -61,5 +61,13 @@ public class InscripcionMateriaResponseDTO {
 	
 	public String getNombreMateria() { 
 		return nombreMateria; 
+	}
+	
+	public Integer getNota() {
+		return nota; 
+	}
+	
+	public void setNota(Integer nota) {
+		this.nota = nota; 
 	}
 }

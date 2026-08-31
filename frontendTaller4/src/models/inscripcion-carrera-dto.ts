@@ -12,4 +12,5 @@ export interface InscripcionCarreraResponseDto {
   apellidoIngresante: string;
   carreraId: number;
   nombreCarrera: string;
+  numeroDocumento: string;
 }

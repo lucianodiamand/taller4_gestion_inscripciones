@@ -67,6 +67,7 @@
                 [options]="materiasFiltradas"
                 optionLabel="nombre"
                 optionValue="id"
+				optionDisabled="disabled"
                 placeholder="Seleccione una materia"
                 styleClass="w-full">
 
@@ -75,6 +76,9 @@
                     {{ mat.nombre }}
                     ({{ mat.anio }}° año -
                     {{ mat.cuatrimestre }}° cuatrimestre)
+					@if (mat.disabled){
+						Correlativas no aprobadas. 
+					}
 
                 </ng-template>
 
@@ -100,7 +104,7 @@
 
                 <p-message severity="info">
 
-                    No hay materias disponibles de primer año para esta carrera.
+                    Seleccione una materia. Las materias con correlativas no aprobadas aparecen bloqueadas.
 
                 </p-message>
 
@@ -159,6 +163,11 @@
         <tr>
             <th>Fecha</th>
             <th>Materia</th>
+			
+			@if (rol === 'ADMIN'){
+				<th>Nota</th>
+				<th>Acciones</th>		
+			}	
         </tr>
 
     </ng-template>
@@ -171,7 +180,28 @@
             <td>{{ insc.fechaInscripcion }}</td>
 
             <td>{{ insc.nombreMateria }}</td>
-
+			
+			@if (rol === 'ADMIN'){
+				
+				<td>
+					<input
+						pInputText
+						type="number"
+						[(ngModel)]="insc.nota"
+						min="0"
+						max="10"
+						placeholder="Nota"
+						/>
+				</td>
+				
+				<td>
+					<p-button
+					    label="Guardar"
+					    icon="pi pi-save"
+					    (onClick)="actualizarNota(insc)">
+					</p-button>
+				</td>
+			}
         </tr>
 
     </ng-template>
@@ -181,7 +211,7 @@
 
         <tr>
 
-            <td colspan="3">
+            <td colspan="4">
                 No hay inscripciones registradas.
             </td>
 

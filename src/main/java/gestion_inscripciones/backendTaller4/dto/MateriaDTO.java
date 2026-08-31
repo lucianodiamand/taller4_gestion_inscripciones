@@ -1,5 +1,7 @@
 package gestion_inscripciones.backendTaller4.dto;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +16,7 @@ public class MateriaDTO {
     private int cuatrimestre;
     private Long carreraId;
     private String nombreCarrera;
-    
+    private List<Long> correlativasIds;
     
 	public Long getCarreraId() {
 		return carreraId;
@@ -72,4 +74,11 @@ public class MateriaDTO {
 	    this.nombreCarrera = nombreCarrera;
 	}
 	
+	private List<Long> getCorrelativasIds(){
+		return correlativasIds; 
+	}
+	
+	public void setCorrelativasIds(List<Long> correlativasIds) {
+		this.correlativasIds = correlativasIds; 
+	}
 }

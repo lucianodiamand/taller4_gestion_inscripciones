@@ -121,6 +121,7 @@ public class InscripcionCarreraService {
             dto.setIngresanteId(entidad.getIngresante().getId());
             dto.setNombreIngresante(entidad.getIngresante().getNombre());
             dto.setApellidoIngresante(entidad.getIngresante().getApellido());
+            dto.setNumeroDocumento(entidad.getIngresante().getNumeroDocumento());
         }
 
         if (entidad.getCarrera() != null) {

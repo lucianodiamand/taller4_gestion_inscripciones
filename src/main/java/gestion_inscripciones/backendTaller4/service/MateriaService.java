@@ -89,7 +89,13 @@ public class MateriaService {
             dto.setCarreraId(entidad.getCarrera().getId());
             dto.setNombreCarrera(entidad.getCarrera().getNombre());
         }
+        
+        if(entidad.getCorrelativas() != null) {
+        	dto.setCorrelativasIds(entidad.getCorrelativas().stream().map(Materia::getId).collect(Collectors.toList()));
+        }
+        
         return dto;
+        
     }
 	
 }

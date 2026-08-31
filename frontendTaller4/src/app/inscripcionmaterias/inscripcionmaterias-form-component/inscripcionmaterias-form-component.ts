@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { InscripcionMateriaResponseDto, InscripcionMateriaRequestDto } from '../../../models/inscripcion-materia-dto';
 import { InscripcionMateriaService } from '../inscripcionmateria.service';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule, Validators} from '@angular/forms';
 import { InscripcionCarreraResponseDto } from '../../../models/inscripcion-carrera-dto';
 import { MateriasDto } from '../../../models/materias-dto';
 import { InscripcionCarreraService } from '../../inscripcioncarreras/inscripcioncarreras.service';
@@ -21,7 +21,7 @@ import { MessageModule } from 'primeng/message';
   selector: 'app-inscripcion-materia',
   templateUrl: './inscripcionmaterias-form-component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink, ButtonModule, SelectModule, InputTextModule, TableModule, CardModule, MessageModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink, ButtonModule, SelectModule, InputTextModule, TableModule, CardModule, MessageModule, FormsModule],
   styleUrl: './inscripcionmaterias-form-component.css'
 })
 export class InscripcionMateriaFormComponent implements OnInit {
@@ -31,7 +31,9 @@ export class InscripcionMateriaFormComponent implements OnInit {
   inscripcionesCarreras: InscripcionCarreraResponseDto[] = [];
   materias: MateriasDto[] = [];
   materiasFiltradas: MateriasDto[] = [];
-
+  dnis: string[]
+  dniSeleccionado: string = '';
+  inscripcionesCarrerasFiltradas: InscripcionCarreraResponseDto[] = [];
   rol: string | null = null;
 
 
@@ -75,6 +77,10 @@ export class InscripcionMateriaFormComponent implements OnInit {
       this.inscripcionCarreraService.obtenerTodas().subscribe({
       next: (data: InscripcionCarreraResponseDto[]) => {
         this.inscripcionesCarreras = data;
+		this.dnis = [
+			...new Set(data.map(ins => ins.numeroDocumento))
+		];
+		
         this.cdr.detectChanges();
       },
       error: (err: any) => console.error('Error al obtener inscripciones a carrera:', err)
@@ -114,7 +120,15 @@ export class InscripcionMateriaFormComponent implements OnInit {
       if(ingresanteId){
           this.inscripcionMateriaService.obtenerPorIngresante(ingresanteId).subscribe({
             next: (data: InscripcionMateriaResponseDto[]) => {
-              this.inscripciones = data;
+              this.inscripciones = data; //cargamos las inscripciones y sus notas.
+			  
+			  //si tenemos una carrera seleccionada, volvemos a calcular las materias disponibles:
+			  const inscripcionCarreraId = Number(this.inscripcionForm.value.inscripcionCarreraId);
+			  
+			  if(inscripcionCarreraId){
+				this.filtrarMaterias(inscripcionCarreraId);
+			  }
+			  
               this.cdr.detectChanges();
             },
             error: (err: any) => console.error('Error al cargar mis inscripciones:', err)
@@ -132,10 +146,36 @@ export class InscripcionMateriaFormComponent implements OnInit {
     return;
   }
 
-  this.materiasFiltradas = this.materias.filter(m => {
-    return m.carreraId === inscripcionElegida.carreraId;// && m.anio === 1 && m.cuatrimestre === 1;
+  // Para que ADMIN pueda ver todas las materias de la carrera y ponerles su nota. 
+  
+  if(this.rol === 'ADMIN'){
+	
+	const materiasInscripto = this.inscripciones.filter(ins => ins.inscripcionCarreraId === inscripcionCarreraId).map(ins => ins.materiaId);
+	
+	this.materiasFiltradas = this.materias.filter(materia => materiaInscripto.includes(materia.id));
+	return; 
+  }
+  
+  //Para el GUEST le aparecen todas las materias, solo sale el boton para inscribirse en las que tiene aprobada (su correlativa). 
+  this.materiasFiltradas = this.materias.filter(m => m.carreraId === inscripcionElegida.carreraId).map(materia => ({
+	
+	...materia, disabled: !this.puedeCursarMateria(materia)
+	//Primero corroboramos que pertenezca a la carrera:
+    //if(m.carreraId !== inscripcionElegida.carreraId){
+	//	return false; 
+	//}
+
+	// Sino tiene correlativa la materia, puede cursarla: 
+	//if(!m.correlativasIds || m.correlativasIds.length === 0){
+	//	return true;
+	//}	
+	
+	//Ahora, verificamos que las correlativas esten aprobadas: 
+	//return m.correlativasIds.every(correlativaId => this.materiaEstaAprobada(correlativaId));
+	
+	//return m.carreraId === inscripcionElegida.carreraId;// && m.anio === 1 && m.cuatrimestre === 1;
     // en el callback la materia m se queda si se cumple la condicion, y filter arma el nuevo arreglo
-  });
+  }));
 
   /*const materiaActual = this.inscripcionForm.value.materiaId; //guarda la materia elegida
   if (!this.materiasFiltradas.some(m => m.id === materiaActual)) { //
@@ -143,6 +183,42 @@ export class InscripcionMateriaFormComponent implements OnInit {
   }*/
 }
 
+  materiaEstaAprobada(materiaId: number): boolean{
+	const inscripcion = this.inscripciones.find(ins => ins.materiaId === materiaId); 
+	
+	return !!inscripcion && inscripcion.nota !== null && inscripcion.nota >= 6; 
+  }
+  
+  puedeCursarMateria(materia: MateriasDto):boolean{
+	//Sino tiene correlativas la materia, puede cursarla: 
+	if(!materia.correlativasIds || materia.correlativasIds.length === 0){
+		return true;
+	}
+	//aca todas las correlativas deben estar aprobadas: 
+	return materia.correlativasIds.every(correlativaId => this.materiaEstaAprobada(correlativaId));
+  }
+  
+  actualizarNota(inscripcion: InscripcionMateriaResponseDto): void{
+	const dto: InscripcionMateriaRequestDto = {
+		fechaInscripcion: inscripcion.fechaInscripcion, 
+		inscripcionCarreraId: inscripcion.inscripcionCarreraId, 
+		materiaId: inscripcion.materiaId, 
+		nota: inscripcion.nota
+	};
+	
+	this.inscripcionMateriaService.actualizar(inscripcion.id, dto).subscribe({
+		next: () => {
+			alert('Nota actualizada correctamente.');
+			this.cargarInscripciones(); 
+		}, 
+		
+		error: (err) => {
+			console.error('Error al actualizar la nota:', err);
+			alert('No se puedo actualizar la nota');
+		}
+	});
+  }
+  
   guardar(): void {
     if (this.inscripcionForm.invalid) {
       this.inscripcionForm.markAllAsTouched();

@@ -108,7 +108,7 @@ public class InscripcionMateriaService {
         entidad.setFechaInscripcion(dto.getFechaInscripcion());
         entidad.setInscripcionCarrera(insCarrera);
         entidad.setMateria(materia);
-        entidad.setNota(null);
+        entidad.setNota(dto.getNota());
 
         
         boolean existeInscripcion = inscripcionMateriaRepository.existsByInscripcionCarreraIdAndMateriaId(
@@ -143,7 +143,8 @@ public class InscripcionMateriaService {
         entidad.setFechaInscripcion(dto.getFechaInscripcion());
         entidad.setInscripcionCarrera(insCarrera);
         entidad.setMateria(materia);
-
+        entidad.setNota(dto.getNota());
+        
         // 4. Guardamos y devolvemos el DTO
         InscripcionMateria actualizada = inscripcionMateriaRepository.save(entidad);
         return convertirAResponseDTO(actualizada);
@@ -158,6 +159,7 @@ public class InscripcionMateriaService {
         InscripcionMateriaResponseDTO dto = new InscripcionMateriaResponseDTO();
         dto.setId(entidad.getId());
         dto.setFechaInscripcion(entidad.getFechaInscripcion());
+        dto.setNota(entidad.getNota());
 
         if (entidad.getInscripcionCarrera() != null) {
             dto.setInscripcionCarreraId(entidad.getInscripcionCarrera().getId());

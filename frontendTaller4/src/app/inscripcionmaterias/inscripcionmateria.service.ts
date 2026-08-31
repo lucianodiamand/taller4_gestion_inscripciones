@@ -29,8 +29,8 @@ export class InscripcionMateriaService {
     return this.http.post<void>(this.url, dto);
   }
 
-  actualizar(id: number, dto: InscripcionMateriaRequestDto): Observable<void> {
-    return this.http.put<void>(`${this.url}/${id}`, dto);
+  actualizar(id: number, dto: InscripcionMateriaRequestDto): Observable<InscripcionMateriaResponseDto> {
+    return this.http.put<InscripcionMateriaResponseDto>(`${this.url}/${id}`, dto);
   }
 
   borrar(id: number): Observable<void> {
