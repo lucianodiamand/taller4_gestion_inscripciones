@@ -45,6 +45,7 @@ export class IngresanteComponent implements OnInit, OnDestroy {
 	
 	private cargarDatosIngresante(){
 	
+    if(this.rol === 'GUEST') {
 		// Obtener el ID del ingresante desde la sesión
 		const ingresanteId = this.authService.getIngresanteId();
 		if (ingresanteId) {
@@ -68,8 +69,8 @@ export class IngresanteComponent implements OnInit, OnDestroy {
 				this.cdr.detectChanges();
 		        console.warn('Atención: No se encontró ingresanteId en localStorage/Sesión.');
 		    }
-		
-	}
+      }
+  }
 
   borrar(id: number) {
     this.subscriptions.add(

@@ -17,5 +17,5 @@ public interface InscripcionMateriaRepository extends JpaRepository<InscripcionM
 	boolean existsByInscripcionCarreraIdAndMateriaId(Long inscripcionCarreraId, Long materiaId);
 	
 	Optional<InscripcionMateria> findByInscripcionCarreraIngresanteIdAndMateriaId(Long ingresanteId, Long materiaId);
-	// busca una inscripcion a carrera cucya incripcion a carrera sea del id del ingresante y cuya materia tenga ese id
+	// busca una inscripcion a materia cuya incripcion a carrera sea del id del ingresante y cuya materia tenga ese id
 }

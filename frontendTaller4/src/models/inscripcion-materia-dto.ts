@@ -16,4 +16,9 @@ export interface InscripcionMateriaResponseDto {
   materiaId: number;
   nombreMateria: string;
   nota: number | null;
+
+  // Datos del inscripto
+  numeroDocumento: string;
+  nombreIngresante: string;
+  apellidoIngresante: string;
 }

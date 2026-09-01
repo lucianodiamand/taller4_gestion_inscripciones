@@ -3,6 +3,8 @@
     Menú principal
 </a>
 
+
+@if (rol == 'GUEST') {
 <h2>Inscripción a Materia</h2>
 
 
@@ -149,6 +151,28 @@
 
 <hr>
 
+}
+
+@if (rol === 'ADMIN') {
+
+  <div class="filtro-documento">
+
+    <label for="documento">
+      Buscar por documento:
+    </label>
+
+    <input
+      pInputText
+      id="documento"
+      type="text"
+      [(ngModel)]="documentoSeleccionado"
+      (input)="filtrarPorDocumento()"
+      placeholder="Ingrese documento"
+    />
+
+  </div>
+
+}
 
 <h3>Inscripciones a Materias Registradas</h3>
 
@@ -162,7 +186,11 @@
 
         <tr>
             <th>Fecha</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Documento</th>
             <th>Materia</th>
+
 			
 			@if (rol === 'ADMIN'){
 				<th>Nota</th>
@@ -178,6 +206,12 @@
         <tr>
 
             <td>{{ insc.fechaInscripcion }}</td>
+
+            <td>{{ insc.nombreIngresante }}</td>
+            
+            <td>{{ insc.apellidoIngresante }}</td>
+            
+            <td>{{ insc.numeroDocumento }}</td>
 
             <td>{{ insc.nombreMateria }}</td>
 			

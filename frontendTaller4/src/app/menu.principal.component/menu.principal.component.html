@@ -44,20 +44,31 @@
 
 <div class="card">
 
+
   <h3>🎓 Carreras</h3>
+
+  @if (rol === 'ADMIN') {
+
+    <a class="boton" routerLink="/inscripcion/carrera">
+      Ver inscripciones
+    </a>
+
+    <a class="boton" routerLink="/carrera">
+    Ver carreras
+    </a>
+
+    <a class="boton" routerLink="/carrera/crear">
+      Crear carrera
+    </a>
+  }
+
+  @if (rol === 'GUEST'){
   <p>Consulta las carreras disponibles.</p>
 
   <a class="boton" routerLink="/carrera">
     Ver carreras
   </a>
-
-  @if (rol === 'ADMIN') {
-
-    <a class="boton" routerLink="/carrera/crear">
-      Crear carrera
-    </a>
-
-  }
+}
 
 </div>
 

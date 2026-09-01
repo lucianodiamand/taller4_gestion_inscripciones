@@ -53,7 +53,7 @@ public class InscripcionMateriaService {
     
     private boolean materiaAprobada(Long ingresanteId, Long materiaId) {
 
-        Optional<InscripcionMateria> inscripcion = // busca si el ingresante tiene una incripcion a la materia con ese id
+        Optional<InscripcionMateria> inscripcion = // busca si el ingresante tiene una incripcion existente a la materia con ese id
             inscripcionMateriaRepository
                 .findByInscripcionCarreraIngresanteIdAndMateriaId(ingresanteId, materiaId);
 
@@ -161,8 +161,11 @@ public class InscripcionMateriaService {
         dto.setFechaInscripcion(entidad.getFechaInscripcion());
         dto.setNota(entidad.getNota());
 
-        if (entidad.getInscripcionCarrera() != null) {
+        if (entidad.getInscripcionCarrera().getIngresante() != null) {
             dto.setInscripcionCarreraId(entidad.getInscripcionCarrera().getId());
+            dto.setNumeroDocumento(entidad.getInscripcionCarrera().getIngresante().getNumeroDocumento());
+            dto.setNombreIngresante(entidad.getInscripcionCarrera().getIngresante().getNombre());
+            dto.setApellidoIngresante(entidad.getInscripcionCarrera().getIngresante().getApellido());
         }
 
         if (entidad.getMateria() != null) {

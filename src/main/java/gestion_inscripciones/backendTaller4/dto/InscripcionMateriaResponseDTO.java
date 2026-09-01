@@ -20,6 +20,10 @@ public class InscripcionMateriaResponseDTO {
     private String nombreMateria;
     private Integer nota; 
     
+    private String numeroDocumento; //para ademas de los datos de la inscripcion, poder ver este dato del ingresante
+    private String nombreIngresante;
+    private String apellidoIngresante;
+    
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -70,4 +74,30 @@ public class InscripcionMateriaResponseDTO {
 	public void setNota(Integer nota) {
 		this.nota = nota; 
 	}
+
+
+	public void setNumeroDocumento(String numeroDocumento) {
+		this.numeroDocumento = numeroDocumento;
+		}
+	
+	public String getNumeroDocumento() {
+	    return numeroDocumento;
+	}
+	
+	public String getNombreIngresante() {
+	    return nombreIngresante;
+	}
+
+	public void setNombreIngresante(String nombreIngresante) {
+	    this.nombreIngresante = nombreIngresante;
+	}
+
+	public String getApellidoIngresante() {
+	    return apellidoIngresante;
+	}
+
+	public void setApellidoIngresante(String apellidoIngresante) {
+	    this.apellidoIngresante = apellidoIngresante;
+	}
+
 }

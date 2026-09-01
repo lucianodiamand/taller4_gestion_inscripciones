@@ -27,12 +27,13 @@ import { MessageModule } from 'primeng/message';
 export class InscripcionMateriaFormComponent implements OnInit {
 
   inscripcionForm: FormGroup;
-  inscripciones: InscripcionMateriaResponseDto[] = [];
+  inscripciones: InscripcionMateriaResponseDto[] = []; // es lo que se muestra. Pueden ser todas o de acuerdo al documento
+  todasLasInscripciones: InscripcionMateriaResponseDto[] = []; // contiene siempre todas las inscripciones
   inscripcionesCarreras: InscripcionCarreraResponseDto[] = [];
   materias: MateriasDto[] = [];
   materiasFiltradas: MateriasDto[] = [];
-  dnis: string[]
-  dniSeleccionado: string = '';
+  //documentos: string[] = [];
+  documentoSeleccionado: string = ''; // para guardar el documento
   inscripcionesCarrerasFiltradas: InscripcionCarreraResponseDto[] = [];
   rol: string | null = null;
 
@@ -77,9 +78,9 @@ export class InscripcionMateriaFormComponent implements OnInit {
       this.inscripcionCarreraService.obtenerTodas().subscribe({
       next: (data: InscripcionCarreraResponseDto[]) => {
         this.inscripcionesCarreras = data;
-		this.dnis = [
-			...new Set(data.map(ins => ins.numeroDocumento))
-		];
+        /*this.documentos = [
+          ...new Set(data.map(ins => ins.numeroDocumento))
+        ];*/
 		
         this.cdr.detectChanges();
       },
@@ -110,7 +111,12 @@ export class InscripcionMateriaFormComponent implements OnInit {
     if(this.rol === 'ADMIN'){
       this.inscripcionMateriaService.obtenerTodas().subscribe({
       next: (data: InscripcionMateriaResponseDto[]) => {
-        this.inscripciones = data;
+        console.log('Inscripciones recibidas:', data);
+        this.todasLasInscripciones = data; // guardamos todas las inscripciones
+        this.inscripciones = data; // para en prrincipio mostrar todas 
+       /* this.documentos = [ // para obtener documentos 
+        ...new Set(data.map(ins => ins.numeroDocumento))
+      ];*/
         this.cdr.detectChanges();
       },
       error: (err: any) => console.error('Error al cargar inscripciones a materia:', err)
@@ -138,28 +144,23 @@ export class InscripcionMateriaFormComponent implements OnInit {
   }
 
   filtrarMaterias(inscripcionCarreraId: number): void {
-  const inscripcionElegida = this.inscripcionesCarreras.find(i => i.id === inscripcionCarreraId);
+    const inscripcionElegida = this.inscripcionesCarreras.find(i => i.id === inscripcionCarreraId);
   // find recorre el arreglo de inscripciones carreras como un for y devuelve el que coincide
-
-  if (!inscripcionElegida) {
-    this.materiasFiltradas = [];
-    return;
-  }
+     if (!inscripcionElegida) {
+      this.materiasFiltradas = [];
+      return;
+     }
 
   // Para que ADMIN pueda ver todas las materias de la carrera y ponerles su nota. 
-  
-  if(this.rol === 'ADMIN'){
-	
-	const materiasInscripto = this.inscripciones.filter(ins => ins.inscripcionCarreraId === inscripcionCarreraId).map(ins => ins.materiaId);
-	
-	this.materiasFiltradas = this.materias.filter(materia => materiaInscripto.includes(materia.id));
-	return; 
-  }
+     if(this.rol === 'ADMIN'){
+      const materiasInscripto = this.inscripciones.filter(ins => ins.inscripcionCarreraId === inscripcionCarreraId).map(ins => ins.materiaId);
+      this.materiasFiltradas = this.materias.filter(materia => materiasInscripto.includes(materia.id));
+      return; 
+    }
   
   //Para el GUEST le aparecen todas las materias, solo sale el boton para inscribirse en las que tiene aprobada (su correlativa). 
-  this.materiasFiltradas = this.materias.filter(m => m.carreraId === inscripcionElegida.carreraId).map(materia => ({
-	
-	...materia, disabled: !this.puedeCursarMateria(materia)
+     this.materiasFiltradas = this.materias.filter(m => m.carreraId === inscripcionElegida.carreraId).map(materia => ({
+      ...materia, disabled: !this.puedeCursarMateria(materia)
 	//Primero corroboramos que pertenezca a la carrera:
     //if(m.carreraId !== inscripcionElegida.carreraId){
 	//	return false; 
@@ -183,6 +184,20 @@ export class InscripcionMateriaFormComponent implements OnInit {
   }*/
 }
 
+filtrarPorDocumento(): void {
+
+  const documento = this.documentoSeleccionado.trim();// para eliminar espacios al principio o final del texto
+
+  if (!this.documentoSeleccionado) { // si no se selecciono un documento muestra todas las inscripciones 
+    this.inscripciones = this.todasLasInscripciones;
+    return;
+  }
+
+  this.inscripciones = this.todasLasInscripciones.filter( //sino muestra la inscripcion que coindice con el documento de busqueda por medio de filter 
+    ins => ins.numeroDocumento.includes(documento) // se usa includes para no tener que escribir completo el documento que se busca
+  );
+}
+
   materiaEstaAprobada(materiaId: number): boolean{
 	const inscripcion = this.inscripciones.find(ins => ins.materiaId === materiaId); 
 	
@@ -191,22 +206,21 @@ export class InscripcionMateriaFormComponent implements OnInit {
   
   puedeCursarMateria(materia: MateriasDto):boolean{
 	//Sino tiene correlativas la materia, puede cursarla: 
-	if(!materia.correlativasIds || materia.correlativasIds.length === 0){
-		return true;
-	}
+      if(!materia.correlativasIds || materia.correlativasIds.length === 0){
+        return true;
+      }
 	//aca todas las correlativas deben estar aprobadas: 
-	return materia.correlativasIds.every(correlativaId => this.materiaEstaAprobada(correlativaId));
-  }
+     return materia.correlativasIds.every(correlativaId => this.materiaEstaAprobada(correlativaId));
+    }
   
   actualizarNota(inscripcion: InscripcionMateriaResponseDto): void{
-	const dto: InscripcionMateriaRequestDto = {
+    const dto: InscripcionMateriaRequestDto = {
 		fechaInscripcion: inscripcion.fechaInscripcion, 
 		inscripcionCarreraId: inscripcion.inscripcionCarreraId, 
 		materiaId: inscripcion.materiaId, 
 		nota: inscripcion.nota
 	};
-	
-	this.inscripcionMateriaService.actualizar(inscripcion.id, dto).subscribe({
+  this.inscripcionMateriaService.actualizar(inscripcion.id, dto).subscribe({
 		next: () => {
 			alert('Nota actualizada correctamente.');
 			this.cargarInscripciones(); 
@@ -218,6 +232,8 @@ export class InscripcionMateriaFormComponent implements OnInit {
 		}
 	});
   }
+
+
   
   guardar(): void {
     if (this.inscripcionForm.invalid) {
