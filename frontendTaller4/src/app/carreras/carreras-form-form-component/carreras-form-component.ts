@@ -4,14 +4,14 @@ import { Subscription } from 'rxjs';
 import { CarrerasService } from '../carreras.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarrerasDto } from '../../../models/carreras-dto';
-
+import { RouterLink } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-carreras-form',
-  imports: [ReactiveFormsModule, InputTextModule, InputNumberModule, ButtonModule],
+  imports: [RouterLink ,ReactiveFormsModule, InputTextModule, InputNumberModule, ButtonModule],
   templateUrl: './carreras-form-component.html',
   styleUrl: './carreras-form-component.css',
 })
@@ -79,7 +79,7 @@ guardar() {
 }
 
 ngOnDestroy(){ // para cancelar la suscripcion
-    this.subscription.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
 }

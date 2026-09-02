@@ -1,13 +1,8 @@
 package gestion_inscripciones.backendTaller4.dto;
 
 import java.util.List;
-
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
 @NoArgsConstructor
 public class MateriaDTO {
     private Long id;
@@ -21,12 +16,10 @@ public class MateriaDTO {
 	public Long getCarreraId() {
 		return carreraId;
 	}
-
-
+	
 	public String getNombre() {
 		return nombre;
 	}
-
 
 	public int getAnio() {
 		return anio;
@@ -36,31 +29,25 @@ public class MateriaDTO {
 		return id;
 	}
 
-
 	public int getCuatrimestre() {
 		return cuatrimestre;
 	}
-
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
 
 	public void setAnio(int anio) {
 		this.anio = anio;
 	}
 
-
 	public void setCuatrimestre(int cuatrimestre) {
 		this.cuatrimestre = cuatrimestre;
 	}
-
 
 	public void setCarreraId(Long carreraId) {
 		this.carreraId = carreraId;

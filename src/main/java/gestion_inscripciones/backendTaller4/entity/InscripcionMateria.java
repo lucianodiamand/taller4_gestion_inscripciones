@@ -28,7 +28,6 @@ public class InscripcionMateria {
     @Column
     private Integer nota;
     
-    
     @ManyToOne(optional = false)//una inscripcion a carrera puede tener 0 o muchas inscripciones a meaterias 
     @JoinColumn(name = "inscripcion_carrera_id", nullable = false) //para determinar a que carrera pertenece la inscripcion
     private InscripcionCarrera inscripcionCarrera;
