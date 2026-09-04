@@ -1,0 +1,101 @@
+<a class="volver" routerLink="/menu">
+  <i class="pi pi-arrow-left"></i>
+  Menú principal
+</a>
+
+<div class="p-4 flex flex-column gap-4 style-container">
+
+  <!-- Cartel de Alerta/Mensaje Sin Animaciones -->
+  @if (mensajeTexto) {
+    <div class="alerta" [ngClass]="mensajeTipo">
+      <span>{{ mensajeTexto }}</span>
+    </div>
+  }
+
+  <!-- Formulario de Carga de Nota -->
+  <p-card header="Asignar Nota a Inscripción" subheader="Planilla de carga directa">
+    <form [formGroup]="notaForm" (ngSubmit)="guardarNota()" class="grid p-fluid">
+      
+      <div class="col-12 md:col-5">
+        <label for="idInscripcion" class="font-bold block mb-2">ID Inscripción</label>
+        <p-inputNumber 
+          id="idInscripcion" 
+          formControlName="idInscripcion" 
+          placeholder="Ej: 101"
+          [useGrouping]="false">
+        </p-inputNumber>
+      </div>
+
+      <div class="col-12 md:col-5">
+        <label for="nota" class="font-bold block mb-2">Nota (0 - 10)</label>
+        <p-inputNumber 
+          id="nota" 
+          formControlName="nota" 
+          [min]="0" 
+          [max]="10" 
+          placeholder="Ej: 8">
+        </p-inputNumber>
+      </div>
+
+      <div class="col-12 md:col-2 flex align-items-end">
+        <p-button 
+          label="Guardar" 
+          icon="pi pi-check" 
+          type="submit" 
+          [disabled]="notaForm.invalid">
+        </p-button>
+      </div>
+
+    </form>
+  </p-card>
+
+  <!-- Tabla de Materias Aprobadas -->
+  <p-card header="Materias Aprobadas del Ingresante">
+    
+    <div class="flex gap-2 mb-4 max-w-26rem">
+      <p-inputNumber 
+        [(ngModel)]="idIngresanteBusqueda" 
+        placeholder="ID del Ingresante" 
+        [useGrouping]="false" 
+        class="w-full">
+      </p-inputNumber>
+      <p-button label="Buscar" icon="pi pi-search" (onClick)="buscarPorIngresante()"></p-button>
+    </div>
+
+    <p-table 
+      [value]="materiasAprobadas" 
+      [loading]="cargandoTabla" 
+      responsiveLayout="scroll" 
+      stripedRows>
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID Registro</th>
+          <th>Ingresante</th>
+          <th>Materia</th>
+          <th style="width: 100px;">Nota</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.nombreIngresante }} (ID: {{ item.idIngresante }})</td>
+          <td>{{ item.nombreMateria }} (ID: {{ item.idMateria }})</td>
+          <td><strong>{{ item.nota }}</strong></td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4" class="text-center p-4">
+            No se encontraron registros de materias aprobadas.
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+
+  </p-card>
+
+</div>

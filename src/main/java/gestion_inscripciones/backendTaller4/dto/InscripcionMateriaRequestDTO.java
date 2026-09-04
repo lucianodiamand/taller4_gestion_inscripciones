@@ -12,7 +12,7 @@ public class InscripcionMateriaRequestDTO {
     private LocalDate fechaInscripcion;
     private Long inscripcionCarreraId;
     private Long materiaId;
-    private Integer nota; 
+    
     
 	public Long getInscripcionCarreraId() {
 		return inscripcionCarreraId;
@@ -27,13 +27,4 @@ public class InscripcionMateriaRequestDTO {
 	public LocalDate getFechaInscripcion() {
 		return fechaInscripcion;
 	}
-	
-	public Integer getNota() {
-		return nota; 
-	}
-	
-	public void setNota(Integer nota) {
-		this.nota = nota; 
-	}
-	
 }

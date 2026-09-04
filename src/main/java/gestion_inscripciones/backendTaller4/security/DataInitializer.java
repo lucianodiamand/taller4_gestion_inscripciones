@@ -27,7 +27,7 @@ public class DataInitializer implements CommandLineRunner {
             
             Usuario admin = new Usuario();//creamos el usuario
             admin.setUsername("admin");		//nombre de usuario
-            admin.setPassword(passwordEncoder.encode("321constradeladmin123")); //contraseña
+            admin.setPassword(passwordEncoder.encode("321contradeladmin123")); //contraseña
             admin.setRol(Rol.ADMIN);   // Asignamos rol de admin
             admin.setIngresante(null); // NULL, no hay un ingresante vinculado
 

@@ -168,7 +168,7 @@ INSERT INTO public.materia_correlativa (materia_id, correlativa_id)
 INSERT INTO public.materia_correlativa (materia_id, correlativa_id) 
 	VALUES (205, 202) ON CONFLICT DO NOTHING;
 	
--- de carrerra id==2 
+-- de carrerra id==2  Ing civil (Completa)
 INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera_id)
 	VALUES (16, 'Introducción a Obras Civiles', 1, 1, 2) ON CONFLICT (id) DO NOTHING;
 INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera_id)
@@ -302,7 +302,53 @@ INSERT INTO public.materia_correlativa (materia_id, correlativa_id)
 INSERT INTO public.materia_correlativa (materia_id, correlativa_id) 
 	VALUES (218, 214) ON CONFLICT DO NOTHING;
 	
--- carrera id==3 
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera_id)
+	VALUES (219, 'Mega Obras II', 4, 2, 2) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera_id)
+	VALUES (220, 'Prácticas Profesionales', 4, 2, 2) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera_id)
+	VALUES (221, 'Urbanización', 4, 2, 2) ON CONFLICT (id) DO NOTHING;
+	
+	--correlativas de 4-2
+INSERT INTO public.materia_correlativa (materia_id, correlativa_id) 
+	VALUES (219, 216) ON CONFLICT DO NOTHING;
+INSERT INTO public.materia_correlativa (materia_id, correlativa_id) 
+	VALUES (220, 218) ON CONFLICT DO NOTHING;
+INSERT INTO public.materia_correlativa (materia_id, correlativa_id) 
+	VALUES (221, 217) ON CONFLICT DO NOTHING;
+	
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera_id)
+	VALUES (222, 'Seminario I', 5, 1, 2) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera_id)
+	VALUES (223, 'Prácticas Profesionales II', 5, 1, 2) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera_id)
+	VALUES (224, 'Transporte', 5, 1, 2) ON CONFLICT (id) DO NOTHING;
+
+	--correlativas de 5-1
+INSERT INTO public.materia_correlativa (materia_id, correlativa_id) 
+	VALUES (222, 219) ON CONFLICT DO NOTHING;
+INSERT INTO public.materia_correlativa (materia_id, correlativa_id) 
+	VALUES (223, 220) ON CONFLICT DO NOTHING;
+INSERT INTO public.materia_correlativa (materia_id, correlativa_id) 
+	VALUES (224, 221) ON CONFLICT DO NOTHING;
+	
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera_id)
+	VALUES (225, 'Seminario II', 5, 2, 2) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera_id)
+	VALUES (226, 'Proyecto Final', 5, 2, 2) ON CONFLICT (id) DO NOTHING;
+INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera_id)
+	VALUES (227, 'Transporte II', 5, 2, 2) ON CONFLICT (id) DO NOTHING;
+	
+	--correlativas de 5-2
+INSERT INTO public.materia_correlativa (materia_id, correlativa_id) 
+	VALUES (225, 222) ON CONFLICT DO NOTHING;
+INSERT INTO public.materia_correlativa (materia_id, correlativa_id) 
+	VALUES (226, 223) ON CONFLICT DO NOTHING;
+INSERT INTO public.materia_correlativa (materia_id, correlativa_id) 
+	VALUES (227, 224) ON CONFLICT DO NOTHING;
+	
+		
+-- carrera id==3 Ing Industrial 
 INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera_id)
 	VALUES (34, 'Introducción a la Industria', 1, 1, 3) ON CONFLICT (id) DO NOTHING;
 INSERT INTO public.materia (id, nombre, anio, cuatrimestre, carrera_id)

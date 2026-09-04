@@ -21,6 +21,9 @@ import { MenuPrincipalComponent } from './menu.principal.component/menu.principa
 
 //import {InscripcionMateriaComponent} from './inscripcionmaterias/inscripcionmaterias.component/inscripcionmaterias.component';
 
+//Importacion del componente de Materias Aprobadas / Planilla de Notas
+import { MateriasAprobadas } from './materiasAprobadas/materias-aprobadas/materias-aprobadas';
+
 export const routes: Routes = [
 	
   // Rutas de Autenticacion
@@ -50,6 +53,9 @@ export const routes: Routes = [
   // Rutas de inscripcion a materia: 
   { path: 'inscripcion/materia', component: InscripcionMateriaFormComponent },  
 
+  // Ruta para acceder a la planilla de materias aprobadas / notas
+    { path: 'materias-aprobadas', component: MateriasAprobadas },
+	
   // Ruta de menu principal
   { path: 'menu', component: MenuPrincipalComponent },
   

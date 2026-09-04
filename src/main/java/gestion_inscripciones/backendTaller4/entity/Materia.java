@@ -1,5 +1,6 @@
 package gestion_inscripciones.backendTaller4.entity;
 
+
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -11,13 +12,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import lombok.Getter;
+import jakarta.persistence.UniqueConstraint;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
 public class Materia {
 	@Id
@@ -41,10 +40,10 @@ public class Materia {
     @JoinTable( // relaciono la entidad materia consigo misma con una tabla intermedia
         name = "materia_correlativa",
         joinColumns = @JoinColumn(name = "materia_id", nullable = false), // representa la materia desde la que estoy partiendo
-        inverseJoinColumns = @JoinColumn(name = "correlativa_id", nullable = false) // representa la materia relacionada a la anterior (la correlativa)
+        inverseJoinColumns = @JoinColumn(name = "correlativa_id", nullable = false), // representa la materia relacionada a la anterior (la correlativa)
+        uniqueConstraints = @UniqueConstraint(columnNames = {"materia_id", "correlativa_id"}) // para evitar que repita inserts de data.sql
     )
     private List<Materia> correlativas;
-    
     
 	public Long getId() {
 		return id;

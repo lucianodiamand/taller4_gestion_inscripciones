@@ -117,6 +117,33 @@
     </a>
 
   </div>
+  <!-- NOTAS Y MATERIAS APROBADAS - GUEST -->
+   
+  <div class="card">
+
+      <h3>📊 Mis Notas </h3>
+      <p>Consulta tus materias aprobadas y calificaciones.</p>
+
+      <a class="boton" routerLink="/materias-aprobadas">
+        Ver materias aprobadas
+      </a>
+
+   </div>
 
 }
 
+
+@if (rol === 'ADMIN') {
+
+  <div class="card">
+
+    <h3>📊 Gestión de Notas </h3>
+    <p>Carga de notas y consulta de materias aprobadas.</p>
+	
+    <a class="boton" routerLink="/materias-aprobadas">
+      Cargar / Ver notas
+    </a>
+
+  </div>
+
+}
