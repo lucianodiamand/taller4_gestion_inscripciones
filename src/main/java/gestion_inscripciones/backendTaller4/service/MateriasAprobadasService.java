@@ -1,26 +1,33 @@
 package gestion_inscripciones.backendTaller4.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import gestion_inscripciones.backendTaller4.dto.AsignarNotaDTO;
+import gestion_inscripciones.backendTaller4.dto.InscripcionMateriaResponseDTO;
 import gestion_inscripciones.backendTaller4.dto.MateriasAprobadasDTO;
 import gestion_inscripciones.backendTaller4.entity.InscripcionMateria;
 import gestion_inscripciones.backendTaller4.entity.MateriasAprobadas;
 import gestion_inscripciones.backendTaller4.repository.InscripcionMateriaRepository;
 import gestion_inscripciones.backendTaller4.repository.MateriasAprobadasRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
 public class MateriasAprobadasService {
 	
-	private final MateriasAprobadasRepository materiaAprobadaRepository;
-    private final InscripcionMateriaRepository inscripcionMateriaRepository;
+	@Autowired
+	private MateriasAprobadasRepository materiaAprobadaRepository;
+	
+	@Autowired
+    private InscripcionMateriaRepository inscripcionMateriaRepository;
+	
+	@Autowired
+	private InscripcionMateriaService inscripcionMateriaService;
     
     @Transactional
     public MateriasAprobadasDTO registrarNota(AsignarNotaDTO dto) {
@@ -50,6 +57,13 @@ public class MateriasAprobadasService {
                 .stream()
                 .map(this::mapearADTO)
                 .collect(Collectors.toList());
+    }
+    
+    @Transactional(readOnly = true)
+    public Optional<InscripcionMateriaResponseDTO> obtenerInscripcionPorId(Long idInscripcion) {
+
+        return inscripcionMateriaService.obtenerPorId(idInscripcion);
+
     }
     
     private MateriasAprobadasDTO mapearADTO(MateriasAprobadas entidad) {

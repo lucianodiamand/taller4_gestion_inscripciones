@@ -78,10 +78,22 @@ public class AuthService {
         Usuario usuario = usuarioRepository.findByUsername(dto.getUsername())	
                 .orElseThrow(() -> new RuntimeException("Credenciales inválidas"));
         
+        System.out.println("Usuario encontrado: " + usuario.getUsername());
+        System.out.println("Rol: " + usuario.getRol());
+        System.out.println("Password recibida: " + dto.getPassword());
+        System.out.println("Password guardada: " + usuario.getPassword());
+        System.out.println("Coincide: " +
+                passwordEncoder.matches(dto.getPassword(), usuario.getPassword()));
+        
         //buscamos match de contraseñas encriptadas
         if ((!passwordEncoder.matches(dto.getPassword(), usuario.getPassword()))) { 
             throw new RuntimeException("Credenciales inválidas");
         }
+        
+        System.out.println("USUARIO ENCONTRADO: " + usuario.getUsername());
+        System.out.println("ROL: " + usuario.getRol());
+        System.out.println("PASSWORD COINCIDE: " +
+                passwordEncoder.matches(dto.getPassword(), usuario.getPassword()));
         
         //instanciamos el token que sera guardado localmente
         String token = jwtUtil.generarToken(usuario.getUsername(), usuario.getRol().name());

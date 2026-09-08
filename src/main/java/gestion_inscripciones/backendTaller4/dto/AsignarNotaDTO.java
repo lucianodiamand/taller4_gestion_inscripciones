@@ -20,4 +20,12 @@ public class AsignarNotaDTO {
     @Min(value = 0, message = "La nota mínima es 0")
     @Max(value = 10, message = "La nota máxima es 10")
     private Integer nota;
+
+	public Long getIdInscripcion() {
+		return idInscripcion;
+	}
+
+	public Integer getNota() {
+		return nota;
+	}
 }

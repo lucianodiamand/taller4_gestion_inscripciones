@@ -64,6 +64,7 @@ public class UsuarioService {
 
         Usuario usuario = usuarioRepository.findByUsername(dto.getUsername())
         		.orElseThrow(() -> new RuntimeException("Usuario inexistente."));
+       
         
         if (!passwordEncoder.matches(
                 dto.getPassword(),usuario.getPassword())) {

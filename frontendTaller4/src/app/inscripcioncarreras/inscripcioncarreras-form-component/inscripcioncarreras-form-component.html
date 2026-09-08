@@ -5,68 +5,76 @@
 
 <h2>Inscripción a Carrera</h2>
 
-@if (rol === 'GUEST'){
-<p-card header="Nueva inscripción">
 
-    <form [formGroup]="inscripcionForm" (ngSubmit)="guardar()">
+@if (rol === 'GUEST') {
 
-        <div class="campo">
+    <p-card header="Nueva inscripción">
 
-            <label for="carrera">
-                Carrera
-            </label>
+        <form [formGroup]="inscripcionForm" (ngSubmit)="guardar()">
 
-            <p-select
-                id="carrera"
-                formControlName="carreraId"
-                [options]="carreras"
-                optionLabel="nombre"
-                optionValue="id"
-                placeholder="Seleccione una carrera"
-                styleClass="w-full">
-            </p-select>
+            <div class="campo">
 
-        </div>
+                <label for="carrera">
+                    Carrera
+                </label>
 
+                <p-select
+                    id="carrera"
+                    formControlName="carreraId"
+                    [options]="carreras"
+                    optionLabel="nombre"
+                    optionValue="id"
+                    placeholder="Seleccione una carrera"
+                    styleClass="w-full">
+                </p-select>
 
-        <div class="campo">
-
-            <label for="fecha">
-                Fecha de inscripción
-            </label>
-
-            <input
-                pInputText
-                type="date"
-                id="fecha"
-                formControlName="fechaInscripcion"
-            />
-
-        </div>
+            </div>
 
 
-        <div class="acciones">
+            <div class="campo">
 
-            <p-button
-                type="submit"
-                label="Inscribir"
-                icon="pi pi-check"
-                [disabled]="inscripcionForm.invalid">
-            </p-button>
+                <label for="fecha">
+                    Fecha de inscripción
+                </label>
 
-        </div>
+                <input
+                    pInputText
+                    type="date"
+                    id="fecha"
+                    formControlName="fechaInscripcion"
+                />
 
-    </form>
+            </div>
 
-</p-card>
+
+            <div class="acciones">
+
+                <p-button
+                    type="submit"
+                    label="Inscribir"
+                    icon="pi pi-check"
+                    [disabled]="inscripcionForm.invalid">
+                </p-button>
+
+            </div>
+
+        </form>
+
+    </p-card>
+
 }
+
 
 <h3>
 
     @if (rol === 'ADMIN') {
+
         Todas las inscripciones
+
     } @else {
+
         Mis inscripciones
+
     }
 
 </h3>
@@ -77,16 +85,25 @@
     stripedRows
     [tableStyle]="{ 'min-width': '40rem' }">
 
+
+    <!-- ENCABEZADOS -->
+
     <ng-template #header>
 
         <tr>
 
+            <th>ID Inscripción</th>
+
             <th>Fecha</th>
 
+
             @if (rol === 'ADMIN') {
+
                 <th>Ingresante</th>
                 <th>Documento</th>
+
             }
+
 
             <th>Carrera</th>
 
@@ -95,12 +112,20 @@
     </ng-template>
 
 
+    <!-- DATOS -->
+
     <ng-template #body let-insc>
 
         <tr>
 
+            <td>
+                {{ insc.id }}
+            </td>
 
-            <td>{{ insc.fechaInscripcion }}</td>
+            <td>
+                {{ insc.fechaInscripcion }}
+            </td>
+
 
             @if (rol === 'ADMIN') {
 
@@ -115,19 +140,26 @@
 
             }
 
-            <td>{{ insc.nombreCarrera }}</td>
+
+            <td>
+                {{ insc.nombreCarrera }}
+            </td>
 
         </tr>
 
     </ng-template>
 
 
+    <!-- CUANDO NO HAY DATOS -->
+
     <ng-template #emptymessage>
 
         <tr>
 
-            <td colspan="4">
+            <td [attr.colspan]="rol === 'ADMIN' ? 5 : 3">
+
                 No hay inscripciones registradas.
+
             </td>
 
         </tr>

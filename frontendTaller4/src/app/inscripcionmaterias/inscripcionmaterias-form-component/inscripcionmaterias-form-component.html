@@ -5,7 +5,6 @@
 
 <h2>Inscripción a Materia</h2>
 
-
 <p-card header="Nueva inscripción">
 
     <form [formGroup]="inscripcionForm" (ngSubmit)="guardar()">
@@ -67,7 +66,7 @@
                 [options]="materiasFiltradas"
                 optionLabel="nombre"
                 optionValue="id"
-				optionDisabled="disabled"
+                optionDisabled="disabled"
                 placeholder="Seleccione una materia"
                 styleClass="w-full">
 
@@ -76,9 +75,10 @@
                     {{ mat.nombre }}
                     ({{ mat.anio }}° año -
                     {{ mat.cuatrimestre }}° cuatrimestre)
-					@if (mat.disabled){
-						Correlativas no aprobadas. 
-					}
+
+                    @if (mat.disabled) {
+                        Correlativas no aprobadas.
+                    }
 
                 </ng-template>
 
@@ -158,61 +158,117 @@
     stripedRows
     [tableStyle]="{ 'min-width': '40rem' }">
 
+    <!-- ENCABEZADOS -->
+
     <ng-template #header>
 
         <tr>
-            <th>Fecha</th>
-            <th>Materia</th>
-			
-			@if (rol === 'ADMIN'){
-				<th>Nota</th>
-				<th>Acciones</th>		
-			}	
+
+            @if (rol === 'GUEST') {
+
+                <th>Fecha</th>
+                <th>Materia</th>
+
+            }
+
+            @if (rol === 'ADMIN') {
+
+                <th>Fecha</th>
+                <th>ID Inscripción</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Materia</th>
+                <th>Nota</th>
+                <th>Acciones</th>
+
+            }
+
         </tr>
 
     </ng-template>
 
+
+    <!-- DATOS -->
 
     <ng-template #body let-insc>
 
         <tr>
 
-            <td>{{ insc.fechaInscripcion }}</td>
+            @if (rol === 'GUEST') {
 
-            <td>{{ insc.nombreMateria }}</td>
-			
-			@if (rol === 'ADMIN'){
-				
-				<td>
-					<input
-						pInputText
-						type="number"
-						[(ngModel)]="insc.nota"
-						min="0"
-						max="10"
-						placeholder="Nota"
-						/>
-				</td>
-				
-				<td>
-					<p-button
-					    label="Guardar"
-					    icon="pi pi-save"
-					    (onClick)="actualizarNota(insc)">
-					</p-button>
-				</td>
-			}
+                <td>
+                    {{ insc.fechaInscripcion }}
+                </td>
+
+                <td>
+                    {{ insc.nombreMateria }}
+                </td>
+
+            }
+
+
+            @if (rol === 'ADMIN') {
+
+                <td>
+                    {{ insc.fechaInscripcion }}
+                </td>
+
+                <td>
+                    {{ insc.id }}
+                </td>
+
+                <td>
+                    {{ insc.nombreIngresante }}
+                </td>
+
+                <td>
+                    {{ insc.apellidoIngresante }}
+                </td>
+
+                <td>
+                    {{ insc.nombreMateria }}
+                </td>
+
+                <td>
+
+                    <input
+                        pInputText
+                        type="number"
+                        [(ngModel)]="insc.nota"
+                        min="0"
+                        max="10"
+                        placeholder="Nota"
+                    />
+
+                </td>
+
+                <td>
+
+                    <p-button
+                        label="Guardar"
+                        icon="pi pi-save"
+                        (onClick)="actualizarNota(insc)">
+                    </p-button>
+
+                </td>
+
+            }
+
         </tr>
 
     </ng-template>
 
 
+    <!-- CUANDO NO HAY DATOS -->
+
     <ng-template #emptymessage>
 
         <tr>
 
-            <td colspan="4">
+            <td [attr.colspan]="rol === 'ADMIN' ? 7 : 2">
+
                 No hay inscripciones registradas.
+
             </td>
 
         </tr>

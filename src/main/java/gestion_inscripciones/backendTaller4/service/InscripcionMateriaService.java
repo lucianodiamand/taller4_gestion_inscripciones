@@ -157,6 +157,7 @@ public class InscripcionMateriaService {
         InscripcionMateriaResponseDTO dto = new InscripcionMateriaResponseDTO();
         dto.setId(entidad.getId());
         dto.setFechaInscripcion(entidad.getFechaInscripcion());
+        dto.setNota(entidad.getNota());
        
 
         if (entidad.getInscripcionCarrera().getIngresante() != null) {

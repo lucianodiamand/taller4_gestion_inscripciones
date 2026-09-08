@@ -10,6 +10,8 @@ import { CardModule } from 'primeng/card';
 
 import { MateriasAprobadasService } from '../materias-aprobadas.service';
 import { MateriasAprobadasDTO } from '../../../models/materia-aprobada-dto';
+import { InscripcionMateriaResponseDto } from '../../../models/inscripcion-materia-dto';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-materias-aprobadas',
@@ -31,8 +33,11 @@ export class MateriasAprobadas {
 
   notaForm: FormGroup;
   idIngresanteBusqueda: number | null = null;
+  idInscripcionMateriaBusqueda: number | null = null;
+  inscripcionEncontrada: InscripcionMateriaResponseDto | null = null;
   materiasAprobadas: MateriasAprobadasDTO[] = [];
   cargandoTabla: boolean = false;
+  rol: string | null = null;
 
   // Variables para los mensajes
   mensajeTexto: string = '';
@@ -40,12 +45,17 @@ export class MateriasAprobadas {
 
   constructor(
     private fb: FormBuilder,
-    private materiasService: MateriasAprobadasService
+    private materiasService: MateriasAprobadasService,
+    private authService: AuthService
   ) {
     this.notaForm = this.fb.group({
       idInscripcion: [null, [Validators.required, Validators.min(1)]],
       nota: [null, [Validators.required, Validators.min(0), Validators.max(10)]]
     });
+    const usuario = this.authService.getUsuario();
+    if (usuario) {
+      this.rol = usuario.rol;
+    }
   }
 
   guardarNota(): void {
@@ -57,6 +67,8 @@ export class MateriasAprobadas {
 
     this.materiasService.registrarAprobacion(this.notaForm.value).subscribe({
       next: (res: MateriasAprobadasDTO) => {
+        console.log('RESPUESTA DEL BACKEND:', res);
+
         this.mostrarMensaje(`Nota ${res.nota} asignada a ${res.nombreIngresante} en ${res.nombreMateria}`, 'exito');
         this.notaForm.reset();
       },
@@ -65,6 +77,24 @@ export class MateriasAprobadas {
       }
     });
   }
+
+buscarInscripcion(): void {
+  if (!this.idInscripcionMateriaBusqueda) {
+    this.mostrarMensaje('Ingrese un ID de inscripción válido.', 'advertencia');
+    return;
+  }
+
+  this.materiasService.obtenerInscripcionPorId(this.idInscripcionMateriaBusqueda).subscribe({
+    next: (data: InscripcionMateriaResponseDto) => {
+      this.inscripcionEncontrada = data;
+      this.notaForm.patchValue({idInscripcion: data.id});
+    },
+    error: () => {
+      this.inscripcionEncontrada = null;
+      this.mostrarMensaje('Error al consultar la inscripción.', 'error');
+    }
+  });
+}
 
   buscarPorIngresante(): void {
     if (!this.idIngresanteBusqueda) {
