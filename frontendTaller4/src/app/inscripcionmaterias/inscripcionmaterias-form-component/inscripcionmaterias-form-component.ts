@@ -42,8 +42,6 @@ export class InscripcionMateriaFormComponent implements OnInit {
   inscripcionesCarreras: InscripcionCarreraResponseDto[] = [];
   materias: MateriasDto[] = [];
   materiasFiltradas: MateriasDto[] = [];
-  //dnis: string[]; 
-  //dniSeleccionado: string = '';
   inscripcionesCarrerasFiltradas: InscripcionCarreraResponseDto[] = [];
   rol: string | null = null;
   materiasAprobadasIds: number[] = [];
@@ -88,11 +86,6 @@ export class InscripcionMateriaFormComponent implements OnInit {
     if(this.rol === 'ADMIN'){
       this.inscripcionCarreraService.obtenerTodas().subscribe({
       next: (data: InscripcionCarreraResponseDto[]) => {
-        //this.inscripcionesCarreras = data;
-		//this.dnis = [
-			//...new Set(data.map(ins => ins.numeroDocumento))
-		//];
-		
         this.cdr.detectChanges();	//por si llego info y no se percato, fuerza la actualizacion del DOM
       },
       error: (err: any) => console.error('Error al obtener inscripciones a carrera:', err)

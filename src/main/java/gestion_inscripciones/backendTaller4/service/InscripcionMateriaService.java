@@ -5,9 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-//import org.springframework.web.server.ResponseStatusException;
 
 import gestion_inscripciones.backendTaller4.dto.InscripcionMateriaRequestDTO;
 import gestion_inscripciones.backendTaller4.dto.InscripcionMateriaResponseDTO;
@@ -65,8 +63,8 @@ public class InscripcionMateriaService {
             return;
         }
 
-        for (Materia correlativa : materia.getCorrelativas()) {// recorro las correlativas de una materia
-            if (!materiaAprobada(ingresanteId, correlativa.getId())) { // si no esta aprobada..
+        for (Materia correlativa : materia.getCorrelativas()) {				// recorro las correlativas de una materia
+            if (!materiaAprobada(ingresanteId, correlativa.getId())) {      // si no esta aprobada..
                 throw new IllegalArgumentException(
                     "No puede inscribirse a "
                     + materia.getNombre()
@@ -88,14 +86,11 @@ public class InscripcionMateriaService {
         Long ingresanteId = insCarrera.getIngresante().getId();
         
         validarCorrelativas(ingresanteId, materia);
-
-        //validarMateria(materia);
-        
+       
         InscripcionMateria entidad = new InscripcionMateria();
         entidad.setFechaInscripcion(dto.getFechaInscripcion());
         entidad.setInscripcionCarrera(insCarrera);
         entidad.setMateria(materia);
-
         
         boolean existeInscripcion = inscripcionMateriaRepository.existsByInscripcionCarreraIdAndMateriaId(
         		dto.getInscripcionCarreraId(),
@@ -124,7 +119,6 @@ public class InscripcionMateriaService {
         Materia materia = materiaRepository.findById(dto.getMateriaId())
                 .orElseThrow(() -> new RuntimeException("Materia no encontrada"));
 
-        //validarMateria(materia);
         // 3. Actualizamos los datos
         entidad.setFechaInscripcion(dto.getFechaInscripcion());
         entidad.setInscripcionCarrera(insCarrera);

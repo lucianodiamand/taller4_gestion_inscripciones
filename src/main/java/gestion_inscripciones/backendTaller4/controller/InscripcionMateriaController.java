@@ -21,7 +21,7 @@ import gestion_inscripciones.backendTaller4.service.InscripcionMateriaService;
 
 
 @RestController
-@RequestMapping("/inscripcion/materia") //puse ruta como ejemplo eso todavia no esta implementado
+@RequestMapping("/inscripcion/materia") 
 
 public class InscripcionMateriaController {
 	@Autowired

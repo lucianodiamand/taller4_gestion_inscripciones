@@ -1,12 +1,9 @@
 package gestion_inscripciones.backendTaller4.dto;
 
 import java.time.LocalDate;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+
 @NoArgsConstructor
 public class InscripcionMateriaResponseDTO {
     private Long id;
@@ -40,7 +37,6 @@ public class InscripcionMateriaResponseDTO {
 	public void setNombreMateria(String nombreMateria) {
 		this.nombreMateria = nombreMateria;
 	}
-
 
 	public void setMateriaId(Long materiaId) {
 		this.materiaId = materiaId;

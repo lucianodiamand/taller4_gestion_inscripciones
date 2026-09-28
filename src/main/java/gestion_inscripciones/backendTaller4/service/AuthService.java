@@ -31,7 +31,6 @@ public class AuthService {
     	this.passwordEncoder =passwordEncoder;
     	}
     
-    
     //se creo la cuenta, asiq vamos a registrarlo como ingresante
     @Transactional
     public UsuarioResponseDTO registrar(UsuarioRegisterRequestDTO dto) {

@@ -2,14 +2,8 @@ package gestion_inscripciones.backendTaller4.dto;
 
 import java.time.LocalDate;
 
-//import gestion_inscripciones.backendTaller4.entity.Carrera;
-//import gestion_inscripciones.backendTaller4.entity.Ingresante;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
 @NoArgsConstructor
 public class InscripcionCarreraResponseDTO {
     private Long id;
