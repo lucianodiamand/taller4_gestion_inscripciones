@@ -114,20 +114,14 @@
     <!-- ENCABEZADOS -->
     <ng-template #header>
         <tr>
-            @if (rol === 'GUEST') {
-                <th>Fecha</th>
-                <th>Materia</th>
-            }
-
+          
+            <th>Fecha</th>
             @if (rol === 'ADMIN') {
-                <th>Fecha</th>
                 <th>ID Inscripción</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Materia</th>
-                <th>Nota</th>
-                <th>Acciones</th>
             }
+			<th>Materia</th>
         </tr>
     </ng-template>
 
@@ -135,56 +129,13 @@
     <!-- DATOS -->
     <ng-template #body let-insc>
         <tr>
-            @if (rol === 'GUEST') {
-                <td>
-                    {{ insc.fechaInscripcion }}
-                </td>
-
-                <td>
-                    {{ insc.nombreMateria }}
-                </td>
-            }
-
+			<td>{{ insc.fechaInscripcion }}</td>
             @if (rol === 'ADMIN') {
-                <td>
-                    {{ insc.fechaInscripcion }}
-                </td>
-
-                <td>
-                    {{ insc.id }}
-                </td>
-
-                <td>
-                    {{ insc.nombreIngresante }}
-                </td>
-
-                <td>
-                    {{ insc.apellidoIngresante }}
-                </td>
-
-                <td>
-                    {{ insc.nombreMateria }}
-                </td>
-
-                <td>
-                    <input
-                        pInputText
-                        type="number"
-                        [(ngModel)]="insc.nota"
-                        min="0"
-                        max="10"
-                        placeholder="Nota"
-                    />
-                </td>
-
-                <td>
-                    <p-button
-                        label="Guardar"
-                        icon="pi pi-save"
-                        (onClick)="actualizarNota(insc)">
-                    </p-button>
-                </td>
+                <td>{{ insc.id }}</td>
+                <td>{{ insc.nombreIngresante }}</td>
+                <td>{{ insc.apellidoIngresante }}</td>         
             }
+			<td>{{ insc.nombreMateria }}</td>
         </tr>
     </ng-template>
 
@@ -192,7 +143,7 @@
     <!-- CUANDO NO HAY DATOS -->
     <ng-template #emptymessage>
         <tr>
-            <td [attr.colspan]="rol === 'ADMIN' ? 7 : 2">
+            <td [attr.colspan]="rol === 'ADMIN' ? 5 : 2">
                 No hay inscripciones registradas.
             </td>
         </tr>

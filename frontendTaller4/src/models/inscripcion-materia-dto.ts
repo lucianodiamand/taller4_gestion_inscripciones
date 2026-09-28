@@ -2,7 +2,6 @@ export interface InscripcionMateriaRequestDto {
   fechaInscripcion: string;
   inscripcionCarreraId: number;
   materiaId: number;
-  nota: number | null;
 }
 
 export interface InscripcionMateriaResponseDto {
@@ -15,7 +14,6 @@ export interface InscripcionMateriaResponseDto {
   // Datos de la materia
   materiaId: number;
   nombreMateria: string;
-  nota: number | null;
 
   // Datos del inscripto
   numeroDocumento: string;

@@ -9,6 +9,8 @@ import { InscripcionCarreraService } from '../../inscripcioncarreras/inscripcion
 import { MateriaService } from '../../materia/materia.service';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
+import { MateriasAprobadasService } from '../../materiasAprobadas/materias-aprobadas.service'; 
+import { MateriasAprobadasDTO } from '../../../models/materia-aprobada-dto'; 
 
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
@@ -44,7 +46,7 @@ export class InscripcionMateriaFormComponent implements OnInit {
   //dniSeleccionado: string = '';
   inscripcionesCarrerasFiltradas: InscripcionCarreraResponseDto[] = [];
   rol: string | null = null;
-
+  materiasAprobadasIds: number[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -52,7 +54,8 @@ export class InscripcionMateriaFormComponent implements OnInit {
     private inscripcionCarreraService: InscripcionCarreraService,
     private materiaService: MateriaService,
     private authService: AuthService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+	private materiasAprobadasService: MateriasAprobadasService
   ) {
     const hoy = new Date().toISOString().split('T')[0];
 
@@ -127,18 +130,12 @@ export class InscripcionMateriaFormComponent implements OnInit {
     } else {
       const ingresanteId = this.authService.getIngresanteId();
       if(ingresanteId){
+		  //Cargamos las inscripciones actuales
           this.inscripcionMateriaService.obtenerPorIngresante(ingresanteId).subscribe({
             next: (data: InscripcionMateriaResponseDto[]) => {
-              this.inscripciones = data; //cargamos las inscripciones y sus notas.
-			  
-			  //si tenemos una carrera seleccionada, volvemos a calcular las materias disponibles:
-			  const inscripcionCarreraId = Number(this.inscripcionForm.value.inscripcionCarreraId);
-			  
-			  if(inscripcionCarreraId){
-				this.filtrarMaterias(inscripcionCarreraId);
-			  }
-			  
-              this.cdr.detectChanges();
+              this.inscripciones = data; //cargamos las inscripciones.
+			  //Cargamos las materias aprobadas para validar correlativas
+			  this.cargarMateriasAprobadas(ingresanteId);
             },
             error: (err: any) => console.error('Error al cargar mis inscripciones:', err)
           });
@@ -151,16 +148,6 @@ filtrarMaterias(inscripcionCarreraId: number): void {
 
   if (!inscripcionElegida) {
     this.materiasFiltradas = [];
-    return;
-  }
-
-  // Si es ADMIN: Muestra las materias donde el alumno ya esta registrado (para cargar/editar notas)
-  if (this.rol === 'ADMIN') {
-    const materiasInscripto = this.inscripciones
-      .filter(ins => ins.inscripcionCarreraId === inscripcionCarreraId)
-      .map(ins => ins.materiaId);
-
-    this.materiasFiltradas = this.materias.filter(materia => materiasInscripto.includes(materia.id));
     return;
   }
 
@@ -198,11 +185,27 @@ filtrarMaterias(inscripcionCarreraId: number): void {
 }
 
 
-  materiaEstaAprobada(materiaId: number): boolean{
-	const inscripcion = this.inscripciones.find(ins => ins.materiaId === materiaId); 
-	
-	return !!inscripcion && inscripcion.nota !== null && inscripcion.nota >= 6; 
-  }
+// Método auxiliar para obtener las aprobadas
+cargarMateriasAprobadas(ingresanteId: number): void {
+  this.materiasAprobadasService.obtenerPorIngresante(ingresanteId).subscribe({
+    next: (aprobadas) => {
+      // Mapeamos a un arreglo que contenga solo los IDs de las materias aprobadas
+      this.materiasAprobadasIds = aprobadas.map(a => a.idMateria);
+
+      // Si hay una carrera seleccionada en el formulario, re-calculamos el filtro de materias
+      const inscripcionCarreraId = Number(this.inscripcionForm.value.inscripcionCarreraId);
+      if (inscripcionCarreraId) {
+        this.filtrarMaterias(inscripcionCarreraId);
+      }
+      this.cdr.detectChanges();
+    },
+    error: (err) => console.error('Error al obtener materias aprobadas:', err)
+  });
+}
+
+materiaEstaAprobada(materiaId: number): boolean {
+  return this.materiasAprobadasIds.includes(materiaId);
+}
   
   puedeCursarMateria(materia: MateriasDto):boolean{
 	//Sino tiene correlativas la materia, puede cursarla: 
@@ -211,27 +214,6 @@ filtrarMaterias(inscripcionCarreraId: number): void {
 	}
 	//aca todas las correlativas deben estar aprobadas: 
 	return materia.correlativasIds.every(correlativaId => this.materiaEstaAprobada(correlativaId));
-  }
-  
-  actualizarNota(inscripcion: InscripcionMateriaResponseDto): void{
-	const dto: InscripcionMateriaRequestDto = {
-		fechaInscripcion: inscripcion.fechaInscripcion, 
-		inscripcionCarreraId: inscripcion.inscripcionCarreraId, 
-		materiaId: inscripcion.materiaId, 
-		nota: inscripcion.nota
-	};
-	
-	this.inscripcionMateriaService.actualizar(inscripcion.id, dto).subscribe({
-		next: () => {
-			alert('Nota actualizada correctamente.');
-			this.cargarInscripciones(); 
-		}, 
-		
-		error: (err) => {
-			console.error('Error al actualizar la nota:', err);
-			alert('No se puedo actualizar la nota');
-		}
-	});
   }
   
   guardar(): void {
