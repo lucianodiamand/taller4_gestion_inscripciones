@@ -3,14 +3,14 @@ package gestion_inscripciones.backendTaller4.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.AllArgsConstructor;
+//import lombok.AllArgsConstructor;
 
 //Este DTO es la respuesta, avisa al front que materias aprobo
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public class MateriasAprobadasDTO {
 
     private Long id;

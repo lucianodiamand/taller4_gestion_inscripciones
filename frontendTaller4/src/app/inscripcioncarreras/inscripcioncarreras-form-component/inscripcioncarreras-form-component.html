@@ -18,15 +18,18 @@
                     Carrera
                 </label>
 
-                <p-select
-                    id="carrera"
-                    formControlName="carreraId"
-                    [options]="carreras"
-                    optionLabel="nombre"
-                    optionValue="id"
-                    placeholder="Seleccione una carrera"
-                    styleClass="w-full">
-                </p-select>
+				<p-select
+				    id="carrera"
+				    formControlName="carreraId"
+				    [options]="carreras"
+				    optionLabel="nombre"
+				    optionValue="id"
+				    [filter]="true"
+				    filterBy="nombre"
+				    filterPlaceholder="Buscar carrera..."
+				    placeholder="Seleccione una carrera"
+				    styleClass="w-full">
+				</p-select>
 
             </div>
 

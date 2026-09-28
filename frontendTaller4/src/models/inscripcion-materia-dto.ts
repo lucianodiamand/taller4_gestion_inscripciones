@@ -8,8 +8,7 @@ export interface InscripcionMateriaRequestDto {
 export interface InscripcionMateriaResponseDto {
   id: number;
   fechaInscripcion: string;
-  
-
+ 
   // Datos de la inscripción a carrera
   inscripcionCarreraId: number;
 

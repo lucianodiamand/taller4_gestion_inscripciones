@@ -6,6 +6,5 @@ export interface MateriasDto {
     anio: number;
     cuatrimestre: number;
     nombreCarrera: string;
-	correlativasIds: number[];
-	disabled?: boolean; 
+	correlativasIds: number[]; 
 }

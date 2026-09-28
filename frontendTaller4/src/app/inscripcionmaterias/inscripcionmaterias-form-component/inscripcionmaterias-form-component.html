@@ -10,9 +10,7 @@
     <form [formGroup]="inscripcionForm" (ngSubmit)="guardar()">
 
         <!-- INSCRIPCIÓN A CARRERA -->
-
         <div class="campo">
-
             <label for="inscripcionCarrera">
                 Inscripción a carrera
             </label>
@@ -26,36 +24,20 @@
                 styleClass="w-full">
 
                 <ng-template #item let-insc>
-
-                    {{ insc.nombreIngresante }}
-                    {{ insc.apellidoIngresante }}
-                    -
-                    {{ insc.nombreCarrera }}
-
+                    {{ insc.nombreIngresante }} {{ insc.apellidoIngresante }} - {{ insc.nombreCarrera }}
                 </ng-template>
 
                 <ng-template #selectedItem let-insc>
-
                     @if (insc) {
-
-                        {{ insc.nombreIngresante }}
-                        {{ insc.apellidoIngresante }}
-                        -
-                        {{ insc.nombreCarrera }}
-
+                        {{ insc.nombreIngresante }} {{ insc.apellidoIngresante }} - {{ insc.nombreCarrera }}
                     }
-
                 </ng-template>
-
             </p-select>
-
         </div>
 
 
         <!-- MATERIA -->
-
         <div class="campo">
-
             <label for="materia">
                 Materia
             </label>
@@ -66,57 +48,32 @@
                 [options]="materiasFiltradas"
                 optionLabel="nombre"
                 optionValue="id"
-                optionDisabled="disabled"
                 placeholder="Seleccione una materia"
                 styleClass="w-full">
 
                 <ng-template #item let-mat>
-
-                    {{ mat.nombre }}
-                    ({{ mat.anio }}° año -
-                    {{ mat.cuatrimestre }}° cuatrimestre)
-
-                    @if (mat.disabled) {
-                        Correlativas no aprobadas.
-                    }
-
+                    {{ mat.nombre }} ({{ mat.anio }}° año - {{ mat.cuatrimestre }}° cuatrimestre)
                 </ng-template>
 
                 <ng-template #selectedItem let-mat>
-
                     @if (mat) {
-
-                        {{ mat.nombre }}
-                        ({{ mat.anio }}° año -
-                        {{ mat.cuatrimestre }}° cuatrimestre)
-
+                        {{ mat.nombre }} ({{ mat.anio }}° año - {{ mat.cuatrimestre }}° cuatrimestre)
                     }
-
                 </ng-template>
-
             </p-select>
-
 
             @if (
                 inscripcionForm.value.inscripcionCarreraId &&
                 materiasFiltradas.length === 0
             ) {
-
-                <p-message severity="info">
-
-                    Seleccione una materia. Las materias con correlativas no aprobadas aparecen bloqueadas.
-
+                <p-message severity="info" text="No hay materias disponibles para inscribirse en esta carrera (o no cumple con las correlativas necesarias).">
                 </p-message>
-
             }
-
         </div>
 
 
         <!-- FECHA -->
-
         <div class="campo">
-
             <label for="fecha">
                 Fecha de inscripción
             </label>
@@ -127,19 +84,16 @@
                 id="fecha"
                 formControlName="fechaInscripcion"
             />
-
         </div>
 
 
         <div class="acciones">
-
             <p-button
                 type="submit"
                 label="Inscribir"
                 icon="pi pi-check"
                 [disabled]="inscripcionForm.invalid">
             </p-button>
-
         </div>
 
     </form>
@@ -152,27 +106,20 @@
 
 <h3>Inscripciones a Materias Registradas</h3>
 
-
 <p-table
     [value]="inscripciones"
     stripedRows
     [tableStyle]="{ 'min-width': '40rem' }">
 
     <!-- ENCABEZADOS -->
-
     <ng-template #header>
-
         <tr>
-
             @if (rol === 'GUEST') {
-
                 <th>Fecha</th>
                 <th>Materia</th>
-
             }
 
             @if (rol === 'ADMIN') {
-
                 <th>Fecha</th>
                 <th>ID Inscripción</th>
                 <th>Nombre</th>
@@ -180,22 +127,15 @@
                 <th>Materia</th>
                 <th>Nota</th>
                 <th>Acciones</th>
-
             }
-
         </tr>
-
     </ng-template>
 
 
     <!-- DATOS -->
-
     <ng-template #body let-insc>
-
         <tr>
-
             @if (rol === 'GUEST') {
-
                 <td>
                     {{ insc.fechaInscripcion }}
                 </td>
@@ -203,12 +143,9 @@
                 <td>
                     {{ insc.nombreMateria }}
                 </td>
-
             }
 
-
             @if (rol === 'ADMIN') {
-
                 <td>
                     {{ insc.fechaInscripcion }}
                 </td>
@@ -230,7 +167,6 @@
                 </td>
 
                 <td>
-
                     <input
                         pInputText
                         type="number"
@@ -239,40 +175,27 @@
                         max="10"
                         placeholder="Nota"
                     />
-
                 </td>
 
                 <td>
-
                     <p-button
                         label="Guardar"
                         icon="pi pi-save"
                         (onClick)="actualizarNota(insc)">
                     </p-button>
-
                 </td>
-
             }
-
         </tr>
-
     </ng-template>
 
 
     <!-- CUANDO NO HAY DATOS -->
-
     <ng-template #emptymessage>
-
         <tr>
-
             <td [attr.colspan]="rol === 'ADMIN' ? 7 : 2">
-
                 No hay inscripciones registradas.
-
             </td>
-
         </tr>
-
     </ng-template>
 
 </p-table>

@@ -21,7 +21,16 @@ import { MessageModule } from 'primeng/message';
   selector: 'app-inscripcion-materia',
   templateUrl: './inscripcionmaterias-form-component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink, ButtonModule, SelectModule, InputTextModule, TableModule, CardModule, MessageModule, FormsModule],
+  imports: [ReactiveFormsModule,
+	 CommonModule,
+	 RouterLink,
+	 ButtonModule, 
+	 SelectModule, 
+	 InputTextModule, 
+	 TableModule, 
+	 CardModule, 
+	 MessageModule, 
+	 FormsModule],
   styleUrl: './inscripcionmaterias-form-component.css'
 })
 export class InscripcionMateriaFormComponent implements OnInit {
@@ -81,7 +90,7 @@ export class InscripcionMateriaFormComponent implements OnInit {
 			//...new Set(data.map(ins => ins.numeroDocumento))
 		//];
 		
-        this.cdr.detectChanges();
+        this.cdr.detectChanges();	//por si llego info y no se percato, fuerza la actualizacion del DOM
       },
       error: (err: any) => console.error('Error al obtener inscripciones a carrera:', err)
     });
@@ -137,51 +146,57 @@ export class InscripcionMateriaFormComponent implements OnInit {
     }
   }
 
-  filtrarMaterias(inscripcionCarreraId: number): void {
+filtrarMaterias(inscripcionCarreraId: number): void {
   const inscripcionElegida = this.inscripcionesCarreras.find(i => i.id === inscripcionCarreraId);
-  // find recorre el arreglo de inscripciones carreras como un for y devuelve el que coincide
 
   if (!inscripcionElegida) {
     this.materiasFiltradas = [];
     return;
   }
 
-  // Para que ADMIN pueda ver todas las materias de la carrera y ponerles su nota. 
-  
-  if(this.rol === 'ADMIN'){
-	
-	const materiasInscripto = this.inscripciones.filter(ins => ins.inscripcionCarreraId === inscripcionCarreraId).map(ins => ins.materiaId);
-	
-	this.materiasFiltradas = this.materias.filter(materia => materiasInscripto.includes(materia.id));
-	return; 
+  // Si es ADMIN: Muestra las materias donde el alumno ya esta registrado (para cargar/editar notas)
+  if (this.rol === 'ADMIN') {
+    const materiasInscripto = this.inscripciones
+      .filter(ins => ins.inscripcionCarreraId === inscripcionCarreraId)
+      .map(ins => ins.materiaId);
+
+    this.materiasFiltradas = this.materias.filter(materia => materiasInscripto.includes(materia.id));
+    return;
   }
-  
-  //Para el GUEST le aparecen todas las materias, solo sale el boton para inscribirse en las que tiene aprobada (su correlativa). 
-  this.materiasFiltradas = this.materias.filter(m => m.carreraId === inscripcionElegida.carreraId).map(materia => ({
-	
-	...materia, disabled: !this.puedeCursarMateria(materia)
-	//Primero corroboramos que pertenezca a la carrera:
-    //if(m.carreraId !== inscripcionElegida.carreraId){
-	//	return false; 
-	//}
 
-	// Sino tiene correlativa la materia, puede cursarla: 
-	//if(!m.correlativasIds || m.correlativasIds.length === 0){
-	//	return true;
-	//}	
-	
-	//Ahora, verificamos que las correlativas esten aprobadas: 
-	//return m.correlativasIds.every(correlativaId => this.materiaEstaAprobada(correlativaId));
-	
-	//return m.carreraId === inscripcionElegida.carreraId;// && m.anio === 1 && m.cuatrimestre === 1;
-    // en el callback la materia m se queda si se cumple la condicion, y filter arma el nuevo arreglo
-  }));
+  // Si es ESTUDIANTE / GUEST:
+  const idsMateriasInscriptas = this.inscripciones.map(ins => ins.materiaId);
 
-  /*const materiaActual = this.inscripcionForm.value.materiaId; //guarda la materia elegida
-  if (!this.materiasFiltradas.some(m => m.id === materiaActual)) { //
+  this.materiasFiltradas = this.materias.filter(materia => {
+    // 1. Debe pertenecer a la carrera seleccionada
+    if (materia.carreraId !== inscripcionElegida.carreraId) {
+      return false;
+    }
+
+    // 2. NO debe estar inscripto previamente (ni aprobada ni cursando)
+    if (idsMateriasInscriptas.includes(materia.id)) {
+      return false;
+    }
+
+    // 3. REGLA DE CUATRIMESTRES Y CORRELATIVAS:
+    // Si es del 1º Año y 1º Cuatrimestre, se habilita directamente
+    const esPrimerCuatrimestre = materia.anio === 1 && materia.cuatrimestre === 1;
+
+    if (esPrimerCuatrimestre) {
+      return true;
+    }
+
+    // Para cualquier otro cuatrimestre posterior, debe cumplir las correlativas
+    return this.puedeCursarMateria(materia);
+  });
+
+  // Limpia la seleccion previa del formulario si la materia elegida ya no forma parte de la lista filtrada
+  const materiaActual = Number(this.inscripcionForm.value.materiaId);
+  if (materiaActual && !this.materiasFiltradas.some(m => m.id === materiaActual)) {
     this.inscripcionForm.patchValue({ materiaId: '' });
-  }*/
+  }
 }
+
 
   materiaEstaAprobada(materiaId: number): boolean{
 	const inscripcion = this.inscripciones.find(ins => ins.materiaId === materiaId); 
