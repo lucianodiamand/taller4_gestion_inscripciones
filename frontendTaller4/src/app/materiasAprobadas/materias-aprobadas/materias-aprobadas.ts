@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -7,6 +7,7 @@ import { TableModule } from 'primeng/table';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { MessageModule } from 'primeng/message';
 
 import { MateriasAprobadasService } from '../materias-aprobadas.service';
 import { MateriasAprobadasDTO } from '../../../models/materia-aprobada-dto';
@@ -24,7 +25,8 @@ import { AuthService } from '../../auth/auth.service';
     TableModule,
     InputNumberModule,
     ButtonModule,
-    CardModule
+    CardModule,
+	MessageModule
   ],
   templateUrl: './materias-aprobadas.html',
   styleUrls: ['./materias-aprobadas.css']
@@ -46,7 +48,8 @@ export class MateriasAprobadas {
   constructor(
     private fb: FormBuilder,
     private materiasService: MateriasAprobadasService,
-    private authService: AuthService
+    private authService: AuthService,
+	private cdr: ChangeDetectorRef
   ) {
     this.notaForm = this.fb.group({
       idInscripcion: [null, [Validators.required, Validators.min(1)]],
@@ -57,7 +60,38 @@ export class MateriasAprobadas {
       this.rol = usuario.rol;
     }
   }
-
+  
+  ngOnInit(): void{
+	this.rol = this.authService.getRol();
+	
+	//si es estudiante, cargamos las materias aprobadas para mostrarlas 
+	if(this.rol === 'GUEST'){
+		this.cargarMateriasAprobadasAlumno();
+	}
+  }
+  
+  cargarMateriasAprobadasAlumno():void {
+	const ingresanteId = this.authService.getIngresanteId();
+	
+	if(!ingresanteId){
+		this.mostrarMensaje('No se pudo identificar la sesión del estudiante.', 'error');
+		return;
+	}
+	
+	this.cargandoTabla = true;
+	this.materiasService.obtenerPorIngresante(ingresanteId).subscribe({
+		next: (data: MateriasAprobadasDTO[]) => {
+			this.materiasAprobadas = data;
+			this.cargandoTabla = false;
+			this.cdr.detectChanges();
+		},
+		error: () => {
+			this.cargandoTabla = false;
+			this.mostrarMensaje('Error al consultar el historial de materias.', 'error');
+		}
+	})
+  }
+  
   guardarNota(): void {
 	
     if (this.notaForm.invalid) {

@@ -105,3 +105,53 @@
 
 </p-card>
 }
+
+<!-- Lista de Materias Aprobadas -->
+
+<!-- VISTA ESTUDIANTE (GUEST) -->
+@if (rol === 'GUEST') {
+
+  <p-card header="Mis Materias Aprobadas" subheader="Historial académico de materias finalizadas">
+
+    <p-table
+      [value]="materiasAprobadas"
+      [loading]="cargandoTabla"
+      stripedRows
+      [tableStyle]="{ 'min-width': '40rem' }">
+
+      <!-- ENCABEZADOS -->
+      <ng-template #header>
+        <tr>
+          <th>Materia</th>
+          <th>Fecha de Aprobación</th>
+          <th>Nota Final</th>
+        </tr>
+      </ng-template>
+
+      <!-- DATOS -->
+      <ng-template #body let-item>
+        <tr>
+          <td>{{ item.nombreMateria }}</td>
+          <td>{{ item.fechaAprobacion }}</td>
+          <td>
+            <span class="font-bold text-green-600">
+              {{ item.nota }}
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- CUANDO NO HAY REGISTROS -->
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="3" class="text-center">
+            Aún no posees materias aprobadas registradas.
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+
+  </p-card>
+
+}
