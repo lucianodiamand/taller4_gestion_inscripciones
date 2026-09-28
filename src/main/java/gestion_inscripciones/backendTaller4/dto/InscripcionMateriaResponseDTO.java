@@ -18,10 +18,7 @@ public class InscripcionMateriaResponseDTO {
     // Datos de la Materia
     private Long materiaId;
     private String nombreMateria;
-    
-    private Integer nota;
-     
-    
+          
     private String numeroDocumento; //para ademas de los datos de la inscripcion, poder ver este dato del ingresante
     private String nombreIngresante;
     private String apellidoIngresante;
@@ -91,14 +88,6 @@ public class InscripcionMateriaResponseDTO {
 
 	public void setApellidoIngresante(String apellidoIngresante) {
 	    this.apellidoIngresante = apellidoIngresante;
-	}
-	
-	public Integer getNota() {
-	    return nota;
-	}
-
-	public void setNota(Integer nota) {
-	    this.nota = nota;
 	}
 
 }

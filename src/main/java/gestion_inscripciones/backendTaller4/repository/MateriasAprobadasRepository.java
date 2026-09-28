@@ -10,4 +10,5 @@ public interface MateriasAprobadasRepository extends JpaRepository<MateriasAprob
 
 	List<MateriasAprobadas> findByIngresanteId(Long idIngresante);
     List<MateriasAprobadas> findByMateriaId(Long idMateria);
+    boolean existsByIngresanteIdAndMateriaIdAndNotaGreaterThanEqual(Long ingresanteId, Long materiaId, Integer nota);
 }

@@ -36,7 +36,6 @@ public class MateriasAprobadasService {
     			.orElseThrow(() -> new EntityNotFoundException("Inscripción no encontrada con ID: " + dto.getIdInscripcion()));
     
     	//Actualizar la nota en la inscripcion original (sin borrar el registro)
-        inscripcion.setNota(dto.getNota());
         inscripcionMateriaRepository.save(inscripcion);
         
         //Crear un nuevo registro de materia_aprobada

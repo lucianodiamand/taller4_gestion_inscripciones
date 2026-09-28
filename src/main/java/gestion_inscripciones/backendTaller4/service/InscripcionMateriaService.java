@@ -17,12 +17,16 @@ import gestion_inscripciones.backendTaller4.entity.Materia;
 import gestion_inscripciones.backendTaller4.repository.InscripcionCarreraRepository;
 import gestion_inscripciones.backendTaller4.repository.InscripcionMateriaRepository;
 import gestion_inscripciones.backendTaller4.repository.MateriaRepository;
+import gestion_inscripciones.backendTaller4.repository.MateriasAprobadasRepository;
 
 @Service // para la logica de negocio
 public class InscripcionMateriaService { 
 	@Autowired
     private InscripcionMateriaRepository inscripcionMateriaRepository;
-
+	
+	@Autowired
+	private MateriasAprobadasRepository materiasAprobadasRepository;
+	
     @Autowired
     private InscripcionCarreraRepository inscripcionCarreraRepository;
 
@@ -52,16 +56,7 @@ public class InscripcionMateriaService {
     }
     
     private boolean materiaAprobada(Long ingresanteId, Long materiaId) {
-
-        Optional<InscripcionMateria> inscripcion = // busca si el ingresante tiene una incripcion existente a la materia con ese id
-            inscripcionMateriaRepository
-                .findByInscripcionCarreraIngresanteIdAndMateriaId(ingresanteId, materiaId);
-
-        if (inscripcion.isPresent() && inscripcion.get().getNota() != null && inscripcion.get().getNota() >= 6) {
-            return true;
-        } // si encuentra una inscripcion, su nota no es null y es mayor o igual a 6
-
-        return false;
+        return materiasAprobadasRepository.existsByIngresanteIdAndMateriaIdAndNotaGreaterThanEqual(ingresanteId, materiaId, 6);
     }
     
     private void validarCorrelativas(Long ingresanteId, Materia materia) {
@@ -82,14 +77,6 @@ public class InscripcionMateriaService {
         }
     }
     
-    /*
-    //validacion para 1er año: 
-    
-    private void validarMateria(Materia materia) {
-    	if(materia.getAnio() != 1 || materia.getCuatrimestre() != 1) {
-    		throw new RuntimeException("Solo se permiten inscripciones a materias de primer año y primer cuatrimestre "); 
-    	}
-    }*/
     // Guardar / Crear inscripción (CREATE)
     public InscripcionMateriaResponseDTO guardar(InscripcionMateriaRequestDTO dto) {
         InscripcionCarrera insCarrera = inscripcionCarreraRepository.findById(dto.getInscripcionCarreraId())
@@ -156,9 +143,7 @@ public class InscripcionMateriaService {
     private InscripcionMateriaResponseDTO convertirAResponseDTO(InscripcionMateria entidad) {
         InscripcionMateriaResponseDTO dto = new InscripcionMateriaResponseDTO();
         dto.setId(entidad.getId());
-        dto.setFechaInscripcion(entidad.getFechaInscripcion());
-        dto.setNota(entidad.getNota());
-       
+        dto.setFechaInscripcion(entidad.getFechaInscripcion());  
 
         if (entidad.getInscripcionCarrera().getIngresante() != null) {
             dto.setInscripcionCarreraId(entidad.getInscripcionCarrera().getId());
