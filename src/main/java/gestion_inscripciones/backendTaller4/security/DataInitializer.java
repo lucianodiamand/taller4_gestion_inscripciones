@@ -1,7 +1,7 @@
 package gestion_inscripciones.backendTaller4.security;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.boot.CommandLineRunner; // interfaz de spring que permite ejecutar determinado código automáticamente cuando arranca la aplicación
+import org.springframework.security.crypto.password.PasswordEncoder; // Importamos la interfaz que utilizamos para generar/verificar hashes de contraseñas.
 
 import gestion_inscripciones.backendTaller4.entity.Rol;
 import gestion_inscripciones.backendTaller4.entity.Usuario;
@@ -9,8 +9,9 @@ import gestion_inscripciones.backendTaller4.repository.UsuarioRepository;
 
 import org.springframework.stereotype.Component;
 
-@Component
+@Component // Esto hace que Spring cree un objeto de DataInitializer automáticamente.
 public class DataInitializer implements CommandLineRunner {
+	// CommandLineRunner es una interfaz que obliga a usar el metodo run 
 	
 	private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
@@ -22,6 +23,7 @@ public class DataInitializer implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		// run se ejecuta cuando Spring Boot termina de iniciar la aplicación.
 		// Verifica si el usuario 'admin' ya existe en la base de datos
         if (usuarioRepository.findByUsername("admin").isEmpty()) {
             

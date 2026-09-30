@@ -32,32 +32,35 @@ public class CarreraController {
     
     // 2. Obtener una carrera por ID -> GET http://localhost:8080/carreras/{id}
     @GetMapping("/buscar/{id}")
+ // ResponseEntity es una clase de Spring que representa una respuesta HTTP completa
     public ResponseEntity<CarreraDTO> obtenerPorId(@PathVariable Long id) {
         return carreraService.obtenerPorId(id)
-                .map(ResponseEntity::ok)
+                .map(ResponseEntity::ok) // retorna el mensaje HTTP Status: 200 OK con el body
                 .orElse(ResponseEntity.notFound().build());
     }
     
     @PostMapping("/crear")
     public ResponseEntity<CarreraDTO> crear(@RequestBody CarreraDTO dto) {
         CarreraDTO nueva = carreraService.guardar(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nueva);
+        // para comunicar que la petición fue correcta y además se creó un recurso nuevo
+        return ResponseEntity.status(HttpStatus.CREATED).body(nueva); 
     }
     
     @PutMapping("/editar/{id}")
+    // @PathVariable toma el valor que apareció en {id} dentro de la URL y lo guarda en la variable id
     public ResponseEntity<CarreraDTO> actualizar(@PathVariable Long id, @RequestBody CarreraDTO dto) {
         try {
             CarreraDTO actualizada = carreraService.actualizar(id, dto);
-            return ResponseEntity.ok(actualizada);
+            return ResponseEntity.ok(actualizada); // si existe emite mensaje de ok 200 y actualiza la carrera
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build(); // si no existe emite mensaje de error 404 not found
         }
     }
     
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         carreraService.eliminar(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build(); // para retornar mensaje 204 no content, que significa que La operación fue realizada correctamente, pero no hay contenido que devolver
     }
 
 }

@@ -20,16 +20,16 @@ import gestion_inscripciones.backendTaller4.repository.MateriasAprobadasReposito
 @Service // para la logica de negocio
 public class InscripcionMateriaService { 
 	@Autowired
-    private InscripcionMateriaRepository inscripcionMateriaRepository;
+    private InscripcionMateriaRepository inscripcionMateriaRepository; // para acceder a la entidad de inscripcionMAteria
 	
 	@Autowired
-	private MateriasAprobadasRepository materiasAprobadasRepository;
+	private MateriasAprobadasRepository materiasAprobadasRepository; // para acceder a la entidad de materiasAprobadas
 	
     @Autowired
-    private InscripcionCarreraRepository inscripcionCarreraRepository;
+    private InscripcionCarreraRepository inscripcionCarreraRepository; // para acceder a la entidad de inscripcionCarrera
 
     @Autowired
-    private MateriaRepository materiaRepository;
+    private MateriaRepository materiaRepository; // para acceder a la entidad materias
 
     // Obtener todas las inscripciones (READ)
     public List<InscripcionMateriaResponseDTO> obtenerTodas() {
@@ -46,25 +46,26 @@ public class InscripcionMateriaService {
     }
     
     
-    public List<InscripcionMateriaResponseDTO> obtenerPorIngresante(Long ingresanteId) {
+    public List<InscripcionMateriaResponseDTO> obtenerPorIngresante(Long ingresanteId) { // obtener inscripciones a partir del id del ingresante recibido del front
         return inscripcionMateriaRepository.findByInscripcionCarreraIngresanteId(ingresanteId)
         		.stream()
                 .map(this::convertirAResponseDTO)
                 .collect(Collectors.toList());
     }
     
-    private boolean materiaAprobada(Long ingresanteId, Long materiaId) {
+    private boolean materiaAprobada(Long ingresanteId, Long materiaId) { // recibe el id del ingresante y de la materia
         return materiasAprobadasRepository.existsByIngresanteIdAndMateriaIdAndNotaGreaterThanEqual(ingresanteId, materiaId, 6);
+        // el metodo al que se llama recibe el id del ingresante y materia y la nota
     }
     
     private void validarCorrelativas(Long ingresanteId, Materia materia) {
 
-        if (materia.getCorrelativas() == null || materia.getCorrelativas().isEmpty()) {
+        if (materia.getCorrelativas() == null || materia.getCorrelativas().isEmpty()) { // si no tiene correlativas
             return;
         }
 
-        for (Materia correlativa : materia.getCorrelativas()) {				// recorro las correlativas de una materia
-            if (!materiaAprobada(ingresanteId, correlativa.getId())) {      // si no esta aprobada..
+        for (Materia correlativa : materia.getCorrelativas()) {// recorro las correlativas de una materia
+            if (!materiaAprobada(ingresanteId, correlativa.getId())) {// si no esta aprobada..
                 throw new IllegalArgumentException(
                     "No puede inscribirse a "
                     + materia.getNombre()
@@ -77,22 +78,22 @@ public class InscripcionMateriaService {
     
     // Guardar / Crear inscripción (CREATE)
     public InscripcionMateriaResponseDTO guardar(InscripcionMateriaRequestDTO dto) {
-        InscripcionCarrera insCarrera = inscripcionCarreraRepository.findById(dto.getInscripcionCarreraId())
+        InscripcionCarrera insCarrera = inscripcionCarreraRepository.findById(dto.getInscripcionCarreraId()) // obtenemos el id de la carrera
                 .orElseThrow(() -> new RuntimeException("Inscripción de Carrera no encontrada"));
 
-        Materia materia = materiaRepository.findById(dto.getMateriaId())
+        Materia materia = materiaRepository.findById(dto.getMateriaId()) // obtenemos el id de la materia
                 .orElseThrow(() -> new RuntimeException("Materia no encontrada"));
         
-        Long ingresanteId = insCarrera.getIngresante().getId();
+        Long ingresanteId = insCarrera.getIngresante().getId(); // obtenemos el id del ingresante
         
-        validarCorrelativas(ingresanteId, materia);
+        validarCorrelativas(ingresanteId, materia); // validamos correlativas
        
-        InscripcionMateria entidad = new InscripcionMateria();
+        InscripcionMateria entidad = new InscripcionMateria(); // creamos la entidad
         entidad.setFechaInscripcion(dto.getFechaInscripcion());
         entidad.setInscripcionCarrera(insCarrera);
         entidad.setMateria(materia);
         
-        boolean existeInscripcion = inscripcionMateriaRepository.existsByInscripcionCarreraIdAndMateriaId(
+        boolean existeInscripcion = inscripcionMateriaRepository.existsByInscripcionCarreraIdAndMateriaId( // para evitar duplicados
         		dto.getInscripcionCarreraId(),
         		dto.getMateriaId());
         
@@ -101,7 +102,7 @@ public class InscripcionMateriaService {
         			"El ingresante ya esta inscripto en esta materia"); 
         }
         
-        InscripcionMateria guardada = inscripcionMateriaRepository.save(entidad);
+        InscripcionMateria guardada = inscripcionMateriaRepository.save(entidad); // guardamos la inscripcion en la bd 
 
         return convertirAResponseDTO(guardada);
     }
@@ -134,7 +135,7 @@ public class InscripcionMateriaService {
     	inscripcionMateriaRepository.deleteById(id);
     }
     
-    private InscripcionMateriaResponseDTO convertirAResponseDTO(InscripcionMateria entidad) {
+    private InscripcionMateriaResponseDTO convertirAResponseDTO(InscripcionMateria entidad) { // para convertir la info de la tabla a lo que se enviara al front
         InscripcionMateriaResponseDTO dto = new InscripcionMateriaResponseDTO();
         dto.setId(entidad.getId());
         dto.setFechaInscripcion(entidad.getFechaInscripcion());  

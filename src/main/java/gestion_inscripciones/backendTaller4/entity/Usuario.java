@@ -29,7 +29,7 @@ public class Usuario {
     @Column(nullable = false)
 	private Rol rol; 
 	
-	@OneToOne(optional=true)
+	@OneToOne(optional=true) // un usuario puede pertenecer a un ingresante
 	@JoinColumn(name = "ingresante_id")
 	private Ingresante ingresante;
 

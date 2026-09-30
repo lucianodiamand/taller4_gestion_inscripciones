@@ -16,10 +16,10 @@ import gestion_inscripciones.backendTaller4.repository.MateriaRepository;
 @Service // para la logica de negocio
 public class MateriaService { 
 	@Autowired
-    private MateriaRepository materiaRepository;
+    private MateriaRepository materiaRepository; // para acceder a materias
 	
 	@Autowired
-    private CarreraRepository carreraRepository;
+    private CarreraRepository carreraRepository; // para acceder a carreras
 
     // Obtener todas las materias (READ)
 	public List<MateriaDTO> obtenerTodas() {
@@ -44,25 +44,25 @@ public class MateriaService {
                 .map(this::convertirADTO);
     }
 	
-	public MateriaDTO guardar(MateriaDTO dto) {
-        Carrera carrera = carreraRepository.findById(dto.getCarreraId())
+	public MateriaDTO guardar(MateriaDTO dto) { // crear una materia a partir de lo recibido por el dto frontend --> backend
+        Carrera carrera = carreraRepository.findById(dto.getCarreraId()) // buscamos a que carrera pertenece la materia
                 .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
 
-        Materia materia = new Materia();
+        Materia materia = new Materia(); // creamos la materia 
         materia.setNombre(dto.getNombre());
         materia.setAnio(dto.getAnio());
         materia.setCuatrimestre(dto.getCuatrimestre());
         materia.setCarrera(carrera);
 
-        Materia guardada = materiaRepository.save(materia);
+        Materia guardada = materiaRepository.save(materia); // la guardamos en la bd 
         return convertirADTO(guardada);
     }
 	
-	public MateriaDTO actualizar(Long id, MateriaDTO dto) {
-        Materia materia = materiaRepository.findById(id)
+	public MateriaDTO actualizar(Long id, MateriaDTO dto) { // recibe el id y el dto con la nueva info
+        Materia materia = materiaRepository.findById(id) // busca la materia en la bd 
                 .orElseThrow(() -> new RuntimeException("Materia no encontrada"));
 
-        Carrera carrera = carreraRepository.findById(dto.getCarreraId())
+        Carrera carrera = carreraRepository.findById(dto.getCarreraId()) // busca a que carrera pertenece la materia
                 .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
 
         materia.setNombre(dto.getNombre());
@@ -85,12 +85,12 @@ public class MateriaService {
         dto.setAnio(entidad.getAnio());
         dto.setCuatrimestre(entidad.getCuatrimestre());
 
-        if (entidad.getCarrera() != null) {
+        if (entidad.getCarrera() != null) {// si bien una materia siempre tiene una carrera asociada, es una comprobación. No contradice a optional = false
             dto.setCarreraId(entidad.getCarrera().getId());
             dto.setNombreCarrera(entidad.getCarrera().getNombre());
         }
         
-        if(entidad.getCorrelativas() != null) {
+        if(entidad.getCorrelativas() != null) { // si tiene correlativas setea sus datos
         	dto.setCorrelativasIds(entidad.getCorrelativas().stream().map(Materia::getId).collect(Collectors.toList()));
         }
         

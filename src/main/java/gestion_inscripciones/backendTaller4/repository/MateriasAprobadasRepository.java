@@ -9,6 +9,9 @@ import gestion_inscripciones.backendTaller4.entity.MateriasAprobadas;
 public interface MateriasAprobadasRepository extends JpaRepository<MateriasAprobadas, Long>{
 
 	List<MateriasAprobadas> findByIngresanteId(Long idIngresante);
+	
     List<MateriasAprobadas> findByMateriaId(Long idMateria);
+    
     boolean existsByIngresanteIdAndMateriaIdAndNotaGreaterThanEqual(Long ingresanteId, Long materiaId, Integer nota);
+    //es una consulta que se hace sobre la bd. JPA genera la implementación automaticamente basándose en el nombre del método
 }

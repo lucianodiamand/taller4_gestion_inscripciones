@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
-public class InscripcionCarrera {
+public class InscripcionCarrera { // inscripcion de un ingresante a una carrera
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,12 +21,12 @@ public class InscripcionCarrera {
     @Column(nullable = false)
     private LocalDate fechaInscripcion;
 
-    @ManyToOne (optional = false) //Especifico como es la relacion entre entidades. Muchas inscripciones o ninguna pertenecen a un ingresante
+    @ManyToOne (optional = false) //Muchas inscripciones o ninguna pertenecen a un ingresante
     @JoinColumn(name = "estudiante_id", nullable = false)// Define la columna que une dos tablas (fk) para relaciones entre entidades
     // establezco el nombre de la columna y si puede ser null
     private Ingresante ingresante;
     
-    @ManyToOne (optional = false) //Una carrera puede tener 0 o muchos inscriptos
+    @ManyToOne (optional = false) //Muchas inscripciones a carrera pueden pertenecer a una carrera
     @JoinColumn(name = "carrera_id", nullable = false) // Define la columna que une dos tablas (fk) para relaciones entre entidades
     private Carrera carrera;
     

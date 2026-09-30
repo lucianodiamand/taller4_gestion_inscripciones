@@ -21,7 +21,12 @@ public class MateriasAprobadas {
 	
 	private Integer nota;
 	
-	//FetchType.LAZY solo traera los id de ingresante y materia con la nota
+	
+	//ManyToOne es eager, por lo que cuando obtengo MateriasAprobadas, tambien se carga inmediatamente las entidades relacionadas
+	// fetch indica cuando se carga la entidad relacionada
+	// LAZY significa que se cargue solo cuando sea necesario
+	//FetchType.LAZY permite que la relacion entre entidades se cargue de forma diferida, es decir, la entidad
+	    //relacionada no se carga inmediatamente, sino cuando se accede a ella y resulta necesario
 	@ManyToOne(fetch = FetchType.LAZY) 
     @JoinColumn(name = "id_ingresante", nullable = false)
     private Ingresante ingresante;
@@ -30,7 +35,7 @@ public class MateriasAprobadas {
     @JoinColumn(name = "id_materia", nullable = false)
     private Materia materia;
     
-    // --- GETTERS & SETTERS ---
+   
     public Long getId() {
         return id;
     }

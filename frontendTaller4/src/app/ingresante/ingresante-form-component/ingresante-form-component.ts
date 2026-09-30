@@ -16,12 +16,12 @@ import { ButtonModule } from 'primeng/button';
   templateUrl: './ingresante-form-component.html',
   styleUrl: './ingresante-form-component.css',
 })
-export class IngresanteFormComponent implements OnInit, OnDestroy {
+export class IngresanteFormComponent implements OnInit, OnDestroy { // para crear o editar un ingresante
 
   ingresanteForm: FormGroup;
   id: string | null = null;
 
-  // Manejador centralizado de suscripciones para evitar memory leaks y errores al destruir el componente
+  // Manejador centralizado de suscripciones para evitar memory leaks y errores al destruir el componente. Administra varias suscripciones
   private readonly subscriptions = new Subscription();
 
   tiposDocumento = [
@@ -49,20 +49,20 @@ export class IngresanteFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id');
+    this.id = this.route.snapshot.paramMap.get('id'); // obtiene id del ingresante
 
-    // Escuchamos los cambios en tipoDocumento
+    // Escuchamos los cambios en  y si hay cambios se ejecuta lo siguiente
     const subTipoDoc = this.ingresanteForm.get('tipoDocumento')?.valueChanges.subscribe(() => {
       this.ingresanteForm.get('numeroDocumento')?.updateValueAndValidity();
     });
-    if (subTipoDoc) this.subscriptions.add(subTipoDoc);
+    if (subTipoDoc) this.subscriptions.add(subTipoDoc); // si existe suscripcion la sumamos al administrador
 
     // Si viene un ID en la URL, buscamos los datos para editar
     if (this.id) {
       this.subscriptions.add(
         this.servicio.obtenerPorId(+this.id).subscribe({
           next: (ingresante: IngresanteDto) => {
-            this.ingresanteForm.patchValue(ingresante);
+            this.ingresanteForm.patchValue(ingresante); // el formulario se llena con los datos existentes
           },
           error: (err) => {
             console.error('Error al buscar el ingresante:', err);
@@ -113,14 +113,14 @@ export class IngresanteFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.id) {
+    if (this.id) { // si existe id es porque se hace una actualizacion
       this.subscriptions.add(
         this.servicio.actualizar(+this.id, this.ingresanteForm.value).subscribe({
           next: () => this.router.navigate(['/ingresante']),
           error: (err) => console.error('Error al actualizar el ingresante:', err)
         })
       );
-    } else {
+    } else { // sino porque se hace un post
       this.subscriptions.add(
         this.servicio.crear(this.ingresanteForm.value).subscribe({
           next: () => this.router.navigate(['/ingresante']),

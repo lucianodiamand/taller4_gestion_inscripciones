@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class InscripcionCarreraRequestDTO {
+public class InscripcionCarreraRequestDTO { // información que va del front -> al back
     private LocalDate fechaInscripcion;
     private Long ingresanteId;
     private Long carreraId;

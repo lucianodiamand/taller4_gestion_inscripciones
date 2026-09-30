@@ -15,11 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class AuthService {
+public class AuthService { // implementa security
 	
-	private final UsuarioRepository usuarioRepository;  //para login
-    private final IngresanteRepository ingresanteRepository; //en caso de que haya que registrarlo
-    private final JwtUtil jwtUtil; //asistencia en seguridad
+	private final UsuarioRepository usuarioRepository;  //para buscar usuario
+    private final IngresanteRepository ingresanteRepository; //en caso de que haya que crear un ingresante
+    private final JwtUtil jwtUtil; //asistencia en seguridad, crea JWT
     private final PasswordEncoder passwordEncoder; //para encriptar contraseña
     
     public AuthService(UsuarioRepository usuarioRepository, 
@@ -34,11 +34,11 @@ public class AuthService {
     //se creo la cuenta, asiq vamos a registrarlo como ingresante
     @Transactional
     public UsuarioResponseDTO registrar(UsuarioRegisterRequestDTO dto) {
-        if (usuarioRepository.findByUsername(dto.getUsername()).isPresent()) {
+        if (usuarioRepository.findByUsername(dto.getUsername()).isPresent()) { // verifica que no exista mismo nombre de usuario
             throw new RuntimeException("El nombre de usuario ya se encuentra registrado");
         }
 
-        // Crear y guardar los datos del Ingresante
+        // Crear y guardar los datos del Ingresante en memoria
         Ingresante ingresante = new Ingresante();
         ingresante.setNombre(dto.getNombre());
         ingresante.setApellido(dto.getApellido());
@@ -47,7 +47,7 @@ public class AuthService {
         ingresante.setTipoDocumento(dto.getTipoDocumento());
         ingresante.setNumeroDocumento(dto.getNumeroDocumento());
         
-        Ingresante ingresanteGuardado = ingresanteRepository.save(ingresante);
+        Ingresante ingresanteGuardado = ingresanteRepository.save(ingresante);// lo guardamos en la bd. save devuelve la entidad persistida en la bd
 
         //Crear y guardar el Usuario asociado al Ingresante
         Usuario usuario = new Usuario();
@@ -59,9 +59,9 @@ public class AuthService {
         Usuario usuarioGuardado = usuarioRepository.save(usuario);
 
         //instanciamos el token que sera guardado localmente
-        String token = jwtUtil.generarToken(usuarioGuardado.getUsername(), usuarioGuardado.getRol().name());
+        String token = jwtUtil.generarToken(usuarioGuardado.getUsername(), usuarioGuardado.getRol().name()); // le pasamos username y rol
 
-        UsuarioResponseDTO response = new UsuarioResponseDTO();
+        UsuarioResponseDTO response = new UsuarioResponseDTO(); // para construir lo que va a recibir el front
         response.setId(usuarioGuardado.getId());
         response.setUsername(usuarioGuardado.getUsername());
         response.setRol(usuarioGuardado.getRol());

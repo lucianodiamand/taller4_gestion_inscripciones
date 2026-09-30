@@ -22,25 +22,25 @@ import { InputTextModule } from 'primeng/inputtext';
   templateUrl: './inscripcioncarreras-form-component.html',
   styleUrl: './inscripcioncarreras-form-component.css'
 })
-export class InscripcionFormComponent implements OnInit {
+export class InscripcionFormComponent implements OnInit { // inscripcion de un ingresante a una carrera
 eliminar(arg0: number) {
 throw new Error('Method not implemented.');
 }
 
   inscripcionForm: FormGroup;
-  inscripciones: InscripcionCarreraResponseDto[] = [];
+  inscripciones: InscripcionCarreraResponseDto[] = []; // guardo las inscripciones devueltas por el back
   carreras: CarrerasDto[] = []; 
 
   rol: string | null = null;
 
-  constructor(
+  constructor( // inyeccion de dependencias mediante constructor
     private fb: FormBuilder,
     private inscripcionService: InscripcionCarreraService,
     private carrerasService: CarrerasService,
     private authService: AuthService,
     private cdr: ChangeDetectorRef
   ) {
-    const hoy = new Date().toISOString().split('T')[0];
+    const hoy = new Date().toISOString().split('T')[0]; // obtenemos fecha actual
 
     this.inscripcionForm = this.fb.group({
       carreraId: ['', Validators.required],
@@ -50,7 +50,7 @@ throw new Error('Method not implemented.');
 
   ngOnInit(): void {
     this.rol = this.authService.getRol(); // obtengo rol
-    this.cargarCarreras();
+    this.cargarCarreras(); // carga las carreras
     this.cargarInscripciones(); // para obtener las inscripciones hechas
   }
 
@@ -95,17 +95,17 @@ throw new Error('Method not implemented.');
       return;
     }
 
-    const ingresanteId = this.authService.getIngresanteId();
+    const ingresanteId = this.authService.getIngresanteId(); // obtenemos id de ingresante
 
     if (!ingresanteId) {
       console.error('No se encontró el ingresante asociado al usuario.');
       return;
     }
-	const carreraIdSeleccionada = Number(this.inscripcionForm.value.carreraId);
+	const carreraIdSeleccionada = Number(this.inscripcionForm.value.carreraId); // obtenemos id de carrera
 
 	  // Validaciones locales rápidas si es un usuario tipo GUEST/Estudiante
-	  const yaEstaInscripto = this.inscripciones.some(
-	    ins => ins.carreraId === carreraIdSeleccionada
+	  const yaEstaInscripto = this.inscripciones.some( // some sirve para verificar si al menos un elemento de un arreglo cumple con la condición indicada en una funció
+	    ins => ins.carreraId === carreraIdSeleccionada // para cada inscripcion, compara su carreraId con el carreraIdSeleccionada
 	  );
 
 	  if (yaEstaInscripto) {
@@ -113,7 +113,7 @@ throw new Error('Method not implemented.');
 	    return;
 	  }
 
-	  const datos = {
+	  const datos = { // construimos objeto a mandar al back
 	    ingresanteId: ingresanteId,
 	    carreraId: carreraIdSeleccionada,
 	    fechaInscripcion: this.inscripcionForm.value.fechaInscripcion

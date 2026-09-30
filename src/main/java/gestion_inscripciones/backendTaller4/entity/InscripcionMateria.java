@@ -21,11 +21,12 @@ public class InscripcionMateria {
     @Column(nullable = false)
     private LocalDate fechaInscripcion;
     
-    @ManyToOne(optional = false)//una inscripcion a carrera puede tener 0 o muchas inscripciones a meaterias 
+    @ManyToOne(optional = false)//Muchas inscripciones a materia pueden pertenecer a una inscripcion a carrera
+    // esto permite que in ingresante primero se deba inscribir a una carrera para que despues pueda inscribirse a una materia
     @JoinColumn(name = "inscripcion_carrera_id", nullable = false) //para determinar a que carrera pertenece la inscripcion
     private InscripcionCarrera inscripcionCarrera;
 
-    @ManyToOne(optional = false)// una materia puede tener 0 o muchos ingresantes inscriptos
+    @ManyToOne(optional = false)// una materia puede tener 0 o muchos ingresantes inscriptos. Muchas inscripciones a materia pueden pertenecer a una materia
     @JoinColumn(name = "materia_id", nullable = false)
     private Materia materia;
     

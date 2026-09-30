@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class InscripcionCarreraResponseDTO {
+public class InscripcionCarreraResponseDTO { // informacion que va del backend al frontend
     private Long id;
     private LocalDate fechaInscripcion;
     

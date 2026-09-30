@@ -37,11 +37,11 @@ public class Materia {
     private Carrera carrera; //esto hace que en la bd haya un campo carrera_id, por lo que no haga falta que carrera conozca sus materias
 
     @ManyToMany
-    @JoinTable( // relaciono la entidad materia consigo misma con una tabla intermedia
+    @JoinTable( // relaciono la entidad materia consigo misma con una tabla intermedia. Muchas materias tienen muchas correlativas. 
         name = "materia_correlativa",
-        joinColumns = @JoinColumn(name = "materia_id", nullable = false), // representa la materia desde la que estoy partiendo
+        joinColumns = @JoinColumn(name = "materia_id", nullable = false), // representa en la tabla intermedia la materia desde la que estoy partiendo
         inverseJoinColumns = @JoinColumn(name = "correlativa_id", nullable = false), // representa la materia relacionada a la anterior (la correlativa)
-        uniqueConstraints = @UniqueConstraint(columnNames = {"materia_id", "correlativa_id"}) // para evitar que repita inserts de data.sql
+        uniqueConstraints = @UniqueConstraint(columnNames = {"materia_id", "correlativa_id"}) // para evitar que haya duplicados
     )
     private List<Materia> correlativas;
     

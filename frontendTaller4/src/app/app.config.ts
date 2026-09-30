@@ -1,7 +1,7 @@
 import { ApplicationConfig, 
 	provideBrowserGlobalErrorListeners, 
 	provideZonelessChangeDetection} from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter } from '@angular/router'; 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 
@@ -17,8 +17,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideRouter(routes), //activa sistema de rutas con app.route.ts
+    provideHttpClient(withInterceptors([authInterceptor])), // habilita httpclient y le engancha un interceptor.
 	
 	
 	// Configuración de PrimeNG

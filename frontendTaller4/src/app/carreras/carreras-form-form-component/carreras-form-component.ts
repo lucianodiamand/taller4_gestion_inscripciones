@@ -15,9 +15,9 @@ import { ButtonModule } from 'primeng/button';
   templateUrl: './carreras-form-component.html',
   styleUrl: './carreras-form-component.css',
 })
-export class CarrerasFormComponent implements OnInit, OnDestroy {
+export class CarrerasFormComponent implements OnInit, OnDestroy { // este componente sirve para crear / editar una carrera
 
-  carreraForm: FormGroup; // propiedad para contener el formulario
+  carreraForm: FormGroup; // variable para contener el formulario
 
   id: string | null = null; // si es null, estoy creando. Si tiene valor, estoy editando
 
@@ -29,20 +29,20 @@ export class CarrerasFormComponent implements OnInit, OnDestroy {
     private readonly route: ActivatedRoute, // sirve para indicar la ruta en la que estoy parado y acceder a informacion de la url
     private readonly router: Router // sirve para cambiar de url sin que el usuario clickee un link, usando el metodo navigate
   ) {
-    this.carreraForm = this.fb.group({
+    this.carreraForm = this.fb.group({ // formulario
       nombre: [""],
       duracion: [""]
     });
   }
 
-  ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id'); // se ejecuta al crear el componente. Se usa para hacer la primer carga de datos. El observable pide a la ruta el valor id de la url
+  ngOnInit() { //se ejecuta cuando Angular inicializa el componente
+    this.id = this.route.snapshot.paramMap.get('id'); // para obtener el parametro id de la url
     console.log('ID leído de la URL:', this.id);
 
   if (this.id) { // si el valor de id existe llamo a obtenrPorId para obtener la carrera
     this.subscription = this.servicio.obtenerPorId(+this.id).subscribe({
       next: (carrera: CarrerasDto) => {
-        this.carreraForm.patchValue(carrera);
+        this.carreraForm.patchValue(carrera); // cargo los datos obtenidos desde el back en el formulario
       },
       error: (err) => {
         console.error('Error al buscar la carrera:', err);
@@ -52,7 +52,7 @@ export class CarrerasFormComponent implements OnInit, OnDestroy {
 }
 
 guardar() {
-  console.log(this.carreraForm.value);
+  console.log(this.carreraForm.value); // muestra contenido actual del formulario
 
   if (this.id) { // si recibo el id es porque se va actualizar una carrera
     this.subscription = this.servicio.actualizar(+this.id, this.carreraForm.value).subscribe({ // subscribe es la accion que se ejecuta cuando se inicia una peticion HTTP al backend

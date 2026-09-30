@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, inject, DestroyRef, ChangeDetectorRef } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'; // permite que mientras el componente exista se mantenga la suscripcion, y cuando el componente se destruya se cancele automaticamente
 import { Observable, Subscription } from 'rxjs';
 import { IngresanteDto } from '../../../models/ingresante-dto';
 import { IngresanteService } from '../ingresante.service';
@@ -16,20 +16,20 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './ingresante.component.html',
   styleUrl: './ingresante.component.css',
 })
-export class IngresanteComponent implements OnInit, OnDestroy {
+export class IngresanteComponent implements OnInit, OnDestroy { // componente que muestra los datos de todos los ingresante o de un ingresante segun rol
 
   private readonly authService = inject(AuthService);
   private readonly servicio = inject(IngresanteService);
   private readonly destroyRef = inject(DestroyRef); // Inyección para limpiar suscripciones automáticamente
   private readonly cdr = inject(ChangeDetectorRef); // Inyectamos ChangeDetectorRef (problema de mostrar datos ingresante)
   
-  // Manejador centralizado de suscripciones
+  // Manejador centralizado de suscripciones, maneja varias suscripciones
   private readonly subscriptions = new Subscription();
 
   ingresante: IngresanteDto | null = null;
   rol: string | null = null;
   cargando: boolean = true; // Agregamos flag de carga (problema de mostrar datos ingresante)
-  ingresantes$!: Observable<Array<IngresanteDto>>;
+  ingresantes$!: Observable<Array<IngresanteDto>>; 
 
   ngOnInit() {
     this.rol = this.authService.getRol();
@@ -46,11 +46,10 @@ export class IngresanteComponent implements OnInit, OnDestroy {
 	private cargarDatosIngresante(){
 	
     if(this.rol === 'GUEST') {
-		// Obtener el ID del ingresante desde la sesión
-		const ingresanteId = this.authService.getIngresanteId();
+		const ingresanteId = this.authService.getIngresanteId(); // recupera id al hacer login
 		if (ingresanteId) {
-		      this.servicio.obtenerPorId(+ingresanteId)
-		        .pipe(takeUntilDestroyed(this.destroyRef)) // Cancela automáticamente al salir de la pantalla
+		      this.servicio.obtenerPorId(+ingresanteId) // pide el ingresante
+		        .pipe(takeUntilDestroyed(this.destroyRef)) // Cancela automáticamente la suscripcion al destruirse el componente
 		        .subscribe({
 		          next: (data) => {
 		            console.log("Datos cargados con éxito:", data);
@@ -64,7 +63,7 @@ export class IngresanteComponent implements OnInit, OnDestroy {
 					this.cdr.detectChanges();
 		          }
 		        });
-		    } else {
+		    } else { // si no hay ingresanteId
 				this.cargando = false;
 				this.cdr.detectChanges();
 		        console.warn('Atención: No se encontró ingresanteId en localStorage/Sesión.');
@@ -87,7 +86,7 @@ export class IngresanteComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Cancela todas las suscripciones de forma segura al destruir el componente
+    // Cancela todas las suscripciones con .add de forma segura al destruir el componente
     this.subscriptions.unsubscribe();
   }
 }

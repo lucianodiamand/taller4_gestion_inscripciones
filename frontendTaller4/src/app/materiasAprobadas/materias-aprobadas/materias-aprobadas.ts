@@ -31,9 +31,9 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './materias-aprobadas.html',
   styleUrls: ['./materias-aprobadas.css']
 })
-export class MateriasAprobadas {
+export class MateriasAprobadas { // para materias aprobadas y carga de notas
 
-  notaForm: FormGroup;
+  notaForm: FormGroup; // formulario usado para cargar nota
   idIngresanteBusqueda: number | null = null;
   idInscripcionMateriaBusqueda: number | null = null;
   inscripcionEncontrada: InscripcionMateriaResponseDto | null = null;
@@ -51,7 +51,7 @@ export class MateriasAprobadas {
     private authService: AuthService,
 	private cdr: ChangeDetectorRef
   ) {
-    this.notaForm = this.fb.group({
+    this.notaForm = this.fb.group({ // creo formulario de nota
       idInscripcion: [null, [Validators.required, Validators.min(1)]],
       nota: [null, [Validators.required, Validators.min(0), Validators.max(10)]]
     });
@@ -104,7 +104,7 @@ export class MateriasAprobadas {
         console.log('RESPUESTA DEL BACKEND:', res);
 
         this.mostrarMensaje(`Nota ${res.nota} asignada a ${res.nombreIngresante} en ${res.nombreMateria}`, 'exito');
-        this.notaForm.reset();
+        this.notaForm.reset(); // limpia formulario
       },
       error: (err: any) => {
         this.mostrarMensaje(err.error?.message || 'No se pudo guardar la nota.', 'error');
@@ -112,7 +112,7 @@ export class MateriasAprobadas {
     });
   }
 
-buscarInscripcion(): void {
+buscarInscripcion(): void { // 
   if (!this.idInscripcionMateriaBusqueda) {
     this.mostrarMensaje('Ingrese un ID de inscripción válido.', 'advertencia');
     return;
@@ -121,7 +121,7 @@ buscarInscripcion(): void {
   this.materiasService.obtenerInscripcionPorId(this.idInscripcionMateriaBusqueda).subscribe({
     next: (data: InscripcionMateriaResponseDto) => {
       this.inscripcionEncontrada = data;
-      this.notaForm.patchValue({idInscripcion: data.id});
+      this.notaForm.patchValue({idInscripcion: data.id}); // completamos el campo id inscripcion del formulario
     },
     error: () => {
       this.inscripcionEncontrada = null;
@@ -130,7 +130,7 @@ buscarInscripcion(): void {
   });
 }
 
-  buscarPorIngresante(): void {
+  buscarPorIngresante(): void { // busca materias aprobadas por ingresante
     if (!this.idIngresanteBusqueda) {
       this.mostrarMensaje('Ingrese un ID de ingresante válido.', 'advertencia');
       return;
